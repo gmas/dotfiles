@@ -1,5 +1,5 @@
 hardstatus alwayslastline
-hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} dev.george %{..Y} %d/%m %C%a "
+hardstatus string "%{.bW}%-w%{.rW}%n %t%{-}%+w %=%{..G} %H %{..Y} %d/%m %C%a "
 #caption always "%3n %t%? @%u%?%? [%h]%?"
 startup_message off
 defscrollback 5000
