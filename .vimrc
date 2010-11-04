@@ -1,5 +1,7 @@
 au BufNewFile,BufRead *.ctp setfiletype php
 filetype plugin on
+colorscheme evening
+set pastetoggle=<F2>
 set nonu
 set smartindent
 set autoindent
