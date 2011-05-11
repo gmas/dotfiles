@@ -16,4 +16,11 @@ set pastetoggle=<F2>
 nnoremap ; :
 
 map <C-\> :!php -l %<CR>
+map ,t <Esc>:tabnew<CR>
 
+map <C-n> :tabn<CR>
+map <C-p> :tabp<CR>
+map <C-t> :tabnew<CR>
+
+set tabstop=4
+set shiftwidth=4
