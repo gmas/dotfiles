@@ -24,3 +24,13 @@ map <C-t> :tabnew<CR>
 
 set tabstop=4
 set shiftwidth=4
+
+set list
+set listchars=tab:▸\ ,trail:▪
+highlight SpecialKey guifg=#4a4a59
+highlight NonText guifg=#4a4a59
+highlight NonText guibg=#1a1a1a
+set visualbell t_vb=
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
