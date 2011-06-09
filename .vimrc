@@ -1,13 +1,11 @@
 au BufNewFile,BufRead *.ctp setfiletype php
 filetype plugin on
-colorscheme evening
+colorscheme elflord 
 set pastetoggle=<F2>
 set nonu
 set smartindent
 set autoindent
 set copyindent
-set ts=4
-set shiftwidth=4
 set shiftround
 set smartcase
 set smarttab
@@ -24,6 +22,7 @@ map <C-t> :tabnew<CR>
 
 set tabstop=4
 set shiftwidth=4
+set expandtab
 
 set list
 set listchars=tab:▸\ ,trail:▪
