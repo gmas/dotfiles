@@ -1,6 +1,10 @@
 au BufNewFile,BufRead *.ctp setfiletype php
+autocmd BufRead,BufNewFile *.js setlocal ft=javascript
+set t_Co=256
+
 filetype plugin on
-colorscheme elflord 
+syntax on
+colorscheme lucius
 set pastetoggle=<F2>
 set nonu
 set smartindent
@@ -20,9 +24,9 @@ map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
 map <C-t> :tabnew<CR>
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
+set tabstop=2
+set shiftwidth=2
+"set expandtab
 
 set list
 set listchars=tab:▸\ ,trail:▪

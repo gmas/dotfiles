@@ -6,3 +6,4 @@ defscrollback 5000
 maptimeout 0
 defc1 off
 termcapinfo xterm* ti@:te@
+bind / eval "clear" "scrollback 0" "scrollback 15000"
