@@ -4,7 +4,7 @@ set t_Co=256
 
 filetype plugin on
 syntax on
-colorscheme lucius
+colorscheme jellybeans
 set pastetoggle=<F2>
 set nonu
 set smartindent
@@ -24,8 +24,8 @@ map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
 map <C-t> :tabnew<CR>
 
-set tabstop=2
-set shiftwidth=2
+set tabstop=4
+set shiftwidth=4
 "set expandtab
 
 set list
