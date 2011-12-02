@@ -79,7 +79,7 @@ vnoremap <buffer> <C-c> :call PhpUnComment()<CR>
 " More common in PEAR coding standard
 " inoremap <buffer>  { {<CR>}<C-O>O
 " Maybe this way in other coding standards
-inoremap <buffer>  { {<CR>}<C-O>O
+inoremap <buffer>  { {  }<LEFT><LEFT>
 
 inoremap <buffer> [ []<LEFT>
 
@@ -110,7 +110,7 @@ inoremap <buffer> ' ''<LEFT>
 
 " The completion dictionary is provided by Rasmus:
 " http://lerdorf.com/funclist.txt
-setlocal dictionary-=/home/dotxp/funclist.txt dictionary+=/home/dotxp/funclist.txt
+setlocal dictionary-=~/Documents/dotfiles/php_funclist.txt dictionary+=~/Documents/dotfiles/php_funclist.txt
 " Use the dictionary completion
 setlocal complete-=k complete+=k
 
