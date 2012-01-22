@@ -354,3 +354,6 @@ endfunction
 " vim: nowrap sw=2 sts=2 ts=8:
 "
 map <C-\> :!ruby -cw %<CR>
+set tabstop=2
+set shiftwidth=2
+set expandtab
