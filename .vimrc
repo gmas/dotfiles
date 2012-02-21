@@ -1,4 +1,4 @@
-au BufNewFile,BufRead *.ctp setfiletype php
+au BufNewFile,BufRead *.ctp setfiletype php             
 autocmd BufRead,BufNewFile *.js setlocal ft=javascript
 set t_Co=256
 set number
@@ -6,6 +6,9 @@ set number
 filetype plugin on
 syntax on
 colorscheme jellybeans
+"map arrow keys
+map <Esc>[B <Down>
+map <Esc>[A <Up>
 set pastetoggle=<F2>
 set nonu
 set smartindent
@@ -23,7 +26,14 @@ map ,t <Esc>:tabnew<CR>
 
 map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
-map <C-t> :tabnew<CR>
+
+function! NewCommandT()
+:tabnew
+:CommandT
+endfunction
+
+map <C-t> :exec NewCommandT()<CR>
+
 
 set tabstop=4
 set shiftwidth=4
