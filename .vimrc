@@ -34,13 +34,12 @@ endfunction
 
 map <C-t> :exec NewCommandT()<CR>
 
-
 set tabstop=4
 set shiftwidth=4
 "set expandtab
 
 set list
-set listchars=tab:▸\ ,trail:▪
+set listchars=tab:¬\ ,trail:▪
 "highlight SpecialKey guifg=#4a4a59
 "highlight NonText guifg=#4a4a59
 "highlight NonText guibg=#1a1a1a
