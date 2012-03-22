@@ -5,23 +5,28 @@ set number
 
 filetype plugin on
 syntax on
-colorscheme jellybeans
 "map arrow keys
 map <Esc>[B <Down>
 map <Esc>[A <Up>
 set pastetoggle=<F2>
-set nonu
 set smartindent
 set autoindent
 set copyindent
 set shiftround
 set smartcase
+
+"tabs
 set smarttab
+set expandtab
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+
 set pastetoggle=<F2>
 
 nnoremap ; :
 
-map <C-\> :!php -l %<CR>
+map <C-\> :w<CR> :!php -l %<CR>
 map ,t <Esc>:tabnew<CR>
 
 map <C-n> :tabn<CR>
@@ -34,18 +39,31 @@ endfunction
 
 map <C-t> :exec NewCommandT()<CR>
 
-set tabstop=4
-set shiftwidth=4
-"set expandtab
-
-set list
-set listchars=tab:¬\ ,trail:▪
 "highlight SpecialKey guifg=#4a4a59
 "highlight NonText guifg=#4a4a59
 "highlight NonText guibg=#1a1a1a
 set visualbell t_vb=
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+"highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+"match OverLength /\%81v.\+/
+
+
 call pathogen#infect()
 
+"colorscheme jellybeans
+let g:solarized_diffmode="high" "default value is normal
+syntax enable
+
+set background=dark
+let g:solarized_termcolors = &t_Co
+let g:solarized_termtrans = 1
+colorscheme solarized
+call togglebg#map("<F5>")
+
+
+"set list
+"set listchars=tab:¬\ ,trail:▪
+
+"let g:solarized_termcolors=256
+"let g:solarized_visibility="low"
+"colorscheme solarized
 "let @l='s/\<var_export\>(\s\+\(\D\+\)\s\+),\s\+PHP_EOL/ \1)/g'
