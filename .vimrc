@@ -14,6 +14,7 @@ set autoindent
 set copyindent
 set shiftround
 set smartcase
+"set hlsearch
 
 "tabs
 set smarttab
@@ -37,7 +38,8 @@ function! NewCommandT()
 :CommandT
 endfunction
 
-map <C-t> :exec NewCommandT()<CR>
+map <C-t> :call NewCommandT()<CR>
+"map <C-t> :TagmaTasks<CR> not needed, use \tt
 
 "highlight SpecialKey guifg=#4a4a59
 "highlight NonText guifg=#4a4a59
@@ -67,3 +69,5 @@ call togglebg#map("<F5>")
 "let g:solarized_visibility="low"
 "colorscheme solarized
 "let @l='s/\<var_export\>(\s\+\(\D\+\)\s\+),\s\+PHP_EOL/ \1)/g'
+inoremap <silent> <buffer> <C-D> <ESC>:call Toggle_task_status()<CR>i
+noremap <silent> <buffer> <C-D> :call Toggle_task_status()<CR>
