@@ -32,11 +32,6 @@
 (require 'tramp)
 (setq tramp-default-method "scp")
 
-;; PHP stuff
-(setq show-paren-mode t)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
 ;; Org-mode
 (require 'org-install)
 (add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
@@ -55,6 +50,14 @@
   ;; Your init file should contain only one such instance.
   ;; If there is more than one, they won't work right.
  )
+
+
+;; PHP stuff
+(setq show-paren-mode t)
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 4)
+(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
 ;; run php lint when press f8 key
 ;; php lint
