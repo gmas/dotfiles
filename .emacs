@@ -1,84 +1,63 @@
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; George's .emacs
+;Meta key is set to ALT
+(set-keyboard-coding-system nil)
+(setq mac-command-modifier 'meta)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Marmalade
-
-(load "~/.emacs.d/package")
-(add-to-list 'package-archives '("marmalade" . "http://marmalade-repo.org/packages/"))
+;;;;Packages
+(require 'package)
 (package-initialize)
+  (add-to-list 'package-archives '("melpa" . "http://melpa.milkbox.net/packages/") t)
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Color Theming
+;(require 'package)
+;(setq package-archives '(("gnu" . "http://elpa.gnu.org/packages/")
+;                         ("marmalade" . "http://marmalade-repo.org/packages/")
+;                         ("melpa" .
+;                         "http://melpa.milkbox.net/packages/")
+;                        ))
+;(defvar my-packages '(starter-kit starter-kit-lisp starter-kit-ruby starter-kit-bindings)
+;  "A list of packages to ensure are installed at lunch.")
 
-(require 'color-theme)
-(color-theme-arjen)
+;;;;THEMES
+(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+;(load-theme 'tango-dark t)
+;(load-theme 'zenburn)
+(load-theme 'solarized-dark t)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+
+ '(custom-safe-themes (quote
+ ("fc5fcb6f1f1c1bc01305694c59a1a861b008c534cae8d0e48e4d5e81ad718bc6"
+ "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
+ "0bac11bd6a3866c6dee5204f76908ec3bdef1e52f3c247d5ceca82860cccfa9d"
+ default)))
+ '(initial-scratch-message "")
+ )
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work 
+ )
+
+(add-hook 'ruby-mode-hook
+          (lambda ()
+            (hl-line-mode -1)
+            (global-hl-line-mode -1))
+          't)
+
+;ElScreen
+(global-set-key (kbd "<f9>") 'elscreen-create)
+(elscreen-start)
+
+
 (ido-mode)
 (set-default-font "Monospace-11")
 (defun fontify-frame (frame)
   (set-frame-parameter frame 'font "Monospace-13"))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Emacs Path Info
-
-(require 'cl)
-(defvar emacs-root "/home/geomas/")
-
-(labels ((add-path (p)
-		   (add-to-list 'load-path
-				(concat emacs-root p))))
-  (add-path ".emacs.d/"))
-
-(require 'tramp)
-(setq tramp-default-method "scp")
-
-;; Org-mode
-(require 'org-install)
-(add-to-list 'auto-mode-alist '("\\.org$" . org-mode))
-(define-key global-map "\C-cl" 'org-store-link)
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-log-done t)
-(custom-set-variables
-  ;; custom-set-variables was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- '(org-agenda-files (quote ("~/new.org"))))
-(custom-set-faces
-  ;; custom-set-faces was added by Custom.
-  ;; If you edit it by hand, you could mess it up, so be careful.
-  ;; Your init file should contain only one such instance.
-  ;; If there is more than one, they won't work right.
- )
-
-
-;; PHP stuff
-(setq show-paren-mode t)
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-(autoload 'php-mode "php-mode" "Major mode for editing php code." t)
-(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-
-;; PHP array indent fix
-(add-hook 'php-mode-hook (lambda ()
-    (defun ywb-php-lineup-arglist-intro (langelem)
-      (save-excursion
-        (goto-char (cdr langelem))
-        (vector (+ (current-column) c-basic-offset))))
-    (defun ywb-php-lineup-arglist-close (langelem)
-      (save-excursion
-        (goto-char (cdr langelem))
-        (vector (current-column))))
-    (c-set-offset 'arglist-intro 'ywb-php-lineup-arglist-intro)
-    (c-set-offset 'arglist-close 'ywb-php-lineup-arglist-close)))
-;; end array indent fix
-
-;; run php lint when press f8 key
-;; php lint
-(defun phplint-thisfile ()
-(interactive)
-(compile (format "php -l %s" (buffer-file-name))))
-(add-hook 'php-mode-hook
-'(lambda ()
-(local-set-key [f8] 'phplint-thisfile)))
-;; end of php lint
+(setq make-backup-files nil) ; stop creating those backup~ files 0
