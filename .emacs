@@ -61,3 +61,10 @@
   (set-frame-parameter frame 'font "Monospace-13"))
 
 (setq make-backup-files nil) ; stop creating those backup~ files 0
+
+
+;use Ibuffer
+(defalias 'list-buffers 'ibuffer)
+
+;make buffer switch command show suggestions
+(ido-mode 1)
