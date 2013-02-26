@@ -42,6 +42,14 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work 
+ '(elscreen-tab-background-face
+   ((t (:background "gray90"))))
+ '(elscreen-tab-control-face
+   ((t (:background "gray90" :foreground "gray60"))))
+ '(elscreen-tab-current-screen-face
+   ((t (:background "blue80" :foreground "brown60"))))
+ '(elscreen-tab-other-screen-face
+   ((t (:background "gray10" :foreground "gray50"))))
  )
 
 (add-hook 'ruby-mode-hook
@@ -52,19 +60,17 @@
 
 ;ElScreen
 (global-set-key (kbd "<f9>") 'elscreen-create)
+(setq elscreen-prefix-key (kbd "\C-t"))
 (elscreen-start)
 
-
-(ido-mode)
 (set-default-font "Monospace-11")
 (defun fontify-frame (frame)
   (set-frame-parameter frame 'font "Monospace-13"))
-
-(setq make-backup-files nil) ; stop creating those backup~ files 0
-
 
 ;use Ibuffer
 (defalias 'list-buffers 'ibuffer)
 
 ;make buffer switch command show suggestions
+(setq make-backup-files nil) ; stop creating those backup~ files 0
 (ido-mode 1)
+(setq tab-width 2)
