@@ -74,3 +74,26 @@
 (setq make-backup-files nil) ; stop creating those backup~ files 0
 (ido-mode 1)
 (setq tab-width 2)
+(global-unset-key (kbd "M-a"))
+(global-set-key (kbd "M-a") 'move-beginning-of-line)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;; Ruby ;;;;
+;(add-hook 'ruby-mode-hook 
+;	  (lambda () 
+;	    (local-unset-key (kbd "C-M-h"))
+;	    (local-set-key (kbd "C-M-h") 'backward-kill-word)
+;	    (local-set-key "\r" 'newline-and-indent)
+;	    (local-unset-key (kbd "<C-\>"))
+;;	    (local-set-key (kbd "C-\\") ')
+;	    )
+;)
+(eval-after-load 'ruby-mode 
+  '(progn
+     (setq ruby-use-encoding-map nil)
+     (define-key ruby-mode-map (kbd "RET") 'reindent-then-newline-and-indent)
+     (define-key ruby-mode-map (kbd "C-M-h") 'backward-kill-word)
+     (define-key ruby-mode-map (kbd "C-c l") "lambda"))
+)
+(add-to-list 'auto-mode-alist '("\\.rake$" . ruby-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
