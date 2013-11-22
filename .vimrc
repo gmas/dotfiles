@@ -3,6 +3,13 @@ syntax on
 filetype plugin indent on
 
 nnoremap ; :
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+set splitbelow
+set splitright
+
 set t_Co=256
 set pastetoggle=<F2>
 set smartindent
@@ -17,6 +24,7 @@ set expandtab
 set softtabstop=2
 set tabstop=2
 set shiftwidth=2
+imap <Tab> <C-P>
 
 map ,t <Esc>:tabnew<CR>:NERDTree<CR>
 
