@@ -1,0 +1,122 @@
+Host puppetmaster
+  Hostname 10.10.25.12
+  IdentityFile ~/.ssh/white-arch/id_rsa
+  User root
+
+Host vokle01-d
+  Hostname 10.10.25.85
+  IdentityFile ~/.ssh/white-arch/id_rsa
+  user root
+
+
+#####staging environment##
+Host vokleapp01-t
+  Hostname 10.10.25.171
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleworker01-t
+  Hostname 10.10.25.172
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokledb01-t
+  Hostname 10.10.25.173
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+##########################
+
+
+#####dev environment######
+Host vokleapp01-d
+  Hostname 10.10.25.175
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleworker01-d
+  Hostname 10.10.25.176
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokledb01-d
+  Hostname 10.10.25.174
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host voklewowza01-d
+  Hostname 10.10.25.177
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+##########################
+
+Host mgmt.vokle.com
+  Hostname mgmt.vokle.com
+  User ubuntu
+  IdentityFile ~/.ssh/nds/nds_id_rsa
+
+#####prod environment######
+Host vokledb01-p
+  Hostname 10.40.25.180
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokledb02-p
+  Hostname 10.40.25.180 
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleapp01-p
+  Hostname 10.10.25.181
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleapp02-p
+  Hostname 10.10.25.182
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleworker01-p
+  Hostname 10.10.25.183
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host vokleworker02-p
+  Hostname 10.10.25.184
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host voklewowza01-p
+  #Hostname 10.10.25.185
+  Hostname boxy.vokle.com
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host ftp
+  Hostname ftp.vokle.com
+  User root
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host recording1
+  Hostname recording1.vokle.com
+  User root
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+Host recording
+  Hostname 208.72.188.3
+  User root
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/white-arch/id_rsa
+
+
+#TRIKKLE
+Host trikkle01-p
+  Hostname 10.10.25.92
+  User root
+  IdentityFile ~/.ssh/white-arch/id_rsa
+##########################
+
+
+Host bitbucket.org
+  IdentityFile ~/.ssh/white-arch/id_rsa
