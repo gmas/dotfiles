@@ -1,3 +1,4 @@
+require("volume")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -190,6 +191,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
+    right_layout:add(volume_widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -270,7 +272,11 @@ globalkeys = awful.util.table.join(
                   awful.util.getdir("cache") .. "/history_eval")
               end),
     -- Menubar
-    awful.key({ modkey }, "p", function() menubar.show() end)
+    awful.key({ modkey }, "p", function() menubar.show() end),
+    
+    -- Brightness control
+    awful.key({ modkey }, "-", function() awful.util.spawn("/usr/bin/adjbacklight -5%") end),
+    awful.key({ modkey }, "=", function() awful.util.spawn("/usr/bin/adjbacklight +5%") end)
 )
 
 clientkeys = awful.util.table.join(
