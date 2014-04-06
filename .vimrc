@@ -1,51 +1,42 @@
-au BufNewFile,BufRead *.ctp setfiletype php             
-autocmd BufRead,BufNewFile *.js setlocal ft=javascript
-set t_Co=256
-set number
-
-filetype plugin on
+call pathogen#infect()
 syntax on
-colorscheme jellybeans
-"map arrow keys
-map <Esc>[B <Down>
-map <Esc>[A <Up>
+filetype plugin indent on
+
+nnoremap ; :
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+set splitbelow
+set splitright
+
+set t_Co=256
 set pastetoggle=<F2>
-set nonu
 set smartindent
 set autoindent
 set copyindent
 set shiftround
 set smartcase
+set ruler
+
 set smarttab
-set pastetoggle=<F2>
+set expandtab
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+imap <Tab> <C-P>
 
-nnoremap ; :
-
-map <C-\> :!php -l %<CR>
-map ,t <Esc>:tabnew<CR>
+map ,t <Esc>:tabnew<CR>:NERDTree<CR>
 
 map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
 
-function! NewCommandT()
-:tabnew
-:CommandT
-endfunction
+let g:solarized_diffmode="high" "default value is normal
+set background=dark
+let g:solarized_termcolors = &t_Co
+let g:solarized_termtrans = 1
+let g:solarized_visibility= "high"
+colorscheme solarized
+call togglebg#map("<F5>")
 
-map <C-t> :exec NewCommandT()<CR>
-
-set tabstop=4
-set shiftwidth=4
-"set expandtab
-
-set list
-set listchars=tab:¬\ ,trail:▪
-"highlight SpecialKey guifg=#4a4a59
-"highlight NonText guifg=#4a4a59
-"highlight NonText guibg=#1a1a1a
-set visualbell t_vb=
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
-call pathogen#infect()
-
-"let @l='s/\<var_export\>(\s\+\(\D\+\)\s\+),\s\+PHP_EOL/ \1)/g'
+set regexpengine=1
