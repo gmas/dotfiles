@@ -1,4 +1,3 @@
-require("volume")
 -- Standard awesome library
 local gears = require("gears")
 local awful = require("awful")
@@ -11,6 +10,13 @@ local beautiful = require("beautiful")
 -- Notification library
 local naughty = require("naughty")
 local menubar = require("menubar")
+
+require("volumecfg")
+-- timer to update volume widget
+volume_timer = timer({ timeout = 1 })
+volume_timer:connect_signal("timeout", function () volumecfg.update() end)
+volume_timer:start()
+-- 
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -191,7 +197,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(volume_widget)
+    right_layout:add(volumecfg_widget)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
@@ -275,8 +281,16 @@ globalkeys = awful.util.table.join(
     awful.key({ modkey }, "p", function() menubar.show() end),
     
     -- Brightness control
-    awful.key({ modkey }, "-", function() awful.util.spawn("/usr/bin/adjbacklight -5%") end),
-    awful.key({ modkey }, "=", function() awful.util.spawn("/usr/bin/adjbacklight +5%") end)
+    awful.key({ modkey }, "XF86MonBrightnessDown", function() awful.util.spawn("/usr/bin/adjbacklight -5%") end),
+    awful.key({ modkey }, "XF86MonBrightnessUp", function() awful.util.spawn("/usr/bin/adjbacklight +5%") end),
+    -- Volume control
+    awful.key({ modkey }, "XF86AudioRaiseVolume", function() volumecfg.up() end),
+    awful.key({ modkey }, "XF86AudioLowerVolume", function() volumecfg.down() end),
+    awful.key({ modkey }, "XF86AudioMute", function() volumecfg.toggle() end)
+    -- Volume control For non-Apple keyboard
+    awful.key({ modkey }, "F12", function() volumecfg.up() end),
+    awful.key({ modkey }, "F11", function() volumecfg.down() end),
+    awful.key({ modkey }, "F10", function() volumecfg.toggle() end)
 )
 
 clientkeys = awful.util.table.join(
