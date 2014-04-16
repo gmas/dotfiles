@@ -286,7 +286,7 @@ globalkeys = awful.util.table.join(
     -- Volume control
     awful.key({ modkey }, "XF86AudioRaiseVolume", function() volumecfg.up() end),
     awful.key({ modkey }, "XF86AudioLowerVolume", function() volumecfg.down() end),
-    awful.key({ modkey }, "XF86AudioMute", function() volumecfg.toggle() end)
+    awful.key({ modkey }, "XF86AudioMute", function() volumecfg.toggle() end),
     -- Volume control For non-Apple keyboard
     awful.key({ modkey }, "F12", function() volumecfg.up() end),
     awful.key({ modkey }, "F11", function() volumecfg.down() end),
