@@ -23,12 +23,12 @@ volumecfg.mixercommand = function (command)
 --       log:close()
 --
        if string.find(status, "on", 1, true) then
-               volume = volume .. "%"
+               volume = volume .. ""
        else   
                volume = volume .. "M"
        end
        local volume_value = " <span color='black' background='grey'> " .. volume .. " </span>"
-       volumecfg_widget:set_markup(volume_value)
+       volumecfg_widget:set_text(volume)
 end
 volumecfg.update = function ()
        volumecfg.mixercommand(" sget " .. volumecfg.channel)
