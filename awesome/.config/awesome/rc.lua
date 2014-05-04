@@ -119,8 +119,6 @@ menubar.utils.terminal = terminal -- Set the terminal for applications that requ
 -- {{{ Wibox
 -- Create a textclock widget
 mytextclock = awful.widget.textclock()
-vol_icon = wibox.widget.imagebox()
-vol_icon:set_image("/home/gmas/Downloads/sm4tik-icon-pack/png/spkr_01.png")
 
 -- Create a wibox for each screen and add it
 mywibox = {}
@@ -195,10 +193,6 @@ for s = 1, screen.count() do
     left_layout:add(mylauncher)
     left_layout:add(mytaglist[s])
     left_layout:add(mypromptbox[s])
-
-    local vol_layout = wibox.layout.fixed.horizontal()
-    vol_layout:add(volumecfg_widget)
-    vol_layout:add(vol_icon)
 
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()

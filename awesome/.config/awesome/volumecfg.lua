@@ -5,10 +5,22 @@ volumecfg = {}
 volumecfg.cardid  = 0
 volumecfg.channel = "Master"
 --volumecfg.widget = widget({ type = "textbox", name = "volumecfg.widget", align = "right" })
-volumecfg_widget = wibox.widget.textbox()
+
+vol_layout = wibox.layout.fixed.horizontal()
+local volumecfg_widget = wibox.widget.textbox()
 volumecfg_widget:set_align("right")
+local vol_icon = wibox.widget.imagebox()
+vol_icon:set_image("/home/gmas/Downloads/sm4tik-icon-pack/png/spkr_01.png")
+vol_layout:add(volumecfg_widget)
+vol_layout:add(vol_icon)
+vol_layout:buttons(awful.util.table.join(
+       awful.button({ }, 4, function () volumecfg.up() end),
+       awful.button({ }, 5, function () volumecfg.down() end),
+       awful.button({ }, 1, function () volumecfg.toggle() end)
+))
 --volumecfg_widget:set_name("volumecfg_widget")
 -- command must start with a space!
+
 volumecfg.mixercommand = function (command)
        local fd = io.popen("amixer " .. command)
        local status = fd:read("*all")
@@ -42,9 +54,4 @@ end
 volumecfg.toggle = function ()
        volumecfg.mixercommand(" sset " .. volumecfg.channel .. " toggle")
 end
-volumecfg_widget:buttons(awful.util.table.join(
-       awful.button({ }, 4, function () volumecfg.up() end),
-       awful.button({ }, 5, function () volumecfg.down() end),
-       awful.button({ }, 1, function () volumecfg.toggle() end)
-))
 volumecfg.update()
