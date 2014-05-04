@@ -12,10 +12,6 @@ local naughty = require("naughty")
 local menubar = require("menubar")
 
 require("volumecfg")
--- timer to update volume widget
-volume_timer = timer({ timeout = 1 })
-volume_timer:connect_signal("timeout", function () volumecfg.update() end)
-volume_timer:start()
 -- 
 
 -- {{{ Error handling
@@ -197,7 +193,7 @@ for s = 1, screen.count() do
     -- Widgets that are aligned to the right
     local right_layout = wibox.layout.fixed.horizontal()
     if s == 1 then right_layout:add(wibox.widget.systray()) end
-    right_layout:add(vol_layout)
+    right_layout:add(volumecfg.vol_layout)
     right_layout:add(mytextclock)
     right_layout:add(mylayoutbox[s])
 
