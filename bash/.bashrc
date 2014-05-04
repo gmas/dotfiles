@@ -12,6 +12,7 @@ PS1='[\u@\h \W]\$ '
 #export TERM=xterm-256color
 export TERM=screen-256color
 alias be='bundle exec'
+alias ssh="ssh -A"
 
 source /usr/local/share/chruby/chruby.sh
 
@@ -30,3 +31,4 @@ BUNDLER_EDITOR='vim'
 source ~/dotfiles/.bash-git-prompt/gitprompt.sh
 
 [ -s "/home/gmas/.nvm/nvm.sh" ] && . "/home/gmas/.nvm/nvm.sh" # This loads nvm
+eval $(ssh-agent)
