@@ -4,7 +4,7 @@
 
 case "$1" in
   "left") echo "Turning on monitor on left"
-          xrandr --output LVDS-1 --auto --right-of DP-1 
+          xrandr --output LVDS-1 --auto --right-of DP-1
           xrandr --output DP-1 --auto --left-of LVDS-1
           ;;
 
@@ -21,4 +21,3 @@ case "$1" in
   *) echo "Must pass left, right or off"
       ;;
 esac
-
