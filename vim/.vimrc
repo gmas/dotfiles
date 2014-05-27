@@ -13,6 +13,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 "Plugin 'tpope/vim-surround'
 Plugin 'rking/ag.vim'
+Plugin 'slim-template/vim-slim'
 call vundle#end()            " required
 filetype plugin indent on  
 
