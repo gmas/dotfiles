@@ -17,6 +17,8 @@ Plugin 'slim-template/vim-slim'
 call vundle#end()            " required
 filetype plugin indent on  
 
+" Quick ESC
+imap jj <ESC>
 syntax on
 nnoremap ; :
 nnoremap <C-J> <C-W><C-J>
