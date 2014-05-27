@@ -11,6 +11,8 @@ Plugin 'ervandew/supertab'
 Plugin 'Townk/vim-autoclose'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
+"Plugin 'tpope/vim-surround'
+Plugin 'rking/ag.vim'
 call vundle#end()            " required
 filetype plugin indent on  
 
