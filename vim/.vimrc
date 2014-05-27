@@ -1,7 +1,20 @@
-call pathogen#infect()
-syntax on
-filetype plugin indent on
+"Vundle setup
+set nocompatible              " be iMproved, required
+filetype off                  " required
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'gmarik/Vundle.vim'
+Plugin 'tpope/vim-fugitive'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ervandew/supertab'
+Plugin 'Townk/vim-autoclose'
+Plugin 'scrooloose/syntastic'
+Plugin 'altercation/vim-colors-solarized'
+call vundle#end()            " required
+filetype plugin indent on  
 
+syntax on
 nnoremap ; :
 nnoremap <C-J> <C-W><C-J>
 nnoremap <C-K> <C-W><C-K>
@@ -32,11 +45,11 @@ map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
 
 let g:solarized_diffmode="high" "default value is normal
-set background=dark
+set background=light
 let g:solarized_termcolors = &t_Co
 let g:solarized_termtrans = 1
 let g:solarized_visibility= "high"
 colorscheme solarized
-call togglebg#map("<F5>")
+"call togglebg#map("<F5>")
 
 set regexpengine=1
