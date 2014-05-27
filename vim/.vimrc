@@ -14,6 +14,8 @@ Plugin 'altercation/vim-colors-solarized'
 "Plugin 'tpope/vim-surround'
 Plugin 'rking/ag.vim'
 Plugin 'slim-template/vim-slim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'othree/html5.vim'
 call vundle#end()            " required
 filetype plugin indent on  
 
