@@ -28,7 +28,7 @@ export EDITOR='vim'
 export GIT_EDITOR='vim'
 BUNDLER_EDITOR='vim'
 
-source ~/dotfiles/.bash-git-prompt/gitprompt.sh
+source ~/.bash-git-prompt/gitprompt.sh
 
 [ -s "/home/gmas/.nvm/nvm.sh" ] && . "/home/gmas/.nvm/nvm.sh" # This loads nvm
 eval $(ssh-agent)
