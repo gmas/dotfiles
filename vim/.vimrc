@@ -16,6 +16,10 @@ Plugin 'rking/ag.vim'
 Plugin 'slim-template/vim-slim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'othree/html5.vim'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tomtom/tlib_vim'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -61,3 +65,4 @@ set t_ut=
 set background=light
 
 set regexpengine=1
+set cursorline
