@@ -20,6 +20,7 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
+Plugin 'kien/ctrlp'
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -66,3 +67,7 @@ set background=light
 
 set regexpengine=1
 set cursorline
+
+cnoreabbrev E e
+cnoreabbrev W w
+cnoreabbrev Q q
