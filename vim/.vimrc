@@ -9,9 +9,10 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ervandew/supertab'
 Plugin 'Townk/vim-autoclose'
+"Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
-"Plugin 'tpope/vim-surround'
 Plugin 'rking/ag.vim'
 Plugin 'slim-template/vim-slim'
 Plugin 'kchmck/vim-coffee-script'
@@ -20,7 +21,8 @@ Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
-Plugin 'kien/ctrlp'
+Plugin 'vim-ruby/vim-ruby'
+" Plugin 'kien/ctrlp'
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -71,3 +73,7 @@ set cursorline
 cnoreabbrev E e
 cnoreabbrev W w
 cnoreabbrev Q q
+
+
+nnoremap <leader>s :w<cr>
+inoremap <leader>s <C-c>:w<cr>
