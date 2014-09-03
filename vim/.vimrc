@@ -22,6 +22,11 @@ Plugin 'tomtom/tlib_vim'
 Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-unimpaired'
+Plugin 'pangloss/vim-javascript'
+Plugin 'tomasr/molokai'
+Plugin 'wincent/command-t'
 " Plugin 'kien/ctrlp'
 call vundle#end()            " required
 filetype plugin indent on  
@@ -77,3 +82,7 @@ cnoreabbrev Q q
 
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <C-c>:w<cr>
+
+"Command-T exclude dirs
+set wildignore+=vendor/bundle
+set wildignore+=node_modules
