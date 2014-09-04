@@ -86,3 +86,5 @@ inoremap <leader>s <C-c>:w<cr>
 "Command-T exclude dirs
 set wildignore+=vendor/bundle
 set wildignore+=node_modules
+set autochdir
+
