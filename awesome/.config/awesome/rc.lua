@@ -101,7 +101,9 @@ myawesomemenu = {
 }
 
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "open terminal", terminal }
+                                    { "Terminal", terminal, beautiful.awesome_icon },
+                                    { "File manager", "/usr/bin/pcmanfm"},
+                                    { "Chrome", "/usr/bin/chromium --incognito"}
                                   }
                         })
 

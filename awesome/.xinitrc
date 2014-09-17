@@ -1,0 +1,8 @@
+#!/bin/bash
+setxkbmap -option 'ctrl:nocaps' &
+xscreensaver -nosplash &
+/usr/bin/nm-applet &
+/usr/bin/xfce4-power-manager &
+/usr/bin/redshiftgui &
+/usr/bin/dropboxd &
+exec /usr/bin/awesome

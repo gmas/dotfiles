@@ -19,20 +19,26 @@ volumecfg.vol_layout:buttons(awful.util.table.join(
        awful.button({ }, 1, function () volumecfg.toggle() end)
 ))
 
+local log = function (msg)
+       local logger = io.open("awesome.log", "a")
+       logger:write(msg,"\n")
+       logger:close()
+end
+
 volumecfg.mixercommand = function (command)
        -- command must start with a space!
        local fd = io.popen("amixer " .. command)
        local status = fd:read("*all")
        fd:close()
+       -- log("----------------","\n")
+       -- log("status: " .. status)
+       if status == "" then
+         -- log("no status, returning")
+         return
+       end
        local volume = string.match(status, "(%d?%d?%d)%%")
        volume = string.format("% 3d", volume)
        status = string.match(status, "%[(o[^%]]*)%]")
---
---       local log = io.open("awesome.log", "w")
---       log:write("volume:", volume, "\n")
---       log:write("status:", status, "\n")
---       log:close()
---
        if string.find(status, "on", 1, true) then
                volume = volume .. ""
        else   
