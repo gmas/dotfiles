@@ -28,6 +28,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'tomasr/molokai'
 Plugin 'wincent/command-t'
 " Plugin 'kien/ctrlp'
+Plugin 'matthewtodd/vim-twilight'
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -67,12 +68,13 @@ map <C-p> :tabp<CR>
 let g:solarized_termcolors = &t_Co
 "let g:solarized_termtrans = 1
 let g:solarized_visibility= "high"
-colorscheme solarized
+"colorscheme solarized
+colorscheme twilight
 call togglebg#map("<F5>")
 set t_ut=
 set background=light
 
-set regexpengine=1
+"set regexpengine=1
 set cursorline
 
 cnoreabbrev E e
@@ -86,5 +88,4 @@ inoremap <leader>s <C-c>:w<cr>
 "Command-T exclude dirs
 set wildignore+=vendor/bundle
 set wildignore+=node_modules
-set autochdir
 
