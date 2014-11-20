@@ -69,7 +69,7 @@ let g:solarized_termcolors = &t_Co
 "let g:solarized_termtrans = 1
 let g:solarized_visibility= "high"
 "colorscheme solarized
-colorscheme twilight
+
 call togglebg#map("<F5>")
 set t_ut=
 set background=light
@@ -89,3 +89,4 @@ inoremap <leader>s <C-c>:w<cr>
 set wildignore+=vendor/bundle
 set wildignore+=node_modules
 
+colorscheme twilight
