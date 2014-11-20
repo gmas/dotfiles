@@ -21,7 +21,8 @@ antigen theme lambda
 # Tell antigen that you're done.
 antigen apply
 
-export TERM=screen-256color
+export TERM="xterm-256color"
+#export TERM="screen-256color"
 source /usr/local/share/chruby/chruby.sh
 #RUBIES=(
 #  ~/.rbenv/versions/*)
@@ -29,6 +30,6 @@ source /usr/local/share/chruby/auto.sh
 
 export EDITOR='vim'
 export GIT_EDITOR='vim'
-BUNDLER_EDITOR='vim'
+export BUNDLER_EDITOR='vim'
 
 eval $(ssh-agent)
