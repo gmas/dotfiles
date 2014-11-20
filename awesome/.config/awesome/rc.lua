@@ -41,8 +41,8 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
---beautiful.init("~/.config/awesome/themes/zenburn/zenburn.lua")
+--beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
+beautiful.init("~/.config/awesome/themes/zenburn_custom/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "xfce4-terminal"
@@ -103,7 +103,8 @@ myawesomemenu = {
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
                                     { "Terminal", terminal, beautiful.awesome_icon },
                                     { "File manager", "/usr/bin/pcmanfm"},
-                                    { "Chrome", "/usr/bin/chromium --incognito"}
+                                    { "Chrome", "/usr/bin/chromium --incognito"},
+                                    { "FireFox", "/usr/bin/firefox-developer"}
                                   }
                         })
 

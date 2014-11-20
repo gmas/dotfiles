@@ -6,5 +6,4 @@ xscreensaver -nosplash &
 /usr/bin/redshiftgui &
 /usr/bin/dropboxd &
 /usr/bin/blueman-applet & 
- ~/scripts/monitor.sh left &
-exec /usr/bin/awesome
+~/scripts/monitor.sh left &
