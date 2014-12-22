@@ -27,8 +27,15 @@ Plugin 'tpope/vim-unimpaired'
 Plugin 'pangloss/vim-javascript'
 Plugin 'tomasr/molokai'
 Plugin 'wincent/command-t'
+"Plugin 'freitass/todo.txt-vim'
 " Plugin 'kien/ctrlp'
 Plugin 'matthewtodd/vim-twilight'
+Plugin 'mileszs/ack.vim'
+"Plugin 'xolox/vim-misc'
+"Plugin 'xolox/vim-notes'
+Plugin 'tomswartz07/vim-todo'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'gabebw/vim-spec-runner'
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -59,7 +66,8 @@ set tabstop=2
 set shiftwidth=2
 imap <Tab> <C-P>
 
-map ,t <Esc>:tabnew<CR>:NERDTree<CR>
+"map ,t <Esc>:tabnew<CR>:NERDTree<CR>
+map ,t <Esc>:tabnew<CR>:CommandT<CR>
 
 map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
@@ -90,3 +98,5 @@ set wildignore+=vendor/bundle
 set wildignore+=node_modules
 
 colorscheme twilight
+hi TabLineSel ctermbg=Brown
+set cursorline cursorcolumn
