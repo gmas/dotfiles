@@ -89,7 +89,6 @@ cnoreabbrev E e
 cnoreabbrev W w
 cnoreabbrev Q q
 
-
 nnoremap <leader>s :w<cr>
 inoremap <leader>s <C-c>:w<cr>
 
@@ -99,4 +98,10 @@ set wildignore+=node_modules
 
 colorscheme twilight
 hi TabLineSel ctermbg=Brown
+
+"disable bg color to enable transparency
+hi Normal ctermbg=none
+hi NonText ctermbg=none
+
+"show column in cursor
 set cursorline cursorcolumn
