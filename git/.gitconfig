@@ -36,10 +36,10 @@
   b = branch -v                     # branch (verbose)
 
   # commit
-  c = commit -m                     # commit with message
+  cm = commit -m                     # commit with message
   #ca = commit -am                   # commit all with message
   ci = commit                       # commit
-  cif = commit -F-                  #commit from STDIN by running 'git cif<<EOF'                  #commit from STDIN by running 'git cif<<EOF'
+  cif = commit -F                   #commit from STDIN by running 'git cif -<<EOF'                  #commit from STDIN by running 'git cif<<EOF'
   amend = commit --amend            # ammend your last commit
 
   # checkout
