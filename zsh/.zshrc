@@ -32,4 +32,8 @@ export EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='vim'
 
+#GO lang config
+export GOPATH=~/play/golang
+export PATH=$PATH:~/play/golang/bin
+
 eval $(ssh-agent)
