@@ -39,12 +39,11 @@
   c = commit -m                     # commit with message
   #ca = commit -am                   # commit all with message
   ci = commit                       # commit
+  cif = commit -F-                  #commit from STDIN by running 'git cif<<EOF'                  #commit from STDIN by running 'git cif<<EOF'
   amend = commit --amend            # ammend your last commit
-  ammend = commit --amend           # ammend your last commit
 
   # checkout
   co = checkout                     # checkout
-  cob = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
   nb = checkout -b                  # create and switch to a new branch (mnemonic: "git new branch branchname...")
 
   # cherry-pick
@@ -91,9 +90,9 @@
   s = status                        # status
   st = status                       # status
   stat = status                     # status
-  chore = "!sh -c 'git checkout -b chore/$1' -"
-  bug = "!sh -c 'git checkout -b bug/$1' -"
-  feature = "!sh -c 'git checkout -b feature/$1' -"
+  #chore = "!sh -c 'git checkout -b chore/$1' -"
+  #bug = "!sh -c 'git checkout -b bug/$1' -"
+  #feature = "!sh -c 'git checkout -b feature/$1' -"
 
 [diff]
   # Git diff will use (i)ndex, (w)ork tree, (c)ommit and (o)bject
