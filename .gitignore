@@ -1,0 +1,5 @@
+*.sw?
+vim/.vim/bundle
+vim/.vim/.netrwhist
+weechat/.weechat/logs
+**/*.log
