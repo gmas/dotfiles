@@ -66,7 +66,7 @@ set tabstop=2
 set shiftwidth=2
 imap <Tab> <C-P>
 
-"map ,t <Esc>:tabnew<CR>:NERDTree<CR>
+map ,n <Esc>:tabnew<CR>:NERDTree<CR>
 map ,t <Esc>:tabnew<CR>:CommandT<CR>
 
 map <C-n> :tabn<CR>
