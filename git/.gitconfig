@@ -39,7 +39,7 @@
   cm = commit -m                     # commit with message
   #ca = commit -am                   # commit all with message
   ci = commit                       # commit
-  cif = commit -F                   #commit from STDIN by running 'git cif -<<EOF'                  #commit from STDIN by running 'git cif<<EOF'
+  cif = commit -F                   #commit from STDIN by running 'git cif -<<EOF'
   amend = commit --amend            # ammend your last commit
 
   # checkout
@@ -82,6 +82,8 @@
   filelog = log -u                  # show changes to a file
   mt = mergetool                    # fire up the merge tool
 
+  #merge 
+  mff = merge --no-ff
   # stash
   ss = stash                        # stash changes
   sl = stash list                   # list stashes
