@@ -35,7 +35,9 @@ Plugin 'mileszs/ack.vim'
 "Plugin 'xolox/vim-notes'
 Plugin 'tomswartz07/vim-todo'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'gabebw/vim-spec-runner'
+"Plugin 'gabebw/vim-spec-runner'
+Plugin 'fatih/vim-go'
+
 call vundle#end()            " required
 filetype plugin indent on  
 
@@ -66,8 +68,11 @@ set tabstop=2
 set shiftwidth=2
 imap <Tab> <C-P>
 
-map ,n <Esc>:tabnew<CR>:NERDTree<CR>
-map ,t <Esc>:tabnew<CR>:CommandT<CR>
+"set <leader> to ,
+let mapleader = ","
+
+map <leader>t <Esc>:tabnew<CR>:NERDTree<CR>
+map <leader>n <Esc>:tabnew<CR>:CommandT<CR>
 
 map <C-n> :tabn<CR>
 map <C-p> :tabp<CR>
@@ -105,3 +110,6 @@ hi NonText ctermbg=none
 
 "show column in cursor
 set cursorline cursorcolumn
+
+"Leader-s to search and replace word under cursor
+nnoremap <Leader>r :%s/\<<C-r><C-w>\>/
