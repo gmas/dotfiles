@@ -1,0 +1,25 @@
+xterm*iconName:Terminal
+xterm*eightBitInput:    false
+xterm*cursorBlink:      true
+xterm*faceName: Monospace
+xterm*cursorOffTime:    300
+xterm*metaSendsEscape:  true
+xterm*faceSize: 9
+xterm*Background:     #000000
+xterm*title:    Terminal
+xterm*cursorOnTime:     300
+xterm*utf8:     1
+xterm*Foreground:       #E6E6E6
+xterm*geometry: 110x31
+xterm*cursorUnderLine:  true
+Xft.antialias: 1
+Xft.autohint: 1
+Xft.dpi: 92
+Xft.hinting: 1
+Xft.hintstyle: hintslight
+Xft.lcdfilter: lcddefault
+Xft.rgba: rgb
+
+xterm*boldMode: true
+xterm*locale: checkfont
+xterm*jumpScroll: true
