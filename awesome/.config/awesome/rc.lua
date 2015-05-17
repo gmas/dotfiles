@@ -45,7 +45,8 @@ end
 beautiful.init("~/.config/awesome/themes/zenburn_custom/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "xfce4-terminal"
+--- terminal = "xfce4-terminal"
+terminal = "xterm"
 editor = os.getenv("EDITOR") or "vim"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -104,7 +105,8 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "Terminal", terminal, beautiful.awesome_icon },
                                     { "File manager", "/usr/bin/pcmanfm"},
                                     { "Chrome", "/usr/bin/chromium --incognito"},
-                                    { "FireFox", "/usr/bin/firefox-developer"}
+                                    { "FireFox", "/home/gmas/bin/firefox-developer/firefox"},
+                                    { "Equalizer", "qpaeq"}
                                   }
                         })
 

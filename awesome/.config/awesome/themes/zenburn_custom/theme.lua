@@ -8,7 +8,7 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper = "~/pictures/877866.jpg"
+theme.wallpaper = "~/pictures/wallpapers/blade-runner-city-1080p.jpg"
 -- }}}
 
 -- {{{ Styles
@@ -124,3 +124,4 @@ theme.titlebar_maximized_button_normal_inactive = "/usr/share/awesome/themes/zen
 -- }}}
 
 return theme
+
