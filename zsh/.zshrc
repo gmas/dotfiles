@@ -21,8 +21,19 @@ antigen theme lambda
 # Tell antigen that you're done.
 antigen apply
 
-export TERM="xterm-256color"
-#export TERM="screen-256color"
+echo "TERM WAS $TERM"
+
+if [ "$TERM" = "xterm" ]
+  then
+    #xterm starts
+    echo "XTERM"
+    export TERM=xterm-256color
+  else
+    echo "TMUX"
+    export TERM=screen-256color
+fi
+echo "TERM IS $TERM"
+
 source /usr/local/share/chruby/chruby.sh
 #RUBIES=(
 #  ~/.rbenv/versions/*)
@@ -36,4 +47,7 @@ export BUNDLER_EDITOR='vim'
 export GOPATH=~/play/golang
 export PATH=$PATH:~/play/golang/bin
 
+export PATH=~/bin:$PATH
 eval $(ssh-agent)
+
+alias tmux="tmux -2"
