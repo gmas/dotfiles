@@ -1,0 +1,82 @@
+xterm*intensityStyles: false
+xterm*depth: 16
+xterm.utf8: true
+xterm.eightBitInput: false
+xterm.backarrowKey: false
+xterm.ttyModes: erase ^?
+xterm.scrollBar: false
+xterm.internalBorder: 0
+
+xterm*saveLines: 5000
+xterm*scrollWithBuffer: true
+xterm*scrollTtyKeypress: false
+xterm*scrollTtyOutput: false          
+
+! Set scrollbar style to rxvt, plain, next or xterm. plain is the authors favourite.
+xterm*scrollstyle: plain
+
+xterm.perl-ext-common: default,matcher
+xterm.url-launcher: /usr/bin/chromium
+xterm.matcher.button: 1
+
+xterm*background: black
+xterm*foreground: white
+xterm*color0: #000000
+xterm*color1: #9e1828
+xterm*color10: #c5f779
+xterm*color11: #fff796
+xterm*color12: #4186be
+xterm*color13: #cf9ebe
+xterm*color14: #71bebe
+xterm*color15: #ffffff
+xterm*color2: #aece92
+xterm*color3: #968a38
+xterm*color4: #414171
+xterm*color5: #963c59
+xterm*color6: #418179
+xterm*color7: #bebebe
+xterm*color8: #666666
+xterm*color9: #cf6171
+
+!best so far in order
+!xterm.font: xft:Dina:pixelsize=12:antialias=false
+!xterm.font: xft:DejaVu Sans Mono:pixelsize=11:antialias=false
+
+!xterm.font: xft:Consolas:pixelsize=12:antialias=false
+!xterm.font: xft:Monaco for Powerline:pixelsize=12:antialias=false
+
+! looks good with antialias turned on
+!xterm.font: xft:Inconsolata:pixelsize=13:dpi=92
+!xterm*faceSize:10
+
+!yucky
+!xterm.font:xft:Monospace:pixelsize=11
+!xterm.boldfont:xft:Monospace-Bold:pixelsize=11
+
+xterm.font: -misc-fixed-medium-r-normal-*-13-*-100-100-*-*-iso10646-1
+
+Xft.antialias: 0
+!Xft.dpi: 92
+Xft.hinting: 0
+!Xft.hintstyle: hintfull
+!Xft.rgba: rgb
+
+!xterm.font: xft:Terminus:pixelsize=13
+!xterm.letterSpace: 0
+
+!xterm*faceName: monospace
+!xterm*faceSize: 8
+!xterm*metaSendsEscape: true
+!xterm*geometry: 100x56
+!xterm*visualBell: false
+
+!Xcursor.size: 18
+!Xcursor.theme: default
+!Xcursor.theme_core: true
+
+! Dim urxvt window on mouse-out
+!xterm.fading: 15
+!xterm.shading: 50
+!xterm.tintColor: black
+!xterm.inheritPixmap: false
+
