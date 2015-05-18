@@ -1,7 +1,13 @@
 xterm*iconName:Terminal
 xterm*eightBitInput:    false
 xterm*cursorBlink:      true
-xterm*faceName: Monospace
+xterm.backarrowKey: false
+xterm.ttyModes: erase ^?
+
+!xterm*faceName: Monospace
+xterm*faceName: Liberation Mono:size=9
+!:antialias=false
+
 xterm*cursorOffTime:    300
 xterm*metaSendsEscape:  true
 xterm*faceSize: 9
@@ -12,11 +18,12 @@ xterm*utf8:     1
 xterm*Foreground:       #E6E6E6
 xterm*geometry: 110x31
 xterm*cursorUnderLine:  true
+
 Xft.antialias: 1
-Xft.autohint: 1
+Xft.autohint: 0
 Xft.dpi: 92
 Xft.hinting: 1
-Xft.hintstyle: hintslight
+!Xft.hintstyle: hintslight
 Xft.lcdfilter: lcddefault
 Xft.rgba: rgb
 
