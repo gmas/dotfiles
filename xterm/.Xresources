@@ -4,13 +4,23 @@ xterm*cursorBlink:      true
 xterm.backarrowKey: false
 xterm.ttyModes: erase ^?
 
+!meh sucky
+xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*
+
+!nicer one
+!xterm*font: -*-inconsolata-medium-*-*-*-17-*-*-*-*-*-iso10646-*
+!xterm*font: -*-consolas-medium-r-*-*-17-*-*-*-*-*-iso10646-*
+!xterm*font: -*-dejavu sans mono-medium-r-*-*-17-*-*-*-*-*-iso10646-*
+
+!ugly true type
 !xterm*faceName: Monospace
-xterm*faceName: Liberation Mono:size=9
+!xterm*faceName: Liberation Mono:size=9
 !:antialias=false
 
 xterm*cursorOffTime:    300
 xterm*metaSendsEscape:  true
-xterm*faceSize: 9
+
+!xterm*faceSize: 9
 xterm*Background:     #000000
 xterm*title:    Terminal
 xterm*cursorOnTime:     300
@@ -19,14 +29,14 @@ xterm*Foreground:       #E6E6E6
 xterm*geometry: 110x31
 xterm*cursorUnderLine:  true
 
-Xft.antialias: 1
-Xft.autohint: 0
-Xft.dpi: 92
-Xft.hinting: 1
-!Xft.hintstyle: hintslight
-Xft.lcdfilter: lcddefault
-Xft.rgba: rgb
+!Xft.antialias: 1
+!Xft.autohint: 0
+!Xft.dpi: 92
+!Xft.hinting: 1
+!Xft.hintstyle: hintfull
+!Xft.lcdfilter: lcddefault
+!Xft.rgba: rgb
 
-xterm*boldMode: true
-xterm*locale: checkfont
+xterm*boldMode: false
+!xterm*locale: checkfont
 xterm*jumpScroll: true
