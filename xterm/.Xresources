@@ -4,13 +4,13 @@ xterm*cursorBlink:      true
 xterm.backarrowKey: false
 xterm.ttyModes: erase ^?
 
-!meh sucky
-xterm*font: -*-terminus-medium-*-*-*-12-*-*-*-*-*-iso10646-*
 
-!nicer one
-!xterm*font: -*-inconsolata-medium-*-*-*-17-*-*-*-*-*-iso10646-*
-!xterm*font: -*-consolas-medium-r-*-*-17-*-*-*-*-*-iso10646-*
-!xterm*font: -*-dejavu sans mono-medium-r-*-*-17-*-*-*-*-*-iso10646-*
+!nice fonts 
+!xterm*font: -misc-fixed-medium-r-semicondensed-*-13-120-75-75-*-*-iso10646-*
+xterm*font: -misc-fixed-medium-r-normal-*-14-*-*-*-*-*-iso10646-*
+
+!meh sucky but works
+!xterm*font: -*-terminus-medium-*-*-*-14-*-*-*-*-*-iso10646-*
 
 !ugly true type
 !xterm*faceName: Monospace
@@ -37,6 +37,8 @@ xterm*cursorUnderLine:  true
 !Xft.lcdfilter: lcddefault
 !Xft.rgba: rgb
 
-xterm*boldMode: false
+xterm*boldMode: true
 !xterm*locale: checkfont
 xterm*jumpScroll: true
+xterm*termName: xterm-256color
+
