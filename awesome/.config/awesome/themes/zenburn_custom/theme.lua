@@ -8,7 +8,7 @@
 
 -- {{{ Main
 theme = {}
-theme.wallpaper = "~/pictures/wallpapers/blade-runner-city-1080p.jpg"
+theme.wallpaper = "~/pictures/wallpapers/current_wallpaper.jpg"
 -- }}}
 
 -- {{{ Styles
