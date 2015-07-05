@@ -65,7 +65,6 @@ nnoremap <C-H> <C-W><C-H>
 set splitbelow
 set splitright
 
-set t_Co=256
 set pastetoggle=<F2>
 set smartindent
 set autoindent
@@ -93,9 +92,9 @@ map <C-n> :tabn<CR>
 
 
 "let g:solarized_diffmode="high" "default value is normal
-let g:solarized_termcolors = &t_Co
+"let g:solarized_termcolors = &t_Co
 "let g:solarized_termtrans = 1
-let g:solarized_visibility= "high"
+"let g:solarized_visibility= "high"
 "colorscheme solarized
 
 "call togglebg#map("<F5>")
@@ -116,7 +115,8 @@ inoremap <leader>s <C-c>:w<cr>
 set wildignore+=vendor/bundle
 set wildignore+=node_modules
 
-colorscheme twilight
+set t_Co=256
+colorscheme distinguished
 hi TabLineSel ctermbg=Brown
 
 "disable bg color to enable transparency
