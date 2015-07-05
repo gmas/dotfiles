@@ -21,7 +21,7 @@ xterm*cursorOffTime:    300
 xterm*metaSendsEscape:  true
 
 !xterm*faceSize: 9
-xterm*Background:     #000000
+xterm*Background:     #181818
 xterm*title:    Terminal
 xterm*cursorOnTime:     300
 xterm*utf8:     1
