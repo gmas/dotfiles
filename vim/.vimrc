@@ -5,40 +5,53 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
+Plugin 'matthewtodd/vim-twilight'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ervandew/supertab'
-Plugin 'Townk/vim-autoclose'
-"Plugin 'tpope/vim-surround'
+Plugin 'kien/ctrlp.vim'
+Plugin 'tomswartz07/vim-todo'
+Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-endwise'
-Plugin 'scrooloose/syntastic'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'rking/ag.vim'
-Plugin 'slim-template/vim-slim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'othree/html5.vim'
 Plugin 'MarcWeber/vim-addon-mw-utils'
-Plugin 'tomtom/tlib_vim'
-Plugin 'garbas/vim-snipmate'
-Plugin 'honza/vim-snippets'
-Plugin 'vim-ruby/vim-ruby'
+
+
+"Fast
+Plugin 'onemanstartup/vim-slim'
+
+Plugin 'othree/html5.vim'
+Plugin 'fatih/vim-go'
 Plugin 'tpope/vim-rails'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'pangloss/vim-javascript'
-Plugin 'tomasr/molokai'
-Plugin 'wincent/command-t'
-"Plugin 'freitass/todo.txt-vim'
-" Plugin 'kien/ctrlp'
-Plugin 'matthewtodd/vim-twilight'
+Plugin 'kchmck/vim-coffee-script'
+
 Plugin 'mileszs/ack.vim'
+
+"SLOOOOWWW
+"Plugin 'slim-template/vim-slim'
+
+"Plugin 'tomtom/tlib_vim'
+"Plugin 'garbas/vim-snipmate'
+"Plugin 'honza/vim-snippets'
+"Plugin 'tpope/vim-unimpaired'
+"Plugin 'pangloss/vim-javascript'
 "Plugin 'xolox/vim-misc'
 "Plugin 'xolox/vim-notes'
-Plugin 'tomswartz07/vim-todo'
-Plugin 'scrooloose/nerdcommenter'
+"Plugin 'scrooloose/nerdcommenter'
 "Plugin 'gabebw/vim-spec-runner'
-Plugin 'fatih/vim-go'
+"Plugin 'tomasr/molokai'
+"Plugin 'wincent/command-t'
+"Plugin 'freitass/todo.txt-vim'
+"Plugin 'Townk/vim-autoclose'
+"Plugin 'tpope/vim-surround'
+"Plugin 'scrooloose/syntastic'
+
+"Not needed, using ftplugin
+"Plugin 'vim-ruby/vim-ruby'
+
+"Plugin 'altercation/vim-colors-solarized'
+"Plugin 'rking/ag.vim'
 
 call vundle#end()            " required
+
 filetype plugin indent on  
 
 " Quick ESC
@@ -72,10 +85,12 @@ imap <Tab> <C-P>
 let mapleader = ","
 
 map <leader>t <Esc>:tabnew<CR>:NERDTree<CR>
-map <leader>n <Esc>:tabnew<CR>:CommandT<CR>
+map <leader>n <Esc>:tabnew<CR>:CtrlP<CR>
 
-map <C-n> :tabn<CR>
+let g:ctrlp_map = ''
 map <C-p> :tabp<CR>
+map <C-n> :tabn<CR>
+
 
 "let g:solarized_diffmode="high" "default value is normal
 let g:solarized_termcolors = &t_Co
@@ -83,9 +98,9 @@ let g:solarized_termcolors = &t_Co
 let g:solarized_visibility= "high"
 "colorscheme solarized
 
-call togglebg#map("<F5>")
+"call togglebg#map("<F5>")
 set t_ut=
-set background=light
+set background=dark
 
 "set regexpengine=1
 set cursorline
@@ -113,3 +128,13 @@ set cursorline cursorcolumn
 
 "Leader-s to search and replace word under cursor
 nnoremap <Leader>r :%s/\<<C-r><C-w>\>/
+
+"Syntastic stuff
+"set statusline+=%#warningmsg#
+"set statusline+=%{SyntasticStatuslineFlag()}
+"set statusline+=%*
+"let g:syntastic_always_populate_loc_list = 0
+"let g:syntastic_check_on_open = 1
+"let g:syntastic_check_on_wq = 0
+"let g:syntastic_enable_highlighting = 0
+"let g:syntastic_auto_jump = 2
