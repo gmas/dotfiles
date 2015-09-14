@@ -21,3 +21,5 @@ case "$1" in
   *) echo "Must pass left, right or off"
       ;;
 esac
+
+exit 0
