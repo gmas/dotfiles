@@ -28,6 +28,10 @@
 	branch = green reverse
 
 [alias]
+ # fetch && rebase 
+ fr = "!f() { \
+        git fetch ; git rebase origin/$1 ; \
+      }; f"
  # add
   a = add                           # add
   chunkyadd = add --patch           # stage commits chunk by chunk
@@ -87,6 +91,7 @@
   # stash
   ss = stash                        # stash changes
   sl = stash list                   # list stashes
+  sp = stash pop
 
   # status
   s = status                        # status
