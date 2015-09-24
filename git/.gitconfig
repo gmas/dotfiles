@@ -29,7 +29,7 @@
 
 [alias]
  # fetch && rebase 
- fr = "!f() { \
+ fro = "!f() { \
         git fetch ; git rebase origin/$1 ; \
       }; f"
  # add
