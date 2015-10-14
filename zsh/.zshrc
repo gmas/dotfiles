@@ -12,7 +12,9 @@ antigen bundle bundler
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 # Load the theme.
-antigen theme lambda
+#antigen theme lambda
+#antigen theme cloud
+antigen theme simple
 
 # Tell antigen that you're done.
 antigen apply
@@ -34,3 +36,4 @@ export PATH=~/bin:$PATH
 eval $(ssh-agent)
 
 alias tmux="tmux -2"
+source /usr/share/nvm/init-nvm.sh
