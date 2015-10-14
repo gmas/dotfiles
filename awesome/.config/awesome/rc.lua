@@ -101,12 +101,18 @@ myawesomemenu = {
    { "quit", awesome.quit }
 }
 
+iconPath = "/usr/share/icons/hicolor/16x16/"
+gnomeIconpath = "/usr/share/icons/gnome/16x16/"
+
 mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesome_icon },
-                                    { "Terminal", terminal, beautiful.awesome_icon },
-                                    { "File manager", "/usr/bin/pcmanfm"},
-                                    { "Chrome", "/usr/bin/chromium --incognito"},
-                                    { "FireFox", "/usr/bin/firefox"},
-                                    { "Equalizer", "qpaeq"}
+                                    { "Pidgin", "/usr/bin/pidgin", iconPath .. "apps/pidgin.png"},
+                                    { "Terminal", terminal, gnomeIconpath .. "apps/terminal.png"  },
+                                    { "File manager", "/usr/bin/pcmanfm", gnomeIconpath .. "apps/file-manager.png"},
+                                    { "Chrome", "/usr/bin/chromium --incognito", iconPath .. "apps/chromium.png"},
+                                    { "FireFox", "/usr/bin/firefox", iconPath ..  "apps/firefox.png"},
+                                    { "Spotify", "/usr/bin/spotify", iconPath ..  "apps/spotify-client.png"},
+                                    { "Equalizer", "qpaeq", gnomeIconpath .. "devices/audio-card.png"},
+                                    { "Volume Control", "/usr/bin/pavucontrol", gnomeIconpath .. "apps/gnome-mixer.png"}
                                   }
                         })
 
