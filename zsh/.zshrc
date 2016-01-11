@@ -37,3 +37,6 @@ eval $(ssh-agent)
 
 alias tmux="tmux -2"
 source /usr/share/nvm/init-nvm.sh
+
+#OSX
+alias reset_dns="sudo killall -HUP mDNSResponder"
