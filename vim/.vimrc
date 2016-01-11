@@ -9,10 +9,13 @@ Plugin 'matthewtodd/vim-twilight'
 Plugin 'scrooloose/nerdtree'
 Plugin 'ervandew/supertab'
 Plugin 'kien/ctrlp.vim'
-Plugin 'tomswartz07/vim-todo'
 Plugin 'tpope/vim-fugitive'
 Plugin 'tpope/vim-endwise'
 Plugin 'MarcWeber/vim-addon-mw-utils'
+
+" TODO file
+Plugin 'tomswartz07/vim-todo'
+"Plugin 'freitass/todo.txt-vim'
 
 
 "Fast
@@ -39,7 +42,6 @@ Plugin 'mileszs/ack.vim'
 "Plugin 'gabebw/vim-spec-runner'
 "Plugin 'tomasr/molokai'
 "Plugin 'wincent/command-t'
-"Plugin 'freitass/todo.txt-vim'
 "Plugin 'Townk/vim-autoclose'
 "Plugin 'tpope/vim-surround'
 "Plugin 'scrooloose/syntastic'
@@ -117,7 +119,7 @@ set wildignore+=node_modules
 
 set t_Co=256
 colorscheme distinguished
-hi TabLineSel ctermbg=Brown
+hi TabLineSel ctermbg=DarkGray
 
 "disable bg color to enable transparency
 hi Normal ctermbg=none
