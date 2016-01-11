@@ -7,4 +7,4 @@ xscreensaver -nosplash &
 /usr/bin/dropboxd &
 /usr/bin/blueman-applet & 
  ~/scripts/monitor.sh left &
-exec /usr/bin/awesome
+exec awesome

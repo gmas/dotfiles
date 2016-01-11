@@ -108,11 +108,12 @@ mymainmenu = awful.menu({ items = { { "awesome", myawesomemenu, beautiful.awesom
                                     { "Pidgin", "/usr/bin/pidgin", iconPath .. "apps/pidgin.png"},
                                     { "Terminal", terminal, gnomeIconpath .. "apps/terminal.png"  },
                                     { "File manager", "/usr/bin/pcmanfm", gnomeIconpath .. "apps/file-manager.png"},
-                                    { "Chrome", "/usr/bin/chromium --incognito", iconPath .. "apps/chromium.png"},
+                                    { "Chrome", "/usr/bin/google-chrome-stable --incognito --disable-gpu", iconPath .. "apps/google-chrome.png"},
                                     { "FireFox", "/usr/bin/firefox", iconPath ..  "apps/firefox.png"},
                                     { "Spotify", "/usr/bin/spotify", iconPath ..  "apps/spotify-client.png"},
                                     { "Equalizer", "qpaeq", gnomeIconpath .. "devices/audio-card.png"},
-                                    { "Volume Control", "/usr/bin/pavucontrol", gnomeIconpath .. "apps/gnome-mixer.png"}
+                                    { "Volume Control", "/usr/bin/pavucontrol", gnomeIconpath .. "apps/gnome-mixer.png"},
+                                    { "Screen Shot", "/usr/bin/xfce4-screenshooter", iconPath .. "apps/xfce4-panel.png"}
                                   }
                         })
 
