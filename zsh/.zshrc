@@ -40,3 +40,7 @@ source /usr/share/nvm/init-nvm.sh
 
 #OSX
 alias reset_dns="sudo killall -HUP mDNSResponder"
+
+zstyle ':completion:*:manuals'    separate-sections true
+zstyle ':completion:*:manuals.*'  insert-sections   true
+zstyle ':completion:*:man:*'      menu yes select
