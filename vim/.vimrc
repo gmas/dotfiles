@@ -14,7 +14,9 @@ Plugin 'tpope/vim-endwise'
 Plugin 'MarcWeber/vim-addon-mw-utils'
 
 " TODO file
-Plugin 'tomswartz07/vim-todo'
+"Plugin 'tomswartz07/vim-todo'
+Plugin 'xolox/vim-notes'
+Plugin 'xolox/vim-misc'
 "Plugin 'freitass/todo.txt-vim'
 
 
@@ -140,3 +142,5 @@ nnoremap <Leader>r :%s/\<<C-r><C-w>\>/
 "let g:syntastic_check_on_wq = 0
 "let g:syntastic_enable_highlighting = 0
 "let g:syntastic_auto_jump = 2
+
+:let g:notes_directories = ['~/Dropbox/notes']
