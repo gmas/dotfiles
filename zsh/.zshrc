@@ -1,3 +1,15 @@
+# For tramp et al., don't do anything fancy.
+if [[ "$TERM" == "dumb"  ]]
+then
+  unsetopt zle
+  unsetopt prompt_cr
+  unsetopt prompt_subst
+  unfunction precmd
+  unfunction preexec
+  PS1='$ '
+  return
+fi
+
 source ~/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
@@ -36,6 +48,7 @@ export PATH=~/bin:$PATH
 eval $(ssh-agent)
 
 alias tmux="tmux -2"
+alias e='emacs -nw'
 source /usr/share/nvm/init-nvm.sh
 
 #OSX
