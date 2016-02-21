@@ -1,3 +1,8 @@
+;backups location
+(defvar backup-dir "~/.emacs.d/backups/")
+(setq backup-directory-alist (list (cons "." backup-dir)))
+(setq make-backup-files nil)
+
 (require 'package)
 
 (setq package-archives
@@ -5,6 +10,7 @@
     ("melpa"       . "http://melpa.milkbox.net/packages/")))
 
 (package-initialize)
+ 
 
 (when (not (package-installed-p 'evil))
   (package-refresh-contents)
@@ -71,10 +77,6 @@
 (menu-bar-mode -1)
 (tool-bar-mode -1)
 
-;backups location
-(defvar backup-dir "~/.emacs.d/backups/")
-(setq backup-directory-alist (list (cons "." backup-dir)))
-(setq make-backup-files nil)
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 (require 'edit-server)
@@ -97,3 +99,4 @@
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
 (sml/setup)
+(evil-magit-init)
