@@ -10,9 +10,13 @@
   (package-refresh-contents)
     (package-install 'evil))
 
-(ido-mode 1)
-
 (evil-mode)
+
+(ido-mode 1)
+(setq inhibit-splash-screen t
+      inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
+
 ; ELScreen tab combos
 (eval-after-load "evil-maps"
   (dolist (map '(evil-motion-state-map
@@ -28,14 +32,14 @@
 ;(setq tab-width 2)
 ;(setq evil-want-C-i-jump nil)
 
-;(global-set-key (kbd "\C-n") 'elscreen-next)
 
 ;ElScreen
+;(global-set-key (kbd "\C-n") 'elscreen-next)
+;(global-set-key (kbd "<f9>") 'elscreen-create)
+;(global-set-key (kbd "C-t") 'elscreen-create)
 ;;(global-set-key (kbd "C-n") 'elscreen-next)
 ;;(evil-make-override-map elscreen-next 'normal)
 ;(setq elscreen-prefix-key "\C-t")
-;(global-set-key (kbd "<f9>") 'elscreen-create)
-;(global-set-key (kbd "C-t") 'elscreen-create)
 
 ;set before elscreen-start
 (custom-set-faces
@@ -70,4 +74,10 @@
 (load-theme 'misterioso)
 
 ;disable menus
-(menu-bar-mode 0)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
+;backups location
+(defvar backup-dir "~/.emacs.d/backups/")
+(setq backup-directory-alist (list (cons "." backup-dir)))
+(setq make-backup-files nil)
