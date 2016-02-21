@@ -12,7 +12,6 @@
 
 (evil-mode)
 
-(ido-mode 1)
 (setq inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -81,3 +80,14 @@
 (defvar backup-dir "~/.emacs.d/backups/")
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
+
+(add-to-list 'load-path "~/.emacs.d/lisp")
+(require 'edit-server)
+(edit-server-start)
+
+(ido-mode -1)
+(require 'helm)
+(require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-command-prefix)
+(global-unset-key (kbd "C-x c"))
+(helm-mode 1)
