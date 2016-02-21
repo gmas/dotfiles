@@ -45,16 +45,11 @@
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work 
- '(elscreen-tab-background-face
-   ((t (:background "gray90"))))
- '(elscreen-tab-control-face
-   ((t (:background "gray90" :foreground "gray60"))))
- '(elscreen-tab-current-screen-face
-   ((t (:background "blue" :foreground "white"))))
- '(elscreen-tab-other-screen-face
-   ((t (:background "gray10" :foreground "gray50"))))
- )
+ ;; If there is more than one, they won't work right.
+ '(elscreen-tab-background-face ((t (:background "gray90"))))
+ '(elscreen-tab-control-face ((t (:background "gray90" :foreground "gray60"))))
+ '(elscreen-tab-current-screen-face ((t (:background "blue" :foreground "white"))))
+ '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50")))))
 (elscreen-start)
 
 ;(defvar my-keys-minor-mode-map
@@ -85,9 +80,20 @@
 (require 'edit-server)
 (edit-server-start)
 
-(ido-mode -1)
+(ido-mode 0)
 (require 'helm)
 (require 'helm-config)
 (global-set-key (kbd "C-c h") 'helm-command-prefix)
 (global-unset-key (kbd "C-x c"))
 (helm-mode 1)
+
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
+(sml/setup)
