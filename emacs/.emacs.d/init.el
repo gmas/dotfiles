@@ -10,7 +10,15 @@
     ("melpa"       . "http://melpa.milkbox.net/packages/")))
 
 (package-initialize)
- 
+
+; TODO add the rest of the packages
+; elscreen
+; helm
+; smart-mode-line
+; edit-server
+; magit
+; evil-magit
+
 
 (when (not (package-installed-p 'evil))
   (package-refresh-contents)
