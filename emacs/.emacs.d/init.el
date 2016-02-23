@@ -3,6 +3,11 @@
 (setq backup-directory-alist (list (cons "." backup-dir)))
 (setq make-backup-files nil)
 
+;; TAB settings 
+(setq tab-width 2)
+;(setq evil-want-C-i-jump nil)
+;(setq-default indent-tabs-mode nil)
+
 (require 'package)
 
 (setq package-archives
@@ -24,6 +29,8 @@
   (package-refresh-contents)
     (package-install 'evil))
 
+; disable tab in evil-mode so that it works in org-mode
+(setq evil-want-C-i-jump nil)
 (evil-mode)
 
 (setq inhibit-splash-screen t
@@ -33,17 +40,14 @@
 ; ELScreen tab combos
 (eval-after-load "evil-maps"
   (dolist (map '(evil-motion-state-map
-		 evil-insert-state-map
-		 evil-normal-state-map
-		 evil-emacs-state-map))
+                 evil-insert-state-map
+                 evil-normal-state-map
+                 evil-emacs-state-map))
 ;    (define-key (eval map) "\C-t" nil)))
     (define-key (eval map) (kbd "\C-t") 'elscreen-create)
     (define-key (eval map) (kbd "\C-n") 'elscreen-next)
     (define-key (eval map) (kbd "\C-p") 'elscreen-previous)))
 
-;; TAB settings that don't work
-;(setq tab-width 2)
-;(setq evil-want-C-i-jump nil)
 
 
 ;ElScreen
@@ -87,8 +91,12 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
-(require 'edit-server)
-(edit-server-start)
+;(require 'edit-server)
+;(edit-server-start)
+(when (and (daemonp) (locate-library "edit-server"))
+  (require 'edit-server)
+  ;(setq edit-server-new-frame nil)
+     (edit-server-start))
 
 (ido-mode 0)
 (require 'helm)
