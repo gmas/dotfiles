@@ -31,6 +31,8 @@
 
 ; disable tab in evil-mode so that it works in org-mode
 (setq evil-want-C-i-jump nil)
+; log time when setting to done
+(setq org-log-done 'time)
 (evil-mode)
 
 (setq inhibit-splash-screen t
