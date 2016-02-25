@@ -29,10 +29,12 @@
   (package-refresh-contents)
     (package-install 'evil))
 
+; Org-mode
 ; disable tab in evil-mode so that it works in org-mode
 (setq evil-want-C-i-jump nil)
 ; log time when setting to done
 (setq org-log-done 'time)
+(setq org-mobile-directory "~/Dropbox/notes")
 (evil-mode)
 
 (setq inhibit-splash-screen t
@@ -118,3 +120,6 @@
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default))))
 (sml/setup)
 (evil-magit-init)
+
+(add-to-list 'load-path "~/.emacs.d/rsense-mode")
+(require 'rsense)

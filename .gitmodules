@@ -4,3 +4,6 @@
 [submodule "zsh/antigen"]
 	path = zsh/antigen
 	url = git@github.com:zsh-users/antigen.git
+[submodule "emacs/.emacs.d/rsense-mode"]
+	path = emacs/.emacs.d/rsense-mode
+	url = https://github.com/niftyn8/rsense-mode
