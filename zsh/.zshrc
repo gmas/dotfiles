@@ -48,7 +48,8 @@ export PATH=~/bin:$PATH
 eval $(ssh-agent)
 
 alias tmux="tmux -2"
-alias e='emacs -nw'
+alias e='emacsclient -t'
+alias emacsd='emacs --daemon'
 source /usr/share/nvm/init-nvm.sh
 
 #OSX
