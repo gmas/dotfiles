@@ -10,6 +10,16 @@ then
   return
 fi
 
+setopt autocd
+setopt cdablevars
+# set cdable vars
+export src=~/src
+export play=~/play
+export dotfiles=~/dotfiles
+export work=~/work
+export nas=~/nas
+export downloads=~/Downloads
+
 source ~/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
