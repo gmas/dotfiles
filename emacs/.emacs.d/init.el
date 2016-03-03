@@ -15,6 +15,8 @@
     ("melpa"       . "http://melpa.milkbox.net/packages/")))
 
 (package-initialize)
+(require 'auto-complete)
+(ac-config-default)
 
 ; TODO add the rest of the packages
 ; elscreen
@@ -23,6 +25,9 @@
 ; edit-server
 ; magit
 ; evil-magit
+; TODO use use-package from https://github.com/jwiegley/use-package/
+; or
+; require-package from https://github.com/purcell/emacs.d/lisp/init-elpa.el
 
 
 (when (not (package-installed-p 'evil))
@@ -126,5 +131,12 @@
 (sml/setup)
 (evil-magit-init)
 
-(add-to-list 'load-path "~/.emacs.d/rsense-mode")
-(require 'rsense)
+(setq show-paren-delay 0)
+(show-paren-mode 1)
+
+;(add-to-list 'load-path "~/.emacs.d/rsense-mode")
+;(require 'rsense)
+
+(add-hook 'ruby-mode-hook 'robe-mode)
+(add-hook 'robe-mode-hook 'ac-robe-setup)
+
