@@ -140,3 +140,6 @@
 (add-hook 'ruby-mode-hook 'robe-mode)
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 
+(setq-default evil-escape-key-sequence "jj")
+(setq-default evil-escape-delay 0.2)
+(evil-escape-mode 1)
