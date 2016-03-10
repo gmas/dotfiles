@@ -57,9 +57,17 @@ export PATH=$PATH:~/play/golang/bin
 export PATH=~/bin:$PATH
 eval $(ssh-agent)
 
+alias weechat="TZ='US/Pacific' TERM=screen-256color weechat-curses"
 alias tmux="tmux -2"
 alias e='emacsclient -t'
 alias emacsd='emacs --daemon'
+
+# Foreman alias to work with RAILS_ENV
+foreman_with_env() {
+    foreman "$@" $(if [ -n "$RAILS_ENV" ]; then echo "-e=.env.$RAILS_ENV"; fi)
+}
+alias foreman=foreman_with_env
+
 source /usr/share/nvm/init-nvm.sh
 
 #OSX
