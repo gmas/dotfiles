@@ -146,3 +146,5 @@
 (evil-escape-mode 1)
 
 (require 'rubocop)
+
+(add-hook 'after-init-hook #'global-flycheck-mode)
