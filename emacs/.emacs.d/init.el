@@ -5,6 +5,7 @@
 
 ;; TAB settings 
 (setq tab-width 2)
+(setq tab-always-indent `complete)
 ;(setq evil-want-C-i-jump nil)
 (setq-default indent-tabs-mode nil)
 
@@ -121,9 +122,12 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(coffee-indent-tabs-mode nil)
+ '(coffee-tab-width 2)
  '(custom-safe-themes
    (quote
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ '(enh-ruby-indent-tabs-mode nil)
  '(evil-shift-width 2)
  '(ruby-align-chained-calls t)
  '(ruby-indent-tabs-mode nil))
@@ -137,9 +141,8 @@
 ;(add-to-list 'load-path "~/.emacs.d/rsense-mode")
 ;(require 'rsense)
 
-(add-hook 'ruby-mode-hook 'robe-mode)
-(add-hook 'robe-mode-hook 'ac-robe-setup)
-
 (setq-default evil-escape-key-sequence "jj")
 (setq-default evil-escape-delay 0.2)
 (evil-escape-mode 1)
+
+(require 'rubocop)
