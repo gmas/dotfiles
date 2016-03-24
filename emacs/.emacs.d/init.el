@@ -77,7 +77,11 @@
  '(elscreen-tab-background-face ((t (:background "gray90"))))
  '(elscreen-tab-control-face ((t (:background "gray90" :foreground "gray60"))))
  '(elscreen-tab-current-screen-face ((t (:background "blue" :foreground "white"))))
- '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50")))))
+ '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50"))))
+ '(flycheck-color-mode-line-error-face ((t (:inherit flycheck-fringe-error :foreground "brightred" :weight semi-bold))))
+ '(flycheck-error ((t (:inherit (error default) :underline "red"))))
+ '(flycheck-error-list-error ((t (:inherit error))))
+ '(flycheck-error-list-highlight ((t (:inherit highlight :underline t)))))
 (elscreen-start)
 
 ;(defvar my-keys-minor-mode-map
@@ -126,10 +130,12 @@
  '(coffee-tab-width 2)
  '(custom-safe-themes
    (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(enh-ruby-indent-tabs-mode nil)
  '(evil-shift-width 2)
+ '(js-indent-level 2)
  '(ruby-align-chained-calls t)
+ '(ruby-align-to-stmt-keywords (quote (begin if def)))
  '(ruby-indent-tabs-mode nil))
 
 (sml/setup)
@@ -148,3 +154,13 @@
 (require 'rubocop)
 
 (add-hook 'after-init-hook #'global-flycheck-mode)
+(require 'flycheck-color-mode-line)
+
+(eval-after-load "flycheck"
+    '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
+(load-library "flow-types")
+
+; prevent scrolling half a page when hitting bottom
+(setq scroll-step 1)
+(setq scroll-conservatively 10000)
+(setq auto-window-vscroll nil)
