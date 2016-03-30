@@ -41,10 +41,10 @@ antigen theme simple
 # Tell antigen that you're done.
 antigen apply
 
-source /usr/local/share/chruby/chruby.sh
+source ~/chruby/usr/local/share/chruby/chruby.sh
 #RUBIES=(
 #  ~/.rbenv/versions/*)
-source /usr/local/share/chruby/auto.sh
+source ~/chruby/usr/local/share/chruby/auto.sh
 
 export EDITOR='vim'
 export GIT_EDITOR='vim'
@@ -68,7 +68,8 @@ foreman_with_env() {
 }
 alias foreman=foreman_with_env
 
-source /usr/share/nvm/init-nvm.sh
+export NVM_DIR="/home/gmas/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 #OSX
 alias reset_dns="sudo killall -HUP mDNSResponder"
@@ -76,3 +77,5 @@ alias reset_dns="sudo killall -HUP mDNSResponder"
 zstyle ':completion:*:manuals'    separate-sections true
 zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
+
+export PATH="/usr/local/heroku/bin:$PATH"
