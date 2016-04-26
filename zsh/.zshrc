@@ -62,11 +62,25 @@ alias tmux="tmux -2"
 alias e='emacsclient -t'
 alias emacsd='emacs --daemon'
 
-# Foreman alias to work with RAILS_ENV
-foreman_with_env() {
-    foreman "$@" $(if [ -n "$RAILS_ENV" ]; then echo "-e=.env.$RAILS_ENV"; fi)
+# Forego alias to work with RAILS_ENV
+forego_with_env() {
+    if [ $1 != "run" ]
+    then
+        forego "$@"
+        return 0
+    else
+        RUN_CMD="run"
+        if [ -n "$RAILS_ENV" ] 
+        then
+            RUN_CMD+=" -e=.env.$RAILS_ENV "
+        fi
+
+        RUN_CMD+=" ${@:2}"
+        set -x
+        forego $(echo "$RUN_CMD")
+    fi
 }
-alias foreman=foreman_with_env
+alias forego=forego_with_env
 
 export NVM_DIR="/home/gmas/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
