@@ -26,13 +26,6 @@
 
 (package-initialize)
 
-(use-package auto-complete
-  :ensure t)
-(ac-config-default)
-
-(use-package magit
-  :ensure t)
-
 ; disable tab in evil-mode so that it works in org-mode
 (use-package evil
   :ensure t
@@ -42,6 +35,16 @@
   (evil-mode)
 )
 
+(use-package auto-complete
+  :ensure t)
+(ac-config-default)
+
+(use-package magit
+  :ensure t)
+(use-package evil-magit
+  :ensure t)
+(evil-magit-init)
+
 ; Org-mode
 ; log time when setting to done
 (setq org-log-done 'time)
@@ -50,8 +53,6 @@
 (setq inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
-
-
 
 ;set before elscreen-start
 (custom-set-faces
@@ -122,18 +123,20 @@
 (use-package helm
   :ensure t
   :init
-        (global-unset-key (kbd "C-x c"))
+        ;; (global-unset-key (kbd "C-x c"))
   :bind (
-         ("C-x C-f" . helm-find-files)
          ("M-x"     . helm-M-x)
          ("C-c h"   . helm-command-prefix))
   :config (require 'helm-config)
-          (helm-mode 1)
+          ;; (helm-mode 0)
 )
 
-;; (global-set-key (kbd "C-c h") 'helm-command-prefix)
-;; (global-set-key (kbd "M-x") 'helm-M-x)
-
+(use-package swiper
+  :ensure t
+  :config (ivy-mode 1)
+  :bind (
+         ("C-s" . swiper))
+)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -155,15 +158,11 @@
  '(ruby-indent-tabs-mode nil))
 
 (load-theme 'afternoon)
-;; (load-theme 'naquadah)
 
 (use-package smart-mode-line
-  :ensure t)
-(sml/setup)
-
-(use-package evil-magit
-  :ensure t)
-(evil-magit-init)
+  :ensure t
+  :config (sml/setup)
+)
 
 (setq show-paren-delay 0)
 (show-paren-mode 1)
@@ -198,10 +197,10 @@
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
 
-;; (use-package find-file-in-project
-;;   :ensure t
-;;   :bind (("C-x C-f" . find-file-in-project))
-;; )
+(use-package find-file-in-project
+  :ensure t
+  :bind ("C-x C-p" . find-file-in-project)
+)
 
 (setq column-number-mode t)
 (setq linum-format "%d ")
