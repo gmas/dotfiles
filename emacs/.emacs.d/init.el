@@ -125,7 +125,7 @@
   :init
         ;; (global-unset-key (kbd "C-x c"))
   :bind (
-         ("M-x"     . helm-M-x)
+         ;; ("M-x"     . helm-M-x)
          ("C-c h"   . helm-command-prefix))
   :config (require 'helm-config)
           ;; (helm-mode 0)
@@ -133,10 +133,8 @@
 
 (use-package swiper
   :ensure t
-  :config (ivy-mode 1)
-  :bind (
-         ("C-s" . swiper))
-)
+  :bind ("C-s" . swiper))
+(ivy-mode 1)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -213,6 +211,11 @@
   (setq simplenote2-password nil)
 )
 (simplenote2-setup)
+
+(use-package counsel
+  :ensure t
+  :bind ("M-x" . counsel-M-x)
+)
 
 ; TODO load the rest of the packages with use-package
 ; edit-server
