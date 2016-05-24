@@ -217,5 +217,9 @@
   :bind ("M-x" . counsel-M-x)
 )
 
+(use-package which-key
+  :ensure t
+  :config (which-key-mode)
+)
 ; TODO load the rest of the packages with use-package
 ; edit-server
