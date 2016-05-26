@@ -93,3 +93,6 @@ zstyle ':completion:*:manuals.*'  insert-sections   true
 zstyle ':completion:*:man:*'      menu yes select
 
 export PATH="/usr/local/heroku/bin:$PATH"
+
+# sudo edit with emacs
+alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
