@@ -26,6 +26,11 @@
 
 (package-initialize)
 
+(if (not (package-installed-p 'use-package))
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package)))
+
 ; disable tab in evil-mode so that it works in org-mode
 (use-package evil
   :ensure t
