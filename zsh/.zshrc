@@ -36,15 +36,21 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 # Load the theme.
 #antigen theme lambda
 #antigen theme cloud
-antigen theme simple
+# antigen theme simple
+antigen theme blinks
 
 # Tell antigen that you're done.
 antigen apply
 
-source ~/chruby/usr/local/share/chruby/chruby.sh
-#RUBIES=(
-#  ~/.rbenv/versions/*)
-source ~/chruby/usr/local/share/chruby/auto.sh
+if [ -e ~/chruby ]
+then
+  echo "found chruby. sourcing it..."
+  source ~/chruby/usr/local/share/chruby/chruby.sh
+  #RUBIES=(
+  #  ~/.rbenv/versions/*)
+  source ~/chruby/usr/local/share/chruby/auto.sh
+fi
+
 
 export EDITOR='vim'
 export GIT_EDITOR='vim'
@@ -53,6 +59,7 @@ export BUNDLER_EDITOR='vim'
 #GO lang config
 export GOPATH=~/play/golang
 export PATH=$PATH:~/play/golang/bin
+export PATH=$PATH:/usr/local/go/bin
 
 export PATH=~/bin:$PATH
 eval $(ssh-agent)
