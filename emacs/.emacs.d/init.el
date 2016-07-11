@@ -6,6 +6,7 @@
  backup-by-copying t      ; don't clobber symlinks
  backup-directory-alist '(("." . "~/.saves"))    ; don't litter my fs tree
  delete-old-versions t
+
  kept-new-versions 6
  kept-old-versions 2
     version-control t)       ; use versioned backups
@@ -41,8 +42,13 @@
 )
 
 (use-package auto-complete
-  :ensure t)
-(ac-config-default)
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+  )
+)
 
 (use-package magit
   :ensure t)
@@ -58,6 +64,11 @@
 (setq inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;disable menus
+(menu-bar-mode -1)
+(tool-bar-mode -1)
 
 ;set before elscreen-start
 (custom-set-faces
@@ -100,10 +111,6 @@
       (define-key (eval map) (kbd "\C-p") 'elscreen-previous)))
   (elscreen-start)
 )
-
-;disable menus
-(menu-bar-mode -1)
-(tool-bar-mode -1)
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -190,15 +197,16 @@
 
 (eval-after-load "flycheck"
     '(add-hook 'flycheck-mode-hook 'flycheck-color-mode-line-mode))
-(use-package flycheck-flow
-  :ensure t)
-(flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
-(load-library "flow-types")
+;(use-package flycheck-flow
+;  :ensure t)
+;(flycheck-add-next-checker 'javascript-eslint 'javascript-flow)
+;(load-library "flow-types")
 
 ; prevent scrolling half a page when hitting bottom
 (setq scroll-step 1)
 (setq scroll-conservatively 10000)
 (setq auto-window-vscroll nil)
+
 
 (use-package find-file-in-project
   :ensure t
@@ -225,6 +233,10 @@
 (use-package which-key
   :ensure t
   :config (which-key-mode)
+)
+
+(use-package helm-ag
+  :ensure t
 )
 ; TODO load the rest of the packages with use-package
 ; edit-server
