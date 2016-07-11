@@ -1,9 +1,6 @@
 #!/usr/bin/env ruby
 
 puts "#{ARGF.argv}"
-File.open("/tmp/acpi.log", "a+") { |fl|
-  fl << ARGF.argv
-}
 
 on_battery = lambda { 
   puts "on_battery"
