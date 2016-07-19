@@ -3,6 +3,7 @@
 ;; (setq backup-directory-alist (list (cons "." backup-dir)))
 ;; (setq make-backup-files nil)
 (setq
+ auto-save-default nil
  backup-by-copying t      ; don't clobber symlinks
  backup-directory-alist '(("." . "~/.saves"))    ; don't litter my fs tree
  delete-old-versions t
@@ -16,7 +17,8 @@
   tab-width 2
   standard-indent 2
   tab-always-indent `complete
-  indent-tabs-mode nil)
+  indent-tabs-mode nil
+  )
 
 
 (require 'package)
@@ -237,6 +239,22 @@
 
 (use-package helm-ag
   :ensure t
+)
+
+(use-package terraform-mode
+  :ensure t
+)
+
+(use-package yasnippet
+  :ensure t
+  :config
+	(require 'yasnippet)
+	(add-to-list 'yas-snippet-dirs "~/.emacs.d/plugins/yasnippet")
+	(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
+	(yas-reload-all)
+        ; FIXME TODO this doesn't run when in terraform-mode
+	; need to execute yas-minor-mode when editing .tf files
+	(add-hook 'terraform-mode #'yas-minor-mode)
 )
 ; TODO load the rest of the packages with use-package
 ; edit-server

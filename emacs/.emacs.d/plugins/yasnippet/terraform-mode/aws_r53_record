@@ -1,0 +1,10 @@
+# name : aws_r53_record
+# key : aws_r53_record
+# --
+resource "aws_route53_record" "$1" {
+  name = "$2"
+  zone_id = "${$3}"
+  type = "$4"
+  ttl = "30"
+  records = ["${$5}"]
+}
