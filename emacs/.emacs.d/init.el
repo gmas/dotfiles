@@ -12,7 +12,7 @@
  kept-old-versions 2
     version-control t)       ; use versioned backups
 
-;; TAB settings 
+;; TAB settings
 (setq-default
   tab-width 2
   standard-indent 2
@@ -247,14 +247,14 @@
 
 (use-package yasnippet
   :ensure t
+  :init
+	(add-hook 'prog-mode-hook #'yas-minor-mode)
   :config
 	(require 'yasnippet)
 	(add-to-list 'yas-snippet-dirs "~/.emacs.d/plugins/yasnippet")
 	(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
 	(yas-reload-all)
-        ; FIXME TODO this doesn't run when in terraform-mode
-	; need to execute yas-minor-mode when editing .tf files
-	(add-hook 'terraform-mode #'yas-minor-mode)
+
 )
 ; TODO load the rest of the packages with use-package
 ; edit-server
