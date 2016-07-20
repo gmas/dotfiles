@@ -53,6 +53,7 @@
   (progn
     (ac-config-default)
     (global-auto-complete-mode t)
+    (add-to-list 'ac-modes 'terraform-mode)
   )
 )
 
