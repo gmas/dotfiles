@@ -222,7 +222,9 @@
 (use-package yasnippet
   :ensure t
   :init
+	(setq yas-indent-line (quote none))
 	(add-hook 'prog-mode-hook #'yas-minor-mode)
+	(add-hook 'yaml-mode-hook #'yas-minor-mode)
   :config
 	(require 'yasnippet)
 	(add-to-list 'yas-snippet-dirs "~/.emacs.d/plugins/yasnippet")
