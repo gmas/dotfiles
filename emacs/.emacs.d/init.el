@@ -139,7 +139,9 @@
 
 (use-package swiper
   :ensure t
-  :bind ("C-s" . swiper))
+  :bind (("C-s" . swiper)
+         ("C-x C-f" . counsel-find-file))
+)
 (ivy-mode 1)
 
 
