@@ -61,7 +61,7 @@ export GOPATH=~/play/golang
 export PATH=$PATH:~/play/golang/bin
 export PATH=$PATH:/usr/local/go/bin
 
-export PATH=~/bin:$PATH
+export PATH=~/dotfiles/scripts/scripts/:~/bin:$PATH
 eval $(ssh-agent)
 
 alias weechat="TZ='US/Pacific' TERM=screen-256color weechat-curses"
@@ -103,3 +103,5 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # sudo edit with emacs
 alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+
+export CDPATH=~/work:$CDPATH
