@@ -234,5 +234,14 @@
 	(yas-reload-all)
 
 )
+
+
+(defun ora-ediff-hook ()
+  (ediff-setup-keymap)
+  (define-key ediff-mode-map "j" 'ediff-next-difference)
+  (define-key ediff-mode-map "k" 'ediff-previous-difference))
+
+(add-hook 'ediff-mode-hook 'ora-ediff-hook)
+
 ; TODO load the rest of the packages with use-package
 ; edit-server
