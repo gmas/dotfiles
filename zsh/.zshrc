@@ -104,4 +104,7 @@ export PATH="/usr/local/heroku/bin:$PATH"
 # sudo edit with emacs
 alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 
+# add SSH keys
+alias ssh-add-keys="ssh-add ~/.ssh/*.pem && ssh-add"
+
 export CDPATH=~/work:$CDPATH
