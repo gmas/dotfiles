@@ -235,6 +235,11 @@
 
 )
 
+(use-package flx
+  :ensure t
+)
+(setq ivy-re-builders-alist
+            '((t . ivy--regex-fuzzy)))
 
 (defun ora-ediff-hook ()
   (ediff-setup-keymap)
