@@ -4,3 +4,4 @@ vim/.vim/.netrwhist
 weechat/.weechat/logs
 **/*.log
 emacs/.emacs.d/elpa/*
+emacs/.emacs.d/auto-save-list/*
