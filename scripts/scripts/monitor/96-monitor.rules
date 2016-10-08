@@ -1,0 +1,2 @@
+ACTION=="change", KERNEL=="card0", SUBSYSTEM=="drm", RUN+="/usr/local/bin/hotplug_monitor.sh"
+
