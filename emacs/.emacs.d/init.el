@@ -139,8 +139,9 @@
 
 (use-package swiper
   :ensure t
-  :bind (("C-s" . swiper)
-         ("C-x C-f" . counsel-find-file))
+  :bind ( ("C-s" . swiper)
+          ("C-x C-f" . counsel-find-file)
+          ("C-x C-p" . counsel-git) )
 )
 (ivy-mode 1)
 
@@ -186,10 +187,10 @@
 (setq auto-window-vscroll nil)
 
 
-(use-package find-file-in-project
-  :ensure t
-  :bind ("C-x C-p" . find-file-in-project)
-)
+;(use-package find-file-in-project
+;  :ensure t
+;  :bind ("C-x C-p" . find-file-in-project)
+;)
 
 (setq column-number-mode t)
 (setq linum-format "%d ")
@@ -239,7 +240,8 @@
   :ensure t
 )
 (setq ivy-re-builders-alist
-            '((t . ivy--regex-fuzzy)))
+      '((swiper . ivy--regex-fuzzy)
+        (t . ivy--regex-fuzzy)))
 
 (defun ora-ediff-hook ()
   (ediff-setup-keymap)
@@ -248,5 +250,17 @@
 
 (add-hook 'ediff-mode-hook 'ora-ediff-hook)
 
+(use-package beacon
+:ensure t
+:config
+(beacon-mode 1))
+
+(use-package ample-theme
+:ensure t)
+
+(use-package go-mode
+:ensure t)
+
 ; TODO load the rest of the packages with use-package
 ; edit-server
+(put 'narrow-to-region 'disabled nil)
