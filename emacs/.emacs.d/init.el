@@ -146,7 +146,7 @@
 (ivy-mode 1)
 
 
-(load-theme 'afternoon)
+;;(load-theme 'afternoon)
 
 (use-package smart-mode-line
   :ensure t
@@ -196,12 +196,16 @@
 (setq linum-format "%d ")
 (global-linum-mode)
 
+(use-package request-deferred
+  :ensure t)
+
 (use-package simplenote2
   :ensure t
   :init
   (setq simplenote2-email "gmasgras@gmail.com")
   (setq simplenote2-password nil)
 )
+(require 'simplenote2)
 (simplenote2-setup)
 
 (use-package counsel
