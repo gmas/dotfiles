@@ -1,3 +1,4 @@
 #!/bin/bash
 
-sudo mount -v -t nfs4 nas:/nas /home/george/nas/
+mkdir -p "$HOME/"nas/
+sudo mount -v -t nfs4 nas:/nas "$HOME/"nas/
