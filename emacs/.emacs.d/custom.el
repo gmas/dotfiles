@@ -31,10 +31,13 @@
  '(js-indent-level 2)
  '(jsx-indent-level 2)
  '(jsx-use-auto-complete t)
+ '(package-selected-packages
+   (quote
+    (go-mode ample-theme beacon flx yasnippet terraform-mode helm-ag which-key counsel simplenote2 request-deferred flycheck-color-mode-line flycheck key-chord smart-mode-line swiper helm helm-core elscreen evil-magit magit auto-complete evil use-package)))
  '(ruby-align-chained-calls t)
  '(ruby-align-to-stmt-keywords (quote (begin if def)))
  '(ruby-indent-tabs-mode nil)
- '(terraform-indent-level 4)
+ '(terraform-indent-level 2)
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
