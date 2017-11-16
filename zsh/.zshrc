@@ -42,14 +42,16 @@ antigen theme blinks
 # Tell antigen that you're done.
 antigen apply
 
-if [ -e ~/chruby ]
+if [ -e /usr/share/chruby ]
 then
   echo "found chruby. sourcing it..."
-  source ~/chruby/usr/local/share/chruby/chruby.sh
-  #RUBIES=(
-  #  ~/.rbenv/versions/*)
-  source ~/chruby/usr/local/share/chruby/auto.sh
+  source /usr/share/chruby/chruby.sh
+  RUBIES=(
+    ~/.rubies/*)
+  source /usr/share/chruby/auto.sh
 fi
+
+source /usr/share/nvm/init-nvm.sh
 
 
 export EDITOR='vim'
@@ -66,8 +68,6 @@ export PATH=~/dotfiles/scripts/scripts/:~/bin:$PATH
 
 alias weechat="TZ='US/Pacific' TERM=screen-256color weechat-curses"
 alias tmux="tmux -2"
-alias e='emacsclient -t'
-alias emacsd='emacs --daemon'
 
 # Forego alias to work with RAILS_ENV
 forego_with_env() {
@@ -101,8 +101,13 @@ zstyle ':completion:*:man:*'      menu yes select
 
 export PATH="/usr/local/heroku/bin:$PATH"
 
+# emacs
+alias emacsd='emacs --daemon'
+alias e='emacsclient -n'
+alias et='emacsclient -t'
 # sudo edit with emacs
-alias E="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
+alias E="SUDO_EDITOR=\"emacsclient -c -a emacs\" sudoedit"
+alias ET="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 
 # add SSH keys
 alias ssh-add-keys="ssh-add ~/.ssh/*.pem && ssh-add"
