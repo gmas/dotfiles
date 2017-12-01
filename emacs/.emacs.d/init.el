@@ -59,7 +59,9 @@
 )
 
 (use-package magit
-  :ensure t)
+  :ensure t
+  :bind ("C-c m" . magit-status)
+)
 (use-package evil-magit
   :ensure t)
 (evil-magit-init)
