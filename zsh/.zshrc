@@ -60,7 +60,7 @@ export BUNDLER_EDITOR='vim'
 
 #GO lang config
 export GOPATH=~/play/golang
-export PATH=$PATH:~/play/golang/bin
+export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
 export PATH=~/dotfiles/scripts/scripts/:~/bin:$PATH
