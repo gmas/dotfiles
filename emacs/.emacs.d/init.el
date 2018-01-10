@@ -57,6 +57,8 @@
     (add-to-list 'ac-modes 'yaml-mode)
   )
 )
+(setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
+
 
 (use-package magit
   :ensure t
@@ -146,6 +148,8 @@
           ("C-x C-p" . counsel-git) )
 )
 (ivy-mode 1)
+(setq ivy-use-selectable-prompt t)
+(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 
 
 ;;(load-theme 'afternoon)
@@ -245,9 +249,6 @@
 (use-package flx
   :ensure t
 )
-(setq ivy-re-builders-alist
-      '((swiper . ivy--regex-fuzzy)
-        (t . ivy--regex-fuzzy)))
 
 (defun ora-ediff-hook ()
   (ediff-setup-keymap)
