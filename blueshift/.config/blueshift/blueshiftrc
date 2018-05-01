@@ -1,0 +1,619 @@
+# -*- python -*-
+
+# This example covers most of what Blueshift offers. For a complete
+# coverage of Blueshift complement this example with:
+#   backlight, crtc-detection, crtc-searching, logarithmic,
+#   stored-settings, modes, textconf, icc-profile-atoms
+# However the are features that are only covered by the info manual:
+#   Methods for calculating correlated colour temperature
+#   The `functionise` function
+#   Predefined colour temperatures
+
+
+# This file is dual-licensed under GNU General Public License
+# version 3 and GNU Free Documentation License version 1.3.
+
+
+# Copyright © 2014  Mattias Andrée (maandree@member.fsf.org)
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+# 
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
+# Copyright © 2014  Mattias Andrée (maandree@member.fsf.org)
+# 
+# Permission is granted to copy, distribute and/or modify this document
+# under the terms of the GNU Free Documentation License, Version 1.3
+# or any later version published by the Free Software Foundation;
+# with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+# You should have received a copy of the GNU General Public License
+# along with this software package.  If not, see <http://www.gnu.org/licenses/>.
+
+import os
+
+
+# Geographical coodinates.
+# ("Kristall, vertikal accent i glas och stål" (Crystal, vertical accent
+# in glass and steal) in this example. A glass obelisk, lit from the inside
+# with adjustable colours and a default colour of 5600 K, in the middle
+# of a hyperelliptic roundabout.)
+#latitude, longitude = 59.3326, 18.0652
+latitude, longitude = 33.8600011, -118.379997
+temperature_day, temperature_night = [6500], [3700]
+
+
+
+# International Civil Aviation Organization (ICAO)
+# code of the nearest airport. Used to get weather
+# report. `None` if you do not want to account for
+# the weather.
+# (Stockholm Bromma Airport in this example.)
+airport = 'KSMO'
+
+# Custom dayness by time settings.
+time_alpha = [['02:00', 0], ['08:00', 1], ['22:00', 1]]
+
+
+def by_time():
+    '''
+    Dayness calculation using time
+    '''
+    global time_alpha
+    if isinstance(time_alpha[0][0], str):
+        for i in range(len(time_alpha)):
+            hh = [float(x) for x in time_alpha[i][0].split(':')]
+            hh = sum([hh[j] / 60 ** j for j in range(len(hh))])
+            time_alpha[i][0] = hh
+    now = datetime.datetime.now()
+    hh = now.hour + now.minute / 60 + now.second / 60 ** 2
+    for i in range(len(time_alpha)):
+        (a, av) = time_alpha[i]
+        (b, bv) = time_alpha[(i + 1) % len(time_alpha)]
+        if a < hh:  a += 24
+        if b < hh:  b += 24
+        if a <= hh <= b:
+            hh = (hh - a) / (b - a)
+            return av * (1 - hh) + bv * hh
+    return 1 # Error in `time_alpha` (probably)
+
+
+
+# Command used to download a file at an HTTP URL
+download_command = None
+# This is what if used if `None` is selected:
+# download_command = lambda url : ['wget', url, '-O', '-']
+
+
+# Method for applying colour curves in X.
+apply_curves_x = randr
+#apply_curves_x = vidmode
+
+# Method for applying colour curves in TTY.
+apply_curves_tty_ = drm
+
+# X's RandR and DRM which is used in TTY, does not
+# necessarily give the CRTC:s the same indices.
+# Specifically, RandR reorders them so that the
+# primary monitor have CRTC 0. Fill in this table
+# so that the indices give by DRM are mapped to
+# those given by RandR. In this example, 0 is mapped
+# to 1 and 1 is mapped to 0, this is how it should
+# be if your primary monitor is given index 1 by
+# DRM and you have two monitors.
+tty_to_x_crtc_mapping = {0 : 1, 1 : 0}
+
+def apply_curves_tty(*crtcs, screen = 0, display = None):
+    '''
+    Wrapping for `apply_curves_tty_` that remaps the CRTC:s
+    indices, to match those in RandR.
+    
+    @param  crtcs:*int    The CRT controllers to use, all are used if none are specified
+    @param  screen:int    The graphics card to which the monitors belong,
+                          named `screen` for compatibility with `randr` and `vidmode`
+    @param  display:str?  Dummy parameter for compatibility with `randr` and `vidmode`
+    '''
+    mapping = tty_to_x_crtc_mapping
+    crtcs_ = [(mapping[c] if c in mapping else c) for c in crtcs]
+    apply_curves_tty_(*crtcs_, screen = screen, display = display)
+
+def apply_curves(*crtcs, screen = 0):
+    '''
+    Applies colour curves
+
+    This wrapper is used to allow multi-display and multi-server support
+    
+    @param  crtcs:*int    The CRT controllers to use, all are used if none are specified
+    @param  screen:int    The screen to which the monitors belong
+    '''
+    # Single display and single server, variant:
+    (apply_curves_tty if ttymode else apply_curves_x)(*crtcs, screen = screen)
+    
+    # Variant for TTY and all X display:
+    #apply_curves_tty(*crtcs, screen = screen)
+    #for display_socket in  os.listdir('/tmp/.X11-unix'):
+    #    if display_socket.startswith('X'):
+    #        try:
+    #            display = ':%i' % int(display_socket[1:])
+    #            apply_curves_x(*crtcs, screen = screen, display = display)
+    #        except:
+    #            pass
+    
+    # Variant for TTY and selected X displays:
+    #apply_curves_tty(*crtcs, screen = screen)
+    #for display in [None, ':1']: # Current and :1
+    #    apply_curves_x(*crtcs, screen = screen, display = display)
+
+
+# Keep uncomment to use solar position.
+get_dayness = lambda : sun(latitude, longitude)
+# Uncomment to use time of day.
+#get_dayness = by_time
+# Uncomment if you do not want continuous mode, high night values are used.
+#get_dayness = None
+
+
+# Dayness modifiers based on weather and sky conditions.
+weather_modifiers = { 'clear'         : 1.00
+                    , 'mostly clear'  : 0.95
+                    , 'partly cloudy' : 0.90
+                    , 'mostly cloudy' : 0.85
+                    , 'overcast'      : 0.80
+                    , 'obscured'      : 0.75
+                    }
+
+# The maximum for visibility range for when to
+# account for the visibility range. `None` if
+# you do dont want to account for visibility range.
+visibility_max = 4
+
+
+# The (zero-based) indices of the monitors (CRTC:s) to apply
+# settings to. An empty list means that all monitors are used,
+# but all monitors will have the same settings.
+monitors = []
+
+
+# The following settings are lists. This is to allow you to
+# use different settings on different monitors. For example,
+# `gamma_red_day = [1]`, this means that during high day, the
+# red gamma is 1 on all monitors. But if we change this to
+# `gamma_red_day = [1.0, 1.1]`, the first monitor will have
+# the red gamma set to 1,0 and the second monitor will have
+# the red gamma set to 1,1. If you have more monitors than
+# used in the settings modulo division will be used. For
+# instance, if you have four monitors, the third monitor will
+# have the same settings as the first monitor, and the fourth
+# monitor will have the same settings as the second monitor.
+
+
+# Colour temperature at high day and high night, respectively.
+temperature_day, temperature_night = [6500], [3700]
+
+
+# Colour brightness at high day and high night, respectively.
+# This setting uses the CIE xyY colour space for calculating values.
+brightness_day, brightness_night = [1], [1]
+
+# Colour brightness of the red, green and blue components,
+# respectively, at high day and high night, respectively.
+# This settings uses the sRGB colour space for calculating values.
+brightness_red_day, brightness_red_night = [1], [1]
+brightness_green_day, brightness_green_night = [1], [1]
+brightness_blue_day, brightness_blue_night = [1], [1]
+
+
+# Colour contrast at high day and high night, respectively.
+# This setting uses the CIE xyY colour space for calculating values.
+contrast_day, contrast_night = [1], [1]
+
+# Colour contrast of the red, green and blue components,
+# respectively, at high day and high night, respectively.
+# This settings uses the sRGB colour space for calculating values.
+contrast_red_day, contrast_red_night = [1], [1]
+contrast_green_day, contrast_green_night = [1], [1]
+contrast_blue_day, contrast_blue_night = [1], [1]
+
+
+# Note: brightness and contrast is not intended for colour
+# calibration, it should be calibrated on the monitors'
+# control panels.
+
+
+# Gamma correction for the red, green and blue components, respectively,
+# at high day, high night and monitor default, respectively.
+# This settings uses the sRGB colour space for calculating values.
+gamma_red_day, gamma_red_night, gamma_red_default = [1], [1], [1]
+gamma_green_day, gamma_green_night, gamma_green_default = [1], [1], [1]
+gamma_blue_day, gamma_blue_night, gamma_blue_default = [1], [1], [1]
+
+
+# Note: gamma is supposted to be static, it purpose is to
+# correct the colours on the monitors the monitor's gamma
+# is exactly 2,2 and the colours look correct in relation
+# too each other. It is supported to have different settings
+# at day and night because there are no technical limitings
+# and it can presumable increase readability on text when
+# the colour temperature is low.
+
+
+# Sigmoid curve (S-curve) correction for the red, green and blue
+# components, respectively, for each monitor. `None` means that
+# no correct is should be applied. `...` means that the value
+# above should be used.
+sigmoid_red = [None]
+sigmoid_green = [...]
+sigmoid_blue = [...]
+
+
+# ICC profile for video filtering and monitor calibration, respectively.
+# Replace `None` with the pathname of the profile. It is assume that
+# the calibration profile is already applied and that you want it to
+# still be applied on exit.
+icc_video_filter_profile_day = [None]
+icc_video_filter_profile_night = [None]
+icc_calibration_profile = [None]
+
+
+# Function for getting the current the current monitor calibration.
+# If `None` the the current monitor calibration will be ignored.
+# `if not panicgate:` is included to ignore monitor calibration if
+# -p (--panicgate) is used.
+current_calibration = [None]
+if not panicgate:
+    if not ttymode:
+        calib_get = None
+        #calib_get = randr_get
+        #calib_get = vidmode_get
+    else:
+        calib_get = None
+        #calib_get = drm_get
+    current_calibration = [calib_get]
+
+
+# These are fun curve manipulator settings that lowers the
+# colour resolution. `red_x_resolution` is the number of colours
+# colours there are one encoding axis of the red curve.
+# `red_y_resolution` is how many colours there are on the
+# output axis of the red curve. `None` means that the default
+# resolution should be used, which are `i_size` for *_x_resolution
+# and `o_size` for *_y_resolution. `...` means that the value
+# above should be used.
+red_x_resolution, red_y_resolution = [None], [None]
+green_x_resolution, green_y_resolution = [...], [...]
+blue_x_resolution, blue_y_resolution = [...], [...]
+
+
+# Negative image settings. `None` means that negative image
+# is applied to none of the subpixels. `lambda : negative(True)`
+# and `negative(True, True, True)` applied negative image to
+# all subpixels by reversion the colour curves on the encoding
+# axes. For the three parameter functions, the first parameters
+# should be `True` to perform negative image on the red subpixel
+# and do nothing if `False`, and analogously for green on the
+# second parameter and blue on the third parameter. `rgb_invert`
+# inverts the curves on the output axes, and `cie_invert` does
+# the same thing except it calcuates the inversion in the CIE
+# xyY colour space.
+negative_image = [None]
+#negative_image = [lambda : negative(True)]
+#negative_image = [lambda : negative(True, True, True)]
+#negative_image = [lambda : rgb_invert(True)]
+#negative_image = [lambda : rgb_invert(True, True, True)]
+#negative_image = [lambda : cie_invert(True)]
+#negative_image = [lambda : cie_invert(True, True, True)]
+
+
+# Loads the current monitor calibrations.
+m = 0
+for i in range(len(current_calibration)):
+    f = current_calibration[i]
+    if f is not None:
+        if not len(monitors) == 0:
+            m = monitors[i % len(monitors)]
+        f = f(m)
+        
+        # Use linear interpolation
+        f = interpolate_function(f, linearly_interpolate_ramp)
+        # Use cubic interpolation
+        #f = interpolate_function(f, cubicly_interpolate_ramp)
+        # Use semitense cubic interpolation
+        #f = interpolate_function(f, lambda *c : cubicly_interpolate_ramp(*c, tension = 0.5))
+        # Use monotone cubic interpolation
+        #f = interpolate_function(f, monotonicly_cubicly_interpolate_ramp)
+        # Use semitense monotone cubic interpolation
+        #f = interpolate_function(f, lambda *c : monotonicly_cubicly_interpolate_ramp(*c, tension = 0.5))
+        # Otherwise use nearest-neighbour
+        
+        current_calibration[i] = f
+
+
+monitor_controller = lambda : apply_curves(*monitors)
+'''
+:()→void  Function used by Blueshift on exit to apply reset colour curves, if using preimplemented `reset`
+'''
+
+
+uses_adhoc_opts = True
+'''
+:bool  `True` if the configuration script parses the ad-hoc settings
+'''
+
+
+reset_on_error = True
+'''
+:bool  Whether to reset the colour curves if the configuration script
+       runs into an exception that it did not handle
+'''
+
+
+# Get --reset from Blueshift ad-hoc settigns
+doreset = parser.opts['--reset']
+
+
+last_dayness, last_metar = None, None
+sigmoid_ = list(zip(sigmoid_red, sigmoid_green, sigmoid_blue))
+icc_video_filter_profile = [None] * len(icc_video_filter_profile_day)
+def periodically(year, month, day, hour, minute, second, weekday, fade):
+    '''
+    Invoked periodically
+    
+    If you want to control at what to invoke this function next time
+    you can set the value of the global variable `wait_period` to the
+    number of seconds to wait before invoking this function again.
+    The value does not need to be an integer.
+    
+    @param  year:int     The year
+    @param  month:int    The month, 1 = January, 12 = December
+    @param  day:int      The day, minimum value is 1, probable maximum value is 31 (*)
+    @param  hour:int     The hour, minimum value is 0, maximum value is 23
+    @param  minute:int   The minute, minimum value is 0, maximum value is 59
+    @param  second:int   The second, minimum value is 0, probable maximum value is 60 (**)
+    @param  weekday:int  The weekday, 1 = Monday, 7 = Sunday
+    @param  fade:float?  Blueshift can use this function to fade into a state when it start
+                         or exits. `fade` can either be negative, zero or positive or `None`,
+                         but the magnitude of value cannot exceed 1. When Blueshift starts,
+                         this function will be invoked multiple with the time parameters
+                         of the time it is invoked and each time `fade` will increase towards
+                         1, starting at 0, when the value is 1, the settings should be applied
+                         to 100 %. After this this function will be invoked once again with
+                         `fade` being `None`. When Blueshift exits the same behaviour is used
+                         except, `fade` decrease towards -1 but start slightly below 0, when
+                         -1 is reached all settings should be normal. Then Blueshift will NOT
+                         invoke this function with `fade` being `None`, instead it will by
+                         itself revert all settings and quit.
+    
+    (*)  Can be exceeded if the calendar system is changed, like in 1712-(02)Feb-30
+    (**) See https://en.wikipedia.org/wiki/Leap_second
+    '''
+    global last_dayness, last_metar, wait_period
+    
+    dayness = get_dayness()
+    
+    if airport is not None:
+        # Get weather report.
+        (metar, last_time) = (None, None) if last_metar is None else last_metar
+        now_time = minute
+        if (metar is None) or (now_time < last_time) or (last_time < now_time + 5):
+            metar = weather(airport, download_command)
+            last_metar = (metar, now_time)
+        
+        # Account for weather.
+        if metar is not None:
+            conditions = [metar[0]] + metar[2]
+            for condition in conditions:
+                if condition in weather_modifiers:
+                    dayness *= weather_modifiers[condition]
+            if metar[1] is not None:
+                (_bound, visibility) = metar[1]
+                if (visibility_max is not None) and (visibility is not None):
+                    if visibility < visibility_max:
+                        dayness *= visibility / visibility_max
+    
+    # Do not do unnecessary work.
+    if fade is None:
+        if dayness == last_dayness:
+            return
+        last_dayness = dayness
+    
+    # Help functions for colour interpolation.
+    interpol = lambda _day, _night : _day[m % len(_day)] * dayness + _night[m % len(_night)] * (1 - dayness)
+    purify = lambda current, pure : current * alpha + pure * (1 - alpha)
+    
+    for m in range(max(1, len(monitors))):
+        temperature_      = interpol(temperature_day,      temperature_night)
+        brightness_       = interpol(brightness_day,       brightness_night)
+        brightness_red_   = interpol(brightness_red_day,   brightness_red_night)
+        brightness_green_ = interpol(brightness_green_day, brightness_green_night)
+        brightness_blue_  = interpol(brightness_blue_day,  brightness_blue_night)
+        contrast_         = interpol(contrast_day,         contrast_night)
+        contrast_red_     = interpol(contrast_red_day,     contrast_red_night)
+        contrast_green_   = interpol(contrast_green_day,   contrast_green_night)
+        contrast_blue_    = interpol(contrast_blue_day,    contrast_blue_night)
+        gamma_red_        = interpol(gamma_red_day,        gamma_red_night)
+        gamma_green_      = interpol(gamma_green_day,      gamma_green_night)
+        gamma_blue_       = interpol(gamma_blue_day,       gamma_blue_night)
+        if fade is not None:
+            alpha = abs(fade)
+            temperature_      = purify(temperature_,      6500)
+            brightness_       = purify(brightness_,       1)
+            brightness_red_   = purify(brightness_red_,   1)
+            brightness_green_ = purify(brightness_green_, 1)
+            brightness_blue_  = purify(brightness_blue_,  1)
+            contrast_         = purify(contrast_,         1)
+            contrast_red_     = purify(contrast_red_,     1)
+            contrast_green_   = purify(contrast_green_,   1)
+            contrast_blue_    = purify(contrast_blue_,    1)
+            gamma_red_        = purify(gamma_red_,        gamma_red_default  [m % len(gamma_red_default)])
+            gamma_green_      = purify(gamma_green_,      gamma_green_default[m % len(gamma_green_default)])
+            gamma_blue_       = purify(gamma_blue_,       gamma_blue_default [m % len(gamma_blue_default)])
+        
+        # Remove settings from last run.
+        start_over()
+        
+        # Apply ICC profile as a video filter.
+        i = m % len(icc_video_filter_profile)
+        if icc_video_filter_profile_day[i] is not None:
+            if icc_video_filter_profile[i] is None:
+                day = load_icc(icc_video_filter_profile_day[i])
+                night = load_icc(icc_video_filter_profile_night[i])
+                icc_video_filter_profile[i] = make_icc_interpolation([night, day])
+            icc_video_filter_profile[i](dayness, 1 if fade is None else abs(fade))
+        
+        # Apply negative image.
+        f = negative_image[m % len(negative_image)]
+        if f is not None:
+            f()
+        
+        # Apply colour temperature using raw CIE 1964 10 degree CMF data with interpolation.
+        temperature(temperature_, lambda t : clip_whitepoint(divide_by_maximum(cmf_10deg(t))))
+        
+        # Apply calibration used when started.
+        c = current_calibration[m % len(current_calibration)]
+        if c is not None:
+            c()
+        
+        # Apply colour brightness using the CIE xyY colour space.
+        cie_brightness(brightness_)
+        # Apply colour brightness using the sRGB colour space.
+        # If we only used one parameter, it would be applied to all colour components.
+        rgb_brightness(brightness_red_, brightness_green_, brightness_blue_)
+        
+        # Apply colour contrast using the CIE xyY colour space.
+        cie_contrast(contrast_)
+        # Apply colour contrast using the sRGB colour space.
+        # If we only used one parameter, it would be applied to all colour components.
+        rgb_contrast(contrast_red_, contrast_green_, contrast_blue_)
+        
+        # Apply low colour resolution emulation.
+        rx = red_x_resolution[m % len(red_x_resolution)]
+        ry = red_y_resolution[m % len(red_y_resolution)]
+        gx = green_x_resolution[m % len(green_x_resolution)]
+        gy = green_y_resolution[m % len(green_y_resolution)]
+        bx = blue_x_resolution[m % len(blue_x_resolution)]
+        by = blue_y_resolution[m % len(blue_y_resolution)]
+        lower_resolution(rx, ry, gx, gy, bx, by)
+        
+        # Clip colour curves to fit [0, 1] to avoid errors by complex numbers.
+        clip()
+        
+        # Apply gamma correction to monitor.
+        gamma(gamma_red_, gamma_green_, gamma_blue_)
+        
+        # Apply sigmoid curve correction to monitor.
+        sigmoid(*(sigmoid_[m % len(sigmoid_)]))
+        
+        # Apply ICC profile as a monitor calibration.
+        i = m % len(icc_calibration_profile)
+        if icc_calibration_profile[i] is not None:
+            if isinstance(icc_calibration_profile[i], str):
+                f = load_icc(icc_calibration_profile[i])
+                
+                # Use linear interpolation
+                f = interpolate_function(f, linearly_interpolate_ramp)
+                # Use cubic interpolation
+                #f = interpolate_function(f, cubicly_interpolate_ramp)
+                # Use semitense cubic interpolation
+                #f = interpolate_function(f, lambda *c : cubicly_interpolate_ramp(*c, tension = 0.5))
+                # Use monotone cubic interpolation
+                #f = interpolate_function(f, monotonicly_cubicly_interpolate_ramp)
+                # Use semitense monotone cubic interpolation
+                #f = interpolate_function(f, lambda *c : monotonicly_cubicly_interpolate_ramp(*c, tension = 0.5))
+                # Otherwise use nearest-neighbour
+                
+                icc_calibration_profile[i] = f
+            icc_calibration_profile[i]()
+        
+        # Flush settings to monitor.
+        if len(monitors) == 0:
+            apply_curves()
+        else:
+            apply_curves(monitors[m % len(monitors)])
+    
+    # Lets wait only 5 seconds, instead of a minute before running again.
+    wait_period = 5
+
+
+def reset():
+    '''
+    Invoked to reset the displays
+    '''
+    for m in range(max(1, len(monitors))):
+        gamma_red_   = gamma_red_default  [m % len(gamma_red_default)]
+        gamma_green_ = gamma_green_default[m % len(gamma_green_default)]
+        gamma_blue_  = gamma_blue_default [m % len(gamma_blue_default)]
+        
+        # Remove settings from last run.
+        start_over()
+        
+        # Apply calibration used when started.
+        c = current_calibration[m % len(current_calibration)]
+        if c is not None:
+            c()
+        
+        # Apply gamma correction to monitor.
+        gamma(gamma_red_, gamma_green_, gamma_blue_)
+        
+        # Apply ICC profile as a monitor calibration.
+        i = m % len(icc_calibration_profile)
+        if icc_calibration_profile[i] is not None:
+            if isinstance(icc_calibration_profile[i], str):
+                icc_calibration_profile[i] = load_icc(icc_calibration_profile[i])
+            icc_calibration_profile[i]()
+        
+        # Flush settings to monitor.
+        if len(monitors) == 0:
+            apply_curves()
+        else:
+            apply_curves(monitors[m % len(monitors)])
+
+
+if (get_dayness is not None) and not doreset:
+    # Set transition time, 0 on high day and 5 seconds on high night.
+    fadein_time = 5 * (1 - get_dayness())
+    # Do 10 changes per second.
+    fadein_steps = fadein_time * 10
+    
+    # Transition on exit in the same way, calculated on exit.
+    old_signal_SIGTERM = signal_SIGTERM
+    if 'SIGTERM' not in conf_storage:
+        conf_storage['SIGTERM'] = old_signal_SIGTERM
+    else:
+        old_signal_SIGTERM = conf_storage['SIGTERM']
+    def signal_SIGTERM(signum, frame):
+        global fadeout_time, fadeout_steps
+        fadeout_time = 5 * (1 - get_dayness())
+        fadeout_steps = fadeout_time * 10
+        old_signal_SIGTERM(signum, frame)
+else:
+    # Do not use continuous mode.
+    get_dayness = lambda : 0
+    def apply(fade):
+        t = datetime.datetime.now()
+        wd = t.isocalendar()[2]
+        periodically(t.year, t.month, t.day, t.hour, t.minute, t.second, wd, fade)
+    if not panicgate:
+        signal.signal(signal.SIGTERM, signal_SIGTERM)
+        trans = 0
+        apply((1 - trans) if doreset else trans)
+        while running:
+            time.sleep(0.1)
+            if trans >= 1:
+                break
+            trans += 0.05
+            apply((1 - trans) if doreset else trans)
+    if not doreset:
+        apply(None)
+    else:
+        reset()
+    periodically = None
+
