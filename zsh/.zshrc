@@ -29,6 +29,7 @@ antigen use oh-my-zsh
 antigen bundle git
 antigen bundle rails
 antigen bundle bundler
+antigen bundle nojhan/liquidprompt
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -37,7 +38,8 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen theme lambda
 #antigen theme cloud
 # antigen theme simple
-antigen theme blinks
+#antigen theme blinks
+antigen theme candy
 
 # Tell antigen that you're done.
 antigen apply
