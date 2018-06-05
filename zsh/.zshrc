@@ -115,3 +115,5 @@ alias ET="SUDO_EDITOR=\"emacsclient -t -a emacs\" sudoedit"
 alias ssh-add-keys="ssh-add ~/.ssh/*.pem && ssh-add"
 
 export CDPATH=~/work:$CDPATH
+#Homebrew
+export PATH=/usr/local/bin:$PATH
