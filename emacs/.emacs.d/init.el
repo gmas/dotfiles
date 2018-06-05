@@ -47,16 +47,6 @@
   (evil-mode)
 )
 
-(use-package auto-complete
-  :ensure t
-  :init
-  (progn
-    (ac-config-default)
-    (global-auto-complete-mode t)
-    (add-to-list 'ac-modes 'terraform-mode)
-    (add-to-list 'ac-modes 'yaml-mode)
-  )
-)
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
 
@@ -127,9 +117,9 @@
 ;; )
 
 (ido-mode 0)
-(use-package helm-core
-  :ensure t
-)
+;; (use-package helm-core
+;;   :ensure t
+;; )
 (use-package helm
   :ensure t
   :init
@@ -271,3 +261,68 @@
 ; TODO load the rest of the packages with use-package
 ; edit-server
 (put 'narrow-to-region 'disabled nil)
+
+;; (defun setup-tide-mode ()
+;;   (interactive)
+;;   (tide-setup)
+;;   (flycheck-mode +1)
+;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
+;;   (eldoc-mode +1)
+;;   (tide-hl-identifier-mode +1)
+;;   ;; company is an optional dependency. You have to
+;;   ;; install it separately via package-install
+;;   ;; `M-x package-install [ret] company`
+;;   (company-mode +1))
+
+;; ;; aligns annotation to the right hand side
+;; (setq company-tooltip-align-annotations t)
+
+;; ;; formats the buffer before saving
+;; (add-hook 'before-save-hook 'tide-format-before-save)
+
+;; (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; (use-package auto-complete
+;;   :ensure t
+;;   :init
+;;   (progn
+;;     (ac-config-default)
+;;     (global-auto-complete-mode t)
+;;     (add-to-list 'ac-modes 'terraform-mode)
+;;     (add-to-list 'ac-modes 'yaml-mode)
+;;   )
+;; )
+
+(use-package company
+  :ensure t
+  :init
+         (global-company-mode)
+         (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+  (progn
+    ;; Use Company for completion
+    (bind-key [remap completion-at-point] #'company-complete company-mode-map)
+
+    (setq company-tooltip-align-annotations t
+          ;; Easy navigation to candidates with M-<n>
+          company-show-numbers t)
+    ;; (setq company-dabbrev-downcase nil)
+  )
+)
+
+
+(use-package company-quickhelp          ; Documentation popups for Company
+  :ensure t
+  :defer t
+:init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
+
+(use-package tide
+  :ensure t
+  :after (typescript-mode company flycheck)
+  :hook ((typescript-mode . tide-setup)
+         (typescript-mode . flycheck-mode)
+         (typescript-mode . tide-hl-identifier-mode)
+         (typescript-mode . company-mode)
+         (typescript-mode . eldoc-mode)
+         (before-save . tide-format-before-save))
+  )
+;;; init.el ends here

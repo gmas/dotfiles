@@ -33,7 +33,7 @@
  '(jsx-use-auto-complete t)
  '(package-selected-packages
    (quote
-    (go-mode ample-theme beacon flx yasnippet terraform-mode helm-ag which-key counsel simplenote2 request-deferred flycheck-color-mode-line flycheck key-chord smart-mode-line swiper helm helm-core elscreen evil-magit magit auto-complete evil use-package)))
+    (company-quickhelp tide typescript-mode dockerfile-mode docker-tramp markdown-mode yaml-mode go-mode ample-theme beacon flx yasnippet terraform-mode helm-ag which-key counsel simplenote2 request-deferred flycheck-color-mode-line flycheck key-chord smart-mode-line swiper helm helm-core elscreen evil-magit magit evil use-package)))
  '(ruby-align-chained-calls t)
  '(ruby-align-to-stmt-keywords (quote (begin if def)))
  '(ruby-indent-tabs-mode nil)
