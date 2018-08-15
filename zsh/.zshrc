@@ -53,9 +53,6 @@ then
   source /usr/share/chruby/auto.sh
 fi
 
-source /usr/share/nvm/init-nvm.sh
-
-
 export EDITOR='vim'
 export GIT_EDITOR='vim'
 export BUNDLER_EDITOR='vim'
@@ -117,3 +114,18 @@ alias ssh-add-keys="ssh-add ~/.ssh/*.pem && ssh-add"
 export CDPATH=~/work:$CDPATH
 #Homebrew
 export PATH=/usr/local/bin:$PATH
+
+# OSX specific
+if [ "$(uname 2> /dev/null)" != "Linux" ]; then
+  # zsh-completion
+  fpath=(/usr/local/share/zsh-completions $fpath)
+  # use native Emacs app
+  alias emacsd='Emacs --daemon'
+  NVM_SCRIPT=/usr/share/nvm/init-nvm.sh
+  if [[ -f NVM_SCRIPT ]]; then
+    echo "NVM found. Sourcing ..."
+    source $NVM_SCRIPT
+  fi
+
+
+fi
