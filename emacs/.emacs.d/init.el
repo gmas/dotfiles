@@ -139,7 +139,8 @@
 )
 (ivy-mode 1)
 (setq ivy-use-selectable-prompt t)
-(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 
 
 ;;(load-theme 'afternoon)
@@ -230,15 +231,15 @@
 	(add-hook 'yaml-mode-hook #'yas-minor-mode)
   :config
 	(require 'yasnippet)
+	(yas-reload-all)
 	(add-to-list 'yas-snippet-dirs "~/.emacs.d/plugins/yasnippet")
 	(add-to-list 'load-path "~/.emacs.d/plugins/yasnippet")
-	(yas-reload-all)
-
-)
+  )
+(use-package yasnippet-snippets
+  :ensure t)
 
 (use-package flx
-  :ensure t
-)
+  :ensure t)
 
 (defun ora-ediff-hook ()
   (ediff-setup-keymap)
@@ -246,11 +247,12 @@
   (define-key ediff-mode-map "k" 'ediff-previous-difference))
 
 (add-hook 'ediff-mode-hook 'ora-ediff-hook)
+(add-hook 'prog-mode-hook 'electric-pair-mode)
 
 (use-package beacon
-:ensure t
-:config
-(beacon-mode 1))
+  :ensure t
+  :config
+  (beacon-mode 1))
 
 (use-package ample-theme
 :ensure t)
@@ -297,7 +299,8 @@
   :ensure t
   :init
          (global-company-mode)
-         (global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+         ;;(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
+         (global-set-key (kbd "TAB") #'company-complete-common)
   (progn
     ;; Use Company for completion
     (bind-key [remap completion-at-point] #'company-complete company-mode-map)
@@ -306,6 +309,12 @@
           ;; Easy navigation to candidates with M-<n>
           company-show-numbers t)
     ;; (setq company-dabbrev-downcase nil)
+  (defun company-mode/backend-with-yas (backend)
+      (if (and (listp backend) (member 'company-yasnippet backend))
+          backend
+        (append (if (consp backend) backend (list backend))
+                '(:with company-yasnippet))))
+  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
   )
 )
 
@@ -325,4 +334,9 @@
          (typescript-mode . eldoc-mode)
          (before-save . tide-format-before-save))
   )
+
+(use-package aggressive-indent
+  :ensure t
+  :hook (prog-mode . aggressive-indent-mode)
+)
 ;;; init.el ends here
