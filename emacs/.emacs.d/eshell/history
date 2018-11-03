@@ -1,5 +1,0 @@
-ls
-ls -al
-less 
-ls -al | less
-exit
