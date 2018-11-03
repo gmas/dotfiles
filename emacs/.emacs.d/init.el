@@ -58,10 +58,27 @@
   :ensure t)
 (evil-magit-init)
 
-; Org-mode
-; log time when setting to done
+;;; Org-mode
+;;; log time when setting to done
+(global-set-key (kbd "C-c c")
+                'org-capture)
 (setq org-log-done 'time)
-(setq org-mobile-directory "~/Dropbox/notes")
+(setq org-directory "~/Dropbox/org")
+(setq org-default-notes-file (concat org-directory "/notes.org"))
+(setq org-mobile-directory "~/Dropbox/org")
+(setq org-agenda-files '("~/Dropbox/org/"))
+(setq org-todo-keywords
+      '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
+(setq org-capture-templates
+      '(("a" "My TODO task format." entry
+         (file "todo.org")
+         "* TODO %?
+         SCHEDULED: %t")
+        ("t" "To Do Item" entry
+         (file+headline "todo.org" "To Do and Notes")
+         "* TODO %? %i\n%a\n%l" :prepend t)
+        ))
+
 
 (setq inhibit-splash-screen t
       inhibit-startup-message t
@@ -338,5 +355,7 @@
 (use-package aggressive-indent
   :ensure t
   :hook (prog-mode . aggressive-indent-mode)
-)
+  )
+
+(load-if-exists "~/.emacs.d/mu4econfig.el")
 ;;; init.el ends here
