@@ -1,6 +1,6 @@
-;;;add the souRce shipped with mu to load-path
+;;;Add the souRce shipped with mu to load-path
 
-(add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+(add-to-list 'load-path (expand-file-name "/usr/share/emacs/site-lisp/mu4e/")) ;
 
 ;;; make sure emacs finds applications in /usr/local/bin
 (setq exec-path (cons "/usr/local/bin" exec-path))
@@ -22,7 +22,8 @@
 (setq mu4e-change-filenames-when-moving t)
 
 ;;; sync email 
-(setq mu4e-update-interval 300)
+;;;(setq mu4e-update-interval 300)
+(defvar mu4e-update-interval 300)
 
 ;; ;;; taken from mu4e page to define bookmarks
 ;; (add-to-list 'mu4e-bookmarks
@@ -42,13 +43,17 @@
 ;;; [Gmail]/All Mail
 (setq mu4e-maildir-shortcuts
       '(
-        ("/INBOX"               . ?i)
-        ("/[Gmail].All Mail"    . ?a)
-        ("/[Gmail].Sent Mail"   . ?s)
-        ("/[Gmail].Starred"    .  ?*)
+        ("/INBOX"                     . ?I)
+        ("/gmail/INBOX"               . ?i)
+        ("/gmail/[Gmail].All Mail"    . ?a)
+        ("/gmail/[Gmail].Sent Mail"   . ?s)
+        ("/gmail/[Gmail].Starred"     . ?*)
+        ("/gmail/[Gmail].Trash"       . ?!)
         )
       )
 
 ;;;  "All Mail" "Deleted Items" "Drafts" "Important" "Sent Mail" "Starred"
+
+(require 'org-mu4e)
 
 ;;; mue4-config.el ends here
