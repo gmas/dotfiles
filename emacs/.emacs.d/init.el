@@ -77,7 +77,10 @@
         ("t" "To Do Item" entry
          (file+headline "todo.org" "To Do and Notes")
          "* TODO %? %i\n%a\n%l" :prepend t)
-        ))
+        ("tt" "todo" entry (file+headline "todo.org" "Tasks")
+         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+        )
+      )
 
 
 (setq inhibit-splash-screen t
@@ -357,5 +360,10 @@
   :hook (prog-mode . aggressive-indent-mode)
   )
 
-(load-if-exists "~/.emacs.d/mu4econfig.el")
+(let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
+  (when (file-exists-p mu4e-config)
+    (load-file mu4e-config))
+  )
+
+(scroll-bar-mode 0)
 ;;; init.el ends here
