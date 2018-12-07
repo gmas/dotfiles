@@ -22,7 +22,7 @@
       mu4e-show-images t
       mu4e-view-image-max-width 800
       mu4e-view-prefer-html t
-      mu4e-update-interval 300
+      mu4e-update-interval 420
       mu4e-split-view 'vertical
       mu4e-headers-visible-columns 60
       mu4e-confirm-quit nil
@@ -33,6 +33,7 @@
       mu4e-completing-read-function 'completing-read
       ;;rename files when moving. NEEDED FOR MBSYNC
       mu4e-change-filenames-when-moving t
+      mu4e-headers-skip-duplicates t
       )
 
 (add-hook 'mu4e-view-mode-hook
@@ -45,8 +46,9 @@
 (setq shr-use-fonts nil)
 
 ;; ;;; taken from mu4e page to define bookmarks
-;; (add-to-list 'mu4e-bookmarks
-;;              '("size:5M..500M"       "Big messages"     ?b))
+(add-to-list 'mu4e-bookmarks
+             '("size:5M..500M"       "Big messages"     ?b))
+
 
 ;;; mu4e requires to specify drafts, sent, and trash dirs
 ;;; a smarter configuration allows to select directories according to the account (see mu4e page)
