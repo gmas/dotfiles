@@ -155,10 +155,13 @@
   :ensure t
   :bind ( ("C-s" . swiper)
           ("C-x C-f" . counsel-find-file)
-          ("C-x C-p" . counsel-git) )
-)
+          ("C-x C-p" . counsel-git)
+          ("C-c g" . counsel-ag)
+          )
+  )
 (ivy-mode 1)
 (setq ivy-use-selectable-prompt t)
+(setq ivy-height 20)
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 
@@ -366,4 +369,5 @@
   )
 
 (scroll-bar-mode 0)
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
 ;;; init.el ends here
