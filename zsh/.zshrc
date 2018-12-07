@@ -121,8 +121,9 @@ if [ "$(uname 2> /dev/null)" != "Linux" ]; then
   export GOROOT=/usr/local/Cellar/go/1.11/libexec
   # zsh-completion
   fpath=(/usr/local/share/zsh-completions $fpath)
-  # use native Emacs app
-  alias emacsd='Emacs --daemon'
+  # use Homebrew Emacs app
+  alias emacsd='/usr/local/bin/emacs --daemon'
+  alias e='/usr/local/bin/emacsclient -n'
   NVM_SCRIPT=/usr/share/nvm/init-nvm.sh
   if [[ -f NVM_SCRIPT ]]; then
     echo "NVM found. Sourcing ..."
