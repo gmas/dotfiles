@@ -57,6 +57,17 @@
 (use-package evil-magit
   :ensure t)
 (evil-magit-init)
+(use-package magithub
+  :ensure t
+  :after magit
+  :config
+  (magithub-feature-autoinject t))
+
+;; BROKEN for 2FA GH auth
+;; (use-package magit-gh-pulls
+;;   :ensure t
+;;   )
+;; (add-hook 'magit-mode-hook #'turn-on-magit-gh-pulls)
 
 ;;; Org-mode
 ;;; log time when setting to done
@@ -161,17 +172,16 @@
   )
 (ivy-mode 1)
 (setq ivy-use-selectable-prompt t)
-(setq ivy-height 20)
+(setq ivy-height 15)
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 
 
-;;(load-theme 'afternoon)
 
 (use-package smart-mode-line
   :ensure t
   :config (sml/setup)
-)
+  )
 
 (setq show-paren-delay 0)
 (show-paren-mode 1)
@@ -278,10 +288,15 @@
   (beacon-mode 1))
 
 (use-package ample-theme
-:ensure t)
+  :ensure t)
+
+(use-package apropospriate-theme
+  :ensure t)
+
+(load-theme 'apropospriate-dark)
 
 (use-package go-mode
-:ensure t)
+  :ensure t)
 
 ; TODO load the rest of the packages with use-package
 ; edit-server
@@ -362,6 +377,15 @@
   :ensure t
   :hook (prog-mode . aggressive-indent-mode)
   )
+
+(use-package dockerfile-mode
+  :ensure t
+  )
+
+(use-package yaml-mode
+  :ensure t
+  )
+
 
 (let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
   (when (file-exists-p mu4e-config)
