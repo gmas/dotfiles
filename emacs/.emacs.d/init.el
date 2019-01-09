@@ -99,12 +99,13 @@
       inhibit-startup-echo-area-message t)
 (fset 'yes-or-no-p 'y-or-n-p)
 
-;disable menus
+;disable menus, scrollbars
 (menu-bar-mode -1)
 (tool-bar-mode -1)
+(scroll-bar-mode 0)
 
 
-;ElScreen
+;;ElScreen
 (use-package elscreen
   :ensure t
   ;; :init
@@ -118,18 +119,18 @@
   ;;   ;; '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50"))))
   ;; )
   :config
-  ; ELScreen tab combos
+                                        ; ELScreen tab combos
   (eval-after-load "evil-maps"
     (dolist (map '(evil-motion-state-map
-                  evil-insert-state-map
-                  evil-normal-state-map
-                  evil-emacs-state-map))
-  ;    (define-key (eval map) "\C-t" nil)))
+                   evil-insert-state-map
+                   evil-normal-state-map
+                   evil-emacs-state-map))
+                                        ;    (define-key (eval map) "\C-t" nil)))
       (define-key (eval map) (kbd "\C-t") 'elscreen-create)
       (define-key (eval map) (kbd "\C-n") 'elscreen-next)
       (define-key (eval map) (kbd "\C-p") 'elscreen-previous)))
   (elscreen-start)
-)
+  )
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
@@ -392,6 +393,21 @@
     (load-file mu4e-config))
   )
 
-(scroll-bar-mode 0)
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; Disable mouse wheel (and two finger swipe) scrolling
+(mouse-wheel-mode -1)
+(global-set-key [wheel-up] 'ignore)
+(global-set-key [wheel-down] 'ignore)
+(global-set-key [double-wheel-up] 'ignore)
+(global-set-key [double-wheel-down] 'ignore)
+(global-set-key [triple-wheel-up] 'ignore)
+(global-set-key [triple-wheel-down] 'ignore)
+(global-set-key [wheel-left] 'ignore)
+(global-set-key [double-wheel-left] 'ignore)
+(global-set-key [triple-wheel-left] 'ignore)
+(global-set-key [wheel-right] 'ignore)
+(global-set-key [double-wheel-right] 'ignore)
+(global-set-key [triple-wheel-right] 'ignore)
+
 ;;; init.el ends here

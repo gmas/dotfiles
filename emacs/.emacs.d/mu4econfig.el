@@ -43,6 +43,7 @@
             (local-set-key (kbd "<backtab>") 'shr-previous-link)))
 
 ;;;If you’re using a dark theme, and the messages are hard to read, it can help to change the luminosity, e.g.:
+(setq shr-color-visible-luminance-min 75)
 (setq shr-use-fonts nil)
 
 ;; ;;; taken from mu4e page to define bookmarks
