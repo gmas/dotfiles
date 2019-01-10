@@ -61,7 +61,7 @@
   :ensure t
   :after magit
   :config
-  (magithub-feature-autoinject t))
+  (magithub-feature-autoinject '(commit-browse completion status-checks-header pull-requests-section)))
 
 ;; BROKEN for 2FA GH auth
 ;; (use-package magit-gh-pulls
@@ -104,6 +104,8 @@
 (tool-bar-mode -1)
 (scroll-bar-mode 0)
 
+;;;disable bell
+(setq ring-bell-function 'ignore)
 
 ;;ElScreen
 (use-package elscreen
@@ -175,7 +177,8 @@
 (setq ivy-use-selectable-prompt t)
 (setq ivy-height 15)
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-(setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
+(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 
 
 
