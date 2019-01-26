@@ -390,6 +390,10 @@
   :ensure t
   )
 
+(use-package org-bullets
+  :ensure t
+  :hook (org-mode . org-bullets-mode)
+  )
 
 (let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
   (when (file-exists-p mu4e-config)
