@@ -129,6 +129,10 @@ if [ "$(uname 2> /dev/null)" != "Linux" ]; then
     echo "NVM found. Sourcing ..."
     source $NVM_SCRIPT
   fi
-
-
 fi
+
+# kubectl aliases
+alias k=kubectl
+alias kd='kubectl describe'
+alias kg='kubectl get'
+alias klo='kubectl logs'
