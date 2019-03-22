@@ -118,7 +118,7 @@ export PATH=/usr/local/bin:$PATH
 # OSX specific
 if [ "$(uname 2> /dev/null)" != "Linux" ]; then
   # proper GOROOT so that go-mode works
-  export GOROOT=/usr/local/Cellar/go/1.11/libexec
+  export GOROOT=/usr/local/Cellar/go/1.12.1/libexec
   # zsh-completion
   fpath=(/usr/local/share/zsh-completions $fpath)
   # use Homebrew Emacs app
