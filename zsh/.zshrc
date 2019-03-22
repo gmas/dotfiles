@@ -136,3 +136,5 @@ alias k=kubectl
 alias kd='kubectl describe'
 alias kg='kubectl get'
 alias klo='kubectl logs'
+
+source ~/dotfiles/scripts/functions.bash
