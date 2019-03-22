@@ -417,4 +417,17 @@
 (global-set-key [double-wheel-right] 'ignore)
 (global-set-key [triple-wheel-right] 'ignore)
 
+;; define _ as word character so that changing inner words works like in vim
+(defadvice evil-inner-word (around underscore-as-word activate)
+  (let ((table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "w" table)
+    (with-syntax-table table
+      ad-do-it)))
+
+;; define _ as word character so that hitting * to search words at cursor works like in vim
+(defadvice evil-search-word-forward (around underscore-as-word activate)
+  (let ((table (copy-syntax-table (syntax-table))))
+    (modify-syntax-entry ?_ "w" table)
+    (with-syntax-table table
+      ad-do-it)))
 ;;; init.el ends here
