@@ -1,14 +1,14 @@
 
 
 ;;; make sure emacs finds applications in /usr/local/bin
-(setq exec-path (cons "/usr/local/bin" exec-path))
+(setq exec-path (cons "/usr/bin" exec-path))
 
 ;;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
 
 ;;;Add the souRce shipped with mu to load-path
-(add-to-list 'load-path (expand-file-name "/usr/local/Cellar/mu/1.0/share/emacs/site-lisp/mu/mu4e"))
+(add-to-list 'load-path (expand-file-name "/usr/share/emacs/site-lisp/mu4e/"))
 
 (require 'mu4e)
 (require 'org-mu4e)
@@ -18,7 +18,7 @@
 (setq mu4e-maildir "~/Maildir/" ;;; tell mu4e where my Maildir is
       mu4e-view-show-images t
       ;; tell mu4e how to sync email
-      mu4e-get-mail-command "/usr/local/bin/mbsync --config ~/mbsync/.mbsyncrc -a"
+      mu4e-get-mail-command "/usr/bin/mbsync --config ~/mbsync/.mbsyncrc -a"
       mu4e-show-images t
       mu4e-view-image-max-width 800
       mu4e-view-prefer-html t
