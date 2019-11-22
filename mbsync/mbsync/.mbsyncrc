@@ -21,7 +21,7 @@ Slave ":gmail-local:"
 Patterns "INBOX"
 Create Both
 Expunge Both
-Sync New Delete
+Sync New Delete Flags
 SyncState *
 
 Channel gmail-all
