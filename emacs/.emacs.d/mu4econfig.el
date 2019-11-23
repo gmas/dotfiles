@@ -16,7 +16,6 @@
 (setq org-mu4e-link-query-in-headers-mode nil)
 
 (setq mu4e-maildir "~/Maildir/" ;;; tell mu4e where my Maildir is
-      mu4e-view-show-images t
       ;; tell mu4e how to sync email
       mu4e-get-mail-command "/usr/bin/mbsync --config ~/mbsync/.mbsyncrc -a"
       mu4e-show-images t
@@ -72,5 +71,44 @@
         ("/gmail/[Gmail].Trash"       . ?!)
         )
       )
+(setq mu4e-enable-async-operations t)
+(setq mu4e-enable-notifications t)
+
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+;; For HTML mails
+(setq
+ w3m-command "/usr/bin/w3m"
+ mu4e-html2text-command "w3m -dump -T text/html"
+ ;; enable inline images
+ mu4e-view-show-images t
+ mu4e-image-max-width 800
+ mu4e-view-prefer-html t
+ mu4e-use-fancy-chars t)
+
+;; mu4e toggle html images
+(defvar killdash9/mu4e~view-html-images nil
+  "Whether to show images in html messages")
+
+(defun killdash9/mu4e-view-toggle-html-images ()
+  "Toggle image-display of html message."
+  (interactive)
+  (setq-local killdash9/mu4e~view-html-images (not killdash9/mu4e~view-html-images))
+  (message "Images are %s" (if killdash9/mu4e~view-html-images "on" "off"))
+  (mu4e-view-refresh))
+
+(defun mu4e-shr2text (msg)
+  "Convert html in MSG to text using the shr engine; this can be
+used in `mu4e-html2text-command' in a new enough emacs. Based on
+code by Titus von der Malsburg."
+  (lexical-let ((view-images killdash9/mu4e~view-html-images))
+               (mu4e~html2text-wrapper
+                (lambda ()
+                  (let ((shr-inhibit-images (not view-images)))
+                    (shr-render-region (point-min) (point-max)))) msg)))
+
+(define-key mu4e-view-mode-map "i" 'killdash9/mu4e-view-toggle-html-images)
 
 ;;; mue4-config.el ends here
