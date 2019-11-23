@@ -49,11 +49,14 @@
 
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
+(add-to-list 'default-frame-alist
+             '(font . "fira mono medium-8"))
+
 
 (use-package magit
   :ensure t
   :bind ("C-c m" . magit-status)
-)
+  )
 (use-package evil-magit
   :ensure t)
 (evil-magit-init)
