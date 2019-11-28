@@ -60,17 +60,6 @@
 (use-package evil-magit
   :ensure t)
 (evil-magit-init)
-(use-package magithub
-  :ensure t
-  :after magit
-  :config
-  (magithub-feature-autoinject '(commit-browse completion status-checks-header pull-requests-section)))
-
-;; BROKEN for 2FA GH auth
-;; (use-package magit-gh-pulls
-;;   :ensure t
-;;   )
-;; (add-hook 'magit-mode-hook #'turn-on-magit-gh-pulls)
 
 ;;; Org-mode
 ;;; log time when setting to done
