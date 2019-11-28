@@ -49,7 +49,7 @@ import os
 # of a hyperelliptic roundabout.)
 #latitude, longitude = 59.3326, 18.0652
 latitude, longitude = 33.8600011, -118.379997
-temperature_day, temperature_night = [6500], [3700]
+temperature_day, temperature_night = [5500], [3300]
 
 
 
