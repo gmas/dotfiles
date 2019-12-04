@@ -76,7 +76,7 @@ forego_with_env() {
         return 0
     else
         RUN_CMD="run"
-        if [ -n "$RAILS_ENV" ] 
+        if [ -n "$RAILS_ENV" ]
         then
             RUN_CMD+=" -e=.env.$RAILS_ENV "
         fi
@@ -118,7 +118,7 @@ export PATH=/usr/local/bin:$PATH
 # OSX specific
 if [ "$(uname 2> /dev/null)" != "Linux" ]; then
   # proper GOROOT so that go-mode works
-  export GOROOT=/usr/local/Cellar/go/1.12.1/libexec
+  export GOROOT=/usr/local/Cellar/go/1.13.4/libexec
   # zsh-completion
   fpath=(/usr/local/share/zsh-completions $fpath)
   # use Homebrew Emacs app
