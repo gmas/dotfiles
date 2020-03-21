@@ -100,10 +100,10 @@
          (file "todo.org")
          "* TODO %?
          SCHEDULED: %t")
-        ("t" "To Do Item" entry
-         (file+headline "todo.org" "To Do and Notes")
+        ("i" "To Do Item" entry
+         (file+headline "todo.org" "To Do")
          "* TODO %? %i\n%a\n%l" :prepend t)
-        ("tt" "todo" entry (file+headline "todo.org" "Tasks")
+        ("t" "todo" entry (file+headline "todo.org" "To Do")
          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
         )
       )
