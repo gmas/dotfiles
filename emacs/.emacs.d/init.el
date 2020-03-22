@@ -49,14 +49,37 @@
 
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
-(add-to-list 'default-frame-alist
-             '(font . "fira mono medium-8"))
+(cond
+ ((string-equal system-type "gnu/linux")
+  (progn
+    (add-to-list 'default-frame-alist
+      '(font . "fira mono medium-8"))
+    )))
 
+(use-package transient
+  :ensure t
+)
+
+(use-package magit-popup
+  :ensure t ; make sure it is installed
+  :demand t ; make sure it is loaded
+  )
 
 (use-package magit
   :ensure t
   :bind ("C-c m" . magit-status)
   )
+(use-package evil-magit
+  :ensure t)
+(evil-magit-init)
+
+(use-package forge
+  :ensure t
+  :after magit)
+
+(with-eval-after-load 'magit
+  (require 'forge))
+
 (use-package evil-magit
   :ensure t)
 (evil-magit-init)
@@ -77,10 +100,10 @@
          (file "todo.org")
          "* TODO %?
          SCHEDULED: %t")
-        ("t" "To Do Item" entry
-         (file+headline "todo.org" "To Do and Notes")
+        ("i" "To Do Item" entry
+         (file+headline "todo.org" "To Do")
          "* TODO %? %i\n%a\n%l" :prepend t)
-        ("tt" "todo" entry (file+headline "todo.org" "Tasks")
+        ("t" "todo" entry (file+headline "todo.org" "To Do")
          "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
         )
       )
@@ -387,10 +410,10 @@
   :hook (org-mode . org-bullets-mode)
   )
 
-(let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
-  (when (file-exists-p mu4e-config)
-    (load-file mu4e-config))
-  )
+;; (let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
+;;   (when (file-exists-p mu4e-config)
+;;     (load-file mu4e-config))
+;;   )
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -428,4 +451,23 @@
   :config
   (bind-key "<tab>" #'dired-subtree-toggle dired-mode-map)
   (bind-key "<backtab>" #'dired-subtree-cycle dired-mode-map))
+
+(use-package dired-sidebar
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar))
+
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+(defun command-line-diff (switch)
+  (let ((file1 (pop command-line-args-left))
+        (file2 (pop command-line-args-left)))
+    (ediff file1 file2)))
+
+(add-to-list 'command-switch-alist '("diff" . command-line-diff))
+;; saner ediff default
+(setq ediff-diff-options "-w")
+(setq ediff-split-window-function 'split-window-vertically)
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+(add-hook 'ediff-before-setup-hook 'new-frame)
+(add-hook 'ediff-quit-hook 'delete-frame)
 ;;; init.el ends here

@@ -20,16 +20,16 @@ export work=~/work
 export nas=~/nas
 export downloads=~/Downloads
 
-source ~/antigen/antigen.zsh
+source /usr/share/zsh/share/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
 # Bundles from the default repo (robbyrussell's oh-my-zsh).
 antigen bundle git
-antigen bundle rails
-antigen bundle bundler
-antigen bundle nojhan/liquidprompt
+#antigen bundle rails
+#antigen bundle bundler
+#antigen bundle nojhan/liquidprompt
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
@@ -76,7 +76,7 @@ forego_with_env() {
         return 0
     else
         RUN_CMD="run"
-        if [ -n "$RAILS_ENV" ] 
+        if [ -n "$RAILS_ENV" ]
         then
             RUN_CMD+=" -e=.env.$RAILS_ENV "
         fi
@@ -118,7 +118,7 @@ export PATH=/usr/local/bin:$PATH
 # OSX specific
 if [ "$(uname 2> /dev/null)" != "Linux" ]; then
   # proper GOROOT so that go-mode works
-  export GOROOT=/usr/local/Cellar/go/1.12.1/libexec
+  export GOROOT=/usr/local/Cellar/go/1.13.4/libexec
   # zsh-completion
   fpath=(/usr/local/share/zsh-completions $fpath)
   # use Homebrew Emacs app
