@@ -1,0 +1,61 @@
+IMAPAccount gmail
+Host imap.gmail.com
+User gmasgras
+PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/mbsync/.mbsyncpass.gpg"
+Port 993
+SSLType IMAPS
+AuthMechs Login
+#CertificateFile /Users/gmas/mbsync/certificates.pem
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/Maildir/gmail/
+Inbox ~/Maildir/gmail/INBOX
+
+Channel gmail-inbox
+Master ":gmail-remote:"
+Slave ":gmail-local:"
+Patterns "INBOX"
+Create Both
+Expunge Both
+Sync New Delete Flags
+SyncState *
+
+Channel gmail-all
+Master :gmail-remote:"[Gmail]/All Mail"
+Slave :gmail-local:"[Gmail].All Mail"
+Create Slave
+SyncState *
+
+Channel gmail-starred
+Master :gmail-remote:"[Gmail]/Starred"
+Slave :gmail-local:"[Gmail].Starred"
+Create Slave
+SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:"[Gmail].Sent Mail"
+Create Slave
+SyncState *
+
+Channel gmail-important
+Master :gmail-remote:"[Gmail]/Important"
+Slave :gmail-local:"[Gmail].Important"
+Create Slave
+SyncState *
+
+Channel gmail-trash
+Master :gmail-remote:"[Gmail]/Trash"
+Slave :gmail-local:"[Gmail].Trash"
+Create Slave
+SyncState *
+
+Channel gmail-drafts
+Master :gmail-remote:"[Gmail]/Drafts"
+Slave :gmail-local:"[Gmail].Drafts"
+Create Slave
+SyncState *
