@@ -2,6 +2,20 @@
 (setq custom-file (concat dotfiles-dir "custom.el"))
 (load custom-file)
 
+(setq inhibit-splash-screen t
+      inhibit-startup-message t
+      inhibit-startup-echo-area-message t)
+(fset 'yes-or-no-p 'y-or-n-p)
+
+;;disable menus, scrollbars
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode 0)
+
+;;;disable bell
+(setq ring-bell-function 'ignore)
+
+
 ;; Backups location
 (defvar backup-dir "~/.emacs.d/backups/")
 ;; (setq backup-directory-alist (list (cons "." backup-dir)))
@@ -38,14 +52,14 @@
       (package-refresh-contents)
       (package-install 'use-package)))
 
-; disable tab in evil-mode so that it works in org-mode
 (use-package evil
   :ensure t
   :init
-  (setq evil-want-C-i-jump nil)
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  ;; (setq evil-want-keybinding nil) ;; needed by evil-collection
+  (setq evil-want-C-i-jump nil) ;; disable tab in evil-mode so that it works in org-mode
   :config
-  (evil-mode)
-)
+  (evil-mode 1))
 
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
@@ -95,32 +109,29 @@
 (setq org-agenda-files '("~/Dropbox/org/"))
 (setq org-todo-keywords
       '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
-(setq org-capture-templates
-      '(("a" "My TODO task format." entry
-         (file "todo.org")
-         "* TODO %?
-         SCHEDULED: %t")
-        ("i" "To Do Item" entry
-         (file+headline "todo.org" "To Do")
-         "* TODO %? %i\n%a\n%l" :prepend t)
-        ("t" "todo" entry (file+headline "todo.org" "To Do")
-         "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
-        )
-      )
 
+(require 'org-capture)
+(require 'org-protocol)
+(setq org-capture-templates `(
+                              ("a" "My TODO task format." entry
+                               (file "todo.org")
+                               "* TODO %?
+                               SCHEDULED: %t")
+                              ("i" "To Do Item" entry
+                               (file+headline "todo.org" "To Do")
+                               "* TODO %? %i\n%a\n%l" :prepend t)
+                              ("t" "todo" entry (file+headline "todo.org" "To Do")
+                               "* TODO [#A] %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
+	                            ("p" "Protocol" entry (file+headline "todo.org" "Inbox")
+                               "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
+	                            ("L" "Protocol Link" entry (file+headline "todo.org" "Inbox")
+                               "* %? [[%:link][%:description]] \nCaptured On: %U")
+                              ))
 
-(setq inhibit-splash-screen t
-      inhibit-startup-message t
-      inhibit-startup-echo-area-message t)
-(fset 'yes-or-no-p 'y-or-n-p)
-
-;disable menus, scrollbars
-(menu-bar-mode -1)
-(tool-bar-mode -1)
-(scroll-bar-mode 0)
-
-;;;disable bell
-(setq ring-bell-function 'ignore)
+(setq org-protocol-default-template-key "L")
+;; (push '("L" "Link" entry (function org-handle-link)
+;;         "* TODO %(org-wash-link)\nAdded: %U\n%(org-link-hooks)\n%?")
+;;       org-capture-templates)
 
 ;;ElScreen
 (use-package elscreen
@@ -150,13 +161,15 @@
   )
 
 
+
 (add-to-list 'load-path "~/.emacs.d/lisp")
 ;(require 'edit-server)
 ;(edit-server-start)
 (when (and (daemonp) (locate-library "edit-server"))
   (require 'edit-server)
-  ;(setq edit-server-new-frame nil)
-     (edit-server-start))
+                                        ;(setq edit-server-new-frame nil)
+  (edit-server-start))
+
 
 ;; Smart meta-x
 ;; (ido-mode 1)
@@ -236,14 +249,15 @@
 (setq auto-window-vscroll nil)
 
 
-;(use-package find-file-in-project
-;  :ensure t
-;  :bind ("C-x C-p" . find-file-in-project)
-;)
+(use-package find-file-in-project
+
+  :ensure t
+  :bind ("C-x C-p" . find-file-in-project)
+  )
 
 (setq column-number-mode t)
 (setq linum-format "%d ")
-(global-linum-mode)
+(global-linum-mode -1)
 
 (use-package request-deferred
   :ensure t)
@@ -405,15 +419,25 @@
   :ensure t
   )
 
-(use-package org-bullets
+(use-package org-superstar
   :ensure t
-  :hook (org-mode . org-bullets-mode)
+  :hook (org-mode . org-superstar-mode)
   )
+;;(org-superstar-configure-like-org-bullets)
 
-;; (let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
-;;   (when (file-exists-p mu4e-config)
-;;     (load-file mu4e-config))
-;;   )
+(let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
+  (when (file-exists-p mu4e-config)
+    (load-file mu4e-config))
+  )
+(use-package mu4e-alert
+  :ensure t
+  :init
+  (setq mu4e-alert-interesting-mail-query
+        (concat
+         "maildir:\"/gmail/INBOX\""
+         " AND flag:unread")
+        )
+  )
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -470,4 +494,73 @@
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
 (add-hook 'ediff-before-setup-hook 'new-frame)
 (add-hook 'ediff-quit-hook 'delete-frame)
+
+;; unset C- and M- digit keys
+(dotimes (n 10)
+  (global-unset-key (kbd (format "C-%d" n)))
+  (global-unset-key (kbd (format "M-%d" n)))
+  )
+;; set up my own map
+(define-prefix-command 'bjm-map)
+(global-set-key (kbd "M-1") 'bjm-map)
+(global-set-key (kbd "C-1") 'bjm-map)
+(define-key bjm-map (kbd "m") 'mu4e)
+
+;;keybinding for favourite agenda view
+;; http://emacs.stackexchange.com/questions/864/how-to-bind-a-key-to-a-specific-agenda-command-list-in-org-mode
+(defun org-agenda-show-agenda-and-todo (&optional arg)
+  (interactive "P")
+  (org-agenda arg "n"))
+(define-key bjm-map (kbd "a") 'org-agenda-show-agenda-and-todo)
+
+(defun my-minibuffer-setup-hook ()
+  (setq gc-cons-threshold most-positive-fixnum))
+
+(defun my-minibuffer-exit-hook ()
+  (setq gc-cons-threshold 800000))
+
+(add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
+(add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
+
+(require 'gcmh)
+(gcmh-mode 1)
+
+(defun override-org-level-faces ()
+  (dolist (face '(org-level-1
+                  org-level-2
+                  org-level-3
+                  org-level-4))
+    (set-face-attribute face nil :weight 'normal
+                        :height 1.0
+                        :foreground (face-foreground 'default)
+                        :background (face-background 'default))))
+(add-hook 'org-mode-hook 'override-org-level-faces)
+
+(defun my-inhibit-slow-modes ()
+  "Counter-act a globalized mode."
+  (add-hook 'after-change-major-mode-hook
+            (lambda ()
+              (beacon-mode -1)
+              (flycheck-mode -1)
+              (flycheck-color-mode-line-mode -1)
+	            )
+            :append :local))
+
+(add-hook 'org-agenda-mode-hook 'my-inhibit-slow-modes)
+(add-hook 'org-mode-hook 'my-inhibit-slow-modes)
+
+;; (add-hook 'org-agenda-mode-hook
+;;           '(lambda () (linum-mode -1))
+;;           'append)
+
+
+;; (setq org-agenda-custom-commands
+;;       '("W" "Weekly review"
+;;         agenda ""
+;;         ((org-agenda-span 'week)
+;;          (org-agenda-start-on-weekday 1)
+;;          (org-agenda-start-with-log-mode t)
+;;          (org-agenda-skip-function
+;;           '(org-agenda-skip-entry-if 'nottodo 'done))
+;;          )))
 ;;; init.el ends here
