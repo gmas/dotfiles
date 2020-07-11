@@ -1,3 +1,4 @@
+(setq load-prefer-newer t)
 (setq dotfiles-dir "~/.emacs.d/")
 (setq custom-file (concat dotfiles-dir "custom.el"))
 (load custom-file)
@@ -125,7 +126,7 @@
 	                            ("p" "Protocol" entry (file+headline "todo.org" "Inbox")
                                "* %^{Title}\nSource: %u, %c\n #+BEGIN_QUOTE\n%i\n#+END_QUOTE\n\n\n%?")
 	                            ("L" "Protocol Link" entry (file+headline "todo.org" "Inbox")
-                               "* %? [[%:link][%:description]] \nCaptured On: %U")
+                               "* %? [[%:link][%:description]] \nSCHEDULED:%(org-insert-time-stamp (org-read-date nil t \"+0d\"))\nCaptured On: %U %?")
                               ))
 
 (setq org-protocol-default-template-key "L")
@@ -564,3 +565,19 @@
 ;;           '(org-agenda-skip-entry-if 'nottodo 'done))
 ;;          )))
 ;;; init.el ends here
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme)))
+  (require 'evil-org-agenda)
+  (evil-org-agenda-set-keys))
+
+(use-package keychain-environment
+  :ensure t
+  :init
+  (keychain-refresh-environment)
+  )
