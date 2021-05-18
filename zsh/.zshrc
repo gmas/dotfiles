@@ -39,7 +39,11 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen theme cloud
 # antigen theme simple
 #antigen theme blinks
-antigen theme candy
+#antigen theme candy
+ZSH_THEME=""
+fpath+=$HOME/.zsh/pure
+autoload -U promptinit; promptinit
+prompt pure
 
 # Tell antigen that you're done.
 antigen apply
@@ -138,3 +142,7 @@ alias kg='kubectl get'
 alias klo='kubectl logs'
 
 source ~/dotfiles/scripts/functions.bash
+source ~/dotfiles/zsh/fzf.zsh
+
+# npm
+export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
