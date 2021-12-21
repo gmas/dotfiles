@@ -43,8 +43,10 @@
 (require 'package)
 
 (setq package-archives
-  '(("gnu"         . "http://elpa.gnu.org/packages/")
-    ("melpa"       . "http://melpa.milkbox.net/packages/")))
+      '(("gnu"         . "http://elpa.gnu.org/packages/")
+        ("melpa"       . "http://melpa.org/packages/")
+        ("elpa" . "https://elpa.gnu.org/packages/"))
+      )
 
 (package-initialize)
 
