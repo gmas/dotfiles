@@ -244,13 +244,6 @@
 ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 
-
-
-(use-package smart-mode-line
-  :ensure t
-  :config (sml/setup)
-  )
-
 (setq show-paren-delay 0)
 (show-paren-mode 1)
 
@@ -346,7 +339,9 @@
 (defun ora-ediff-hook ()
   (ediff-setup-keymap)
   (define-key ediff-mode-map "j" 'ediff-next-difference)
-  (define-key ediff-mode-map "k" 'ediff-previous-difference))
+  (define-key ediff-mode-map "k" 'ediff-previous-difference)
+  (setq ediff-window-setup-function 'ediff-setup-windows-plain)
+  )
 
 (add-hook 'ediff-mode-hook 'ora-ediff-hook)
 (add-hook 'prog-mode-hook 'electric-pair-mode)
@@ -561,8 +556,9 @@
 (setq ediff-diff-options "-w")
 (setq ediff-split-window-function 'split-window-vertically)
 (setq ediff-window-setup-function 'ediff-setup-windows-plain)
-(add-hook 'ediff-before-setup-hook 'new-frame)
-(add-hook 'ediff-quit-hook 'delete-frame)
+
+;;(add-hook 'ediff-before-setup-hook 'new-frame)
+;;(add-hook 'ediff-quit-hook 'delete-frame)
 
 ;; unset C- and M- digit keys
 (dotimes (n 10)
