@@ -63,6 +63,51 @@
       (package-refresh-contents)
       (package-install 'use-package)))
 
+;; NOTE: The first time you load your configuration on a new machine, you'll
+;; need to run the following command interactively so that mode line icons
+;; display correctly:
+;;
+;; M-x all-the-icons-install-fonts
+(use-package all-the-icons
+  :ensure t
+  )
+
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1)
+  :custom ((doom-modeline-height 15)))
+
+(use-package ivy-prescient
+  :ensure t
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  ;; Uncomment the following line to have sorting remembered across sessions!
+                                        ;(prescient-persist-mode 1)
+  (ivy-prescient-mode 1))
+
+(use-package magit-popup
+  :ensure t ; make sure it is installed
+  :demand t ; make sure it is loaded
+  )
+
+(use-package magit
+  :ensure t
+  :bind (("C-c m" . magit-status)
+         ("C-c M-m" . magit-file-dispatch))
+  )
+
+(use-package forge
+  :ensure t
+  :after magit)
+;; (with-eval-after-load 'magit
+;;   (require 'forge))
+
+
+;; Fix related to https://github.com/emacs-evil/evil-collection/issues/60
+(setq evil-want-keybinding nil)
+
 (use-package evil
   :ensure t
   :init
@@ -72,42 +117,22 @@
   :config
   (evil-mode 1))
 
+(use-package evil-collection
+  :ensure t)
+(evil-collection-init)
+
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
 (cond
  ((string-equal system-type "gnu/linux")
   (progn
     (add-to-list 'default-frame-alist
-      '(font . "fira mono medium-8"))
+                 '(font . "fira code retina-9"))
     )))
 
 (use-package transient
   :ensure t
-)
-
-(use-package magit-popup
-  :ensure t ; make sure it is installed
-  :demand t ; make sure it is loaded
   )
-
-(use-package magit
-  :ensure t
-  :bind ("C-c m" . magit-status)
-  )
-(use-package evil-magit
-  :ensure t)
-(evil-magit-init)
-
-(use-package forge
-  :ensure t
-  :after magit)
-
-(with-eval-after-load 'magit
-  (require 'forge))
-
-(use-package evil-magit
-  :ensure t)
-(evil-magit-init)
 
 ;;; Org-mode
 ;;; log time when setting to done
@@ -158,7 +183,7 @@
   ;;   ;; '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50"))))
   ;; )
   :config
-                                        ; ELScreen tab combos
+  ;; ELScreen tab combos
   (eval-after-load "evil-maps"
     (dolist (map '(evil-motion-state-map
                    evil-insert-state-map
@@ -624,3 +649,11 @@
   :init
   (keychain-refresh-environment)
   )
+
+(use-package markdown-mode
+  :ensure t
+  :commands (markdown-mode gfm-mode)
+  :mode (("README\\.md\\'" . gfm-mode)
+         ("\\.md\\'" . markdown-mode)
+         ("\\.markdown\\'" . markdown-mode))
+  :init (setq markdown-command "multimarkdown"))
