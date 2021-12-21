@@ -3,6 +3,14 @@
 (setq custom-file (concat dotfiles-dir "custom.el"))
 (load custom-file)
 
+;; (setq mu4e-thread-folding-file (concat dotfiles-dir "mu4e-thread-folding.el"))
+;; (load mu4e-thread-folding-file)
+;; (add-to-list 'mu4e-header-info-custom
+;;              '(:empty . (:name "Empty"
+;;                                :shortname ""
+;;                                :function (lambda (msg) "  "))))
+;; (setq mu4e-headers-fields '((:empty . 2) ... ))
+
 (setq inhibit-splash-screen t
       inhibit-startup-message t
       inhibit-startup-echo-area-message t)
@@ -441,6 +449,39 @@
          " AND flag:unread")
         )
   )
+;;(add-to-list 'mu4e-view-actions
+;;             '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+;;
+;;(add-to-list 'mu4e-view-actions
+;;             '("XWidget View" . mu4e-action-view-with-xwidget) t)
+
+
+(require 'cl)
+(defun bk-kill-buffers (regexp)
+  "Kill buffers matching REGEXP without asking for confirmation."
+  (interactive "sKill buffers matching this regular expression: ")
+  (cl-flet ((kill-buffer-ask (buffer) (kill-buffer buffer)))
+    (kill-matching-buffers regexp)))
+
+;;xwidgets swiped for somewhere
+(defun my-mu4e-action-view-with-xwidget (msg)
+  "View the body of the message inside xwidget-webkit."
+  (bk-kill-buffers "^\*xwidget")
+  (unless (fboundp 'xwidget-webkit-browse-url)
+    (mu4e-error "No xwidget support available"))
+  (let* ((html (mu4e-message-field msg :body-html))
+         (txt (mu4e-message-field msg :body-txt))
+         (tmpfile (format "%s%x.html" temporary-file-directory (random t))))
+    (unless (or html txt)
+      (mu4e-error "No body part for this message"))
+    (with-temp-buffer
+      ;; simplistic -- but note that it's only an example...
+      (insert (or html (concat "<pre>" txt "</pre>")))
+      (write-file tmpfile)
+      (xwidget-webkit-browse-url (concat "file://" tmpfile) t))))
+
+(add-to-list 'mu4e-view-actions
+             '("xViewXWidget" . my-mu4e-action-view-with-xwidget) t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 

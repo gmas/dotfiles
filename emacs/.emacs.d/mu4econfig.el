@@ -22,12 +22,10 @@
       mu4e-view-image-max-width 800
       mu4e-view-prefer-html t
       mu4e-update-interval 420
+      mu4e-headers-auto-update t
       mu4e-split-view 'vertical
       mu4e-headers-visible-columns 60
       mu4e-confirm-quit nil
-      ;; tell mu4e to use w3m for html rendering
-      ;;mu4e-html2text-command "/usr/local/bin/w3m -dump -T text/html"
-      ;;w3m-command "/usr/local/bin/w3m"
       ;; This allows me to use 'helm' to select mailboxes
       mu4e-completing-read-function 'completing-read
       ;;rename files when moving. NEEDED FOR MBSYNC
@@ -43,11 +41,16 @@
 
 ;;;If you’re using a dark theme, and the messages are hard to read, it can help to change the luminosity, e.g.:
 (setq shr-color-visible-luminance-min 75)
-(setq shr-use-fonts nil)
+(setq shr-use-fonts t)
 
 ;; ;;; taken from mu4e page to define bookmarks
 (add-to-list 'mu4e-bookmarks
              '("size:5M..500M"       "Big messages"     ?b))
+
+(add-to-list 'mu4e-bookmarks
+             '( :name  "Bifrost-infra"
+                :query "list:bifrost-infra.protocol.github.com"
+                :key   ?B))
 
 
 ;;; mu4e requires to specify drafts, sent, and trash dirs
@@ -80,8 +83,9 @@
 
 ;; For HTML mails
 (setq
+ ;; tell mu4e to use w3m for html rendering
  w3m-command "/usr/bin/w3m"
- mu4e-html2text-command "w3m -dump -T text/html"
+ mu4e-html2text-command "w3m -dump -T text/html -cols 72 -o display_link_number=true -o auto_image=true -o display_image=true -o ignore_null_img_alt=true"
  ;; enable inline images
  mu4e-view-show-images t
  mu4e-image-max-width 800
@@ -110,5 +114,10 @@ code by Titus von der Malsburg."
                     (shr-render-region (point-min) (point-max)))) msg)))
 
 (define-key mu4e-view-mode-map "i" 'killdash9/mu4e-view-toggle-html-images)
+
+(add-to-list 'mu4e-view-actions
+             '("ViewInBrowser" . mu4e-action-view-in-browser) t)
+
+(setq mu4e-view-use-gnus t)
 
 ;;; mue4-config.el ends here
