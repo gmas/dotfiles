@@ -34,6 +34,7 @@ antigen bundle git
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle unixorn/fzf-zsh-plugin@main
 
 # Load the theme.
 #antigen theme lambda
@@ -143,7 +144,6 @@ alias kg='kubectl get'
 alias klo='kubectl logs'
 
 source ~/dotfiles/scripts/functions.bash
-source ~/dotfiles/zsh/fzf.zsh
 
 # npm
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
