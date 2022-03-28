@@ -7,3 +7,6 @@
 [submodule "emacs/.emacs.d/rsense-mode"]
 	path = emacs/.emacs.d/rsense-mode
 	url = https://github.com/niftyn8/rsense-mode
+[submodule "zsh/pure"]
+	path = zsh/pure
+	url = https://github.com/sindresorhus/pure.git
