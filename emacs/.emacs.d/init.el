@@ -176,34 +176,6 @@
 ;;         "* TODO %(org-wash-link)\nAdded: %U\n%(org-link-hooks)\n%?")
 ;;       org-capture-templates)
 
-;;ElScreen
-(use-package elscreen
-  :ensure t
-  ;; :init
-  ;; ( ;; custom-set-faces was added by Custom.
-  ;;   ;; If you edit it by hand, you could mess it up, so be careful.
-  ;;   ;; Your init file should contain only one such instance.
-  ;;   ;; If there is more than one, they won't work right.
-  ;;   '(setq elscreen-tab-background-face ((t (:background "gray90"))))
-  ;;   ;; '(elscreen-tab-control-face ((t (:background "gray90" :foreground "gray60"))))
-  ;;   ;; '(elscreen-tab-current-screen-face ((t (:background "blue" :foreground "white"))))
-  ;;   ;; '(elscreen-tab-other-screen-face ((t (:background "gray10" :foreground "gray50"))))
-  ;; )
-  :config
-  ;; ELScreen tab combos
-  (eval-after-load "evil-maps"
-    (dolist (map '(evil-motion-state-map
-                   evil-insert-state-map
-                   evil-normal-state-map
-                   evil-emacs-state-map))
-                                        ;    (define-key (eval map) "\C-t" nil)))
-      (define-key (eval map) (kbd "\C-t") 'elscreen-create)
-      (define-key (eval map) (kbd "\C-n") 'elscreen-next)
-      (define-key (eval map) (kbd "\C-p") 'elscreen-previous)))
-  (elscreen-start)
-  )
-
-
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
 ;(require 'edit-server)
@@ -667,6 +639,19 @@
 (global-set-key [S-mouse-4] 'text-scale-increase)
 (global-set-key [S-mouse-5] 'text-scale-decrease)
 ;;; (ignore-errors (run-with-timer 0 180 'forge-pull))
+
+(eval-after-load "evil-maps"
+  (dolist (map '(evil-motion-state-map
+                 evil-insert-state-map
+                 evil-normal-state-map
+                 evil-emacs-state-map))
+                                        ;    (define-key (eval map) "\C-t" nil)))
+    (define-key (eval map) (kbd "\C-t") 'tab-new)
+    (define-key (eval map) (kbd "\C-n") 'tab-next)
+    (define-key (eval map) (kbd "\C-p") 'tab-previous)
+    )
+  )
+
 (require 'mu4e-thread-folding)
 (add-to-list 'mu4e-header-info-custom
              '(:empty . (:name "Empty"
