@@ -10,6 +10,13 @@
 ;;                                :shortname ""
 ;;                                :function (lambda (msg) "  "))))
 ;; (setq mu4e-headers-fields '((:empty . 2) ... ))
+;; mu4e-thread-folding.el
+
+;; (let  ((mu4e-config "~/.emacs.d/mu4e-thread-folding.el"))
+;;   (when (file-exists-p mu4e-thread-folding)
+;;    (load-file mu4e-thread-folding))
+;;  )
+
 
 (setq inhibit-splash-screen t
       inhibit-startup-message t
@@ -660,3 +667,14 @@
 (global-set-key [S-mouse-4] 'text-scale-increase)
 (global-set-key [S-mouse-5] 'text-scale-decrease)
 ;;; (ignore-errors (run-with-timer 0 180 'forge-pull))
+(require 'mu4e-thread-folding)
+(add-to-list 'mu4e-header-info-custom
+             '(:empty . (:name "Empty"
+                               :shortname ""
+                               :function (lambda (msg) "  "))))
+(setq mu4e-headers-fields '((:empty         .    2)
+                            (:human-date    .   12)
+                            (:flags         .    6)
+                            (:mailing-list  .   10)
+                            (:from          .   22)
+                            (:subject       .   nil)))
