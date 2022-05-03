@@ -20,7 +20,8 @@ export work=~/work
 export nas=~/nas
 export downloads=~/Downloads
 
-source /usr/share/zsh/share/antigen.zsh
+#source /usr/share/zsh/share/antigen.zsh
+source ~/dotfiles/zsh/antigen/antigen.zsh
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
@@ -33,6 +34,7 @@ antigen bundle git
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle unixorn/fzf-zsh-plugin@main
 
 # Load the theme.
 #antigen theme lambda
@@ -41,7 +43,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 #antigen theme blinks
 #antigen theme candy
 ZSH_THEME=""
-fpath+=$HOME/.zsh/pure
+fpath+=$HOME/dotfiles/zsh/pure
 autoload -U promptinit; promptinit
 prompt pure
 
@@ -142,7 +144,6 @@ alias kg='kubectl get'
 alias klo='kubectl logs'
 
 source ~/dotfiles/scripts/functions.bash
-source ~/dotfiles/zsh/fzf.zsh
 
 # npm
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
