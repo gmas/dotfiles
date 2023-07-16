@@ -190,13 +190,15 @@
 (use-package helm
   :ensure t
   :init
-        ;; (global-unset-key (kbd "C-x c"))
+  ;; (global-unset-key (kbd "C-x c"))
   :bind (
          ;; ("M-x"     . helm-M-x)
          ("C-c h"   . helm-command-prefix))
-  :config (require 'helm-config)
-          ;; (helm-mode 0)
-)
+  :config
+  ;; (require 'helm-config)
+  (helm-mode 0)
+  )
+
 (use-package counsel
   :ensure t
   :bind ("M-x" . counsel-M-x)
@@ -668,3 +670,6 @@
 ;;                             (:subject       .   nil)))
 ;;
 
+(use-package highlight-indent-guides
+  :ensure t
+  )
