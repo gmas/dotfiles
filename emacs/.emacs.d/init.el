@@ -84,16 +84,6 @@
   :init (doom-modeline-mode 1)
   :custom ((doom-modeline-height 15)))
 
-(use-package ivy-prescient
-  :ensure t
-  :after counsel
-  :custom
-  (ivy-prescient-enable-filtering nil)
-  :config
-  ;; Uncomment the following line to have sorting remembered across sessions!
-                                        ;(prescient-persist-mode 1)
-  (ivy-prescient-mode 1))
-
 (use-package magit-popup
   :ensure t ; make sure it is installed
   :demand t ; make sure it is loaded
@@ -207,6 +197,10 @@
   :config (require 'helm-config)
           ;; (helm-mode 0)
 )
+(use-package counsel
+  :ensure t
+  :bind ("M-x" . counsel-M-x)
+  )
 
 (use-package swiper
   :ensure t
@@ -222,6 +216,16 @@
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
 (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+(use-package ivy-prescient
+  :ensure t
+  :after counsel
+  :custom
+  (ivy-prescient-enable-filtering nil)
+  :config
+  ;; Uncomment the following line to have sorting remembered across sessions!
+                                        ;(prescient-persist-mode 1)
+  (ivy-prescient-mode 1))
+
 
 (setq show-paren-delay 0)
 (show-paren-mode 1)
@@ -279,15 +283,10 @@
 (require 'simplenote2)
 (simplenote2-setup)
 
-(use-package counsel
-  :ensure t
-  :bind ("M-x" . counsel-M-x)
-)
-
 (use-package which-key
   :ensure t
   :config (which-key-mode)
-)
+  )
 
 (use-package helm-ag
   :ensure t
@@ -435,19 +434,19 @@
   )
 ;;(org-superstar-configure-like-org-bullets)
 
-(let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
-  (when (file-exists-p mu4e-config)
-    (load-file mu4e-config))
-  )
-(use-package mu4e-alert
-  :ensure t
-  :init
-  (setq mu4e-alert-interesting-mail-query
-        (concat
-         "maildir:\"/gmail/INBOX\""
-         " AND flag:unread")
-        )
-  )
+;; (let  ((mu4e-config "~/.emacs.d/mu4econfig.el"))
+;;   (when (file-exists-p mu4e-config)
+;;     (load-file mu4e-config))
+;;   )
+;; (use-package mu4e-alert
+;;   :ensure t
+;;   :init
+;;   (setq mu4e-alert-interesting-mail-query
+;;         (concat
+;;          "maildir:\"/gmail/INBOX\""
+;;          " AND flag:unread")
+;;         )
+;;   )
 ;;(add-to-list 'mu4e-view-actions
 ;;             '("ViewInBrowser" . mu4e-action-view-in-browser) t)
 ;;
@@ -479,8 +478,8 @@
       (write-file tmpfile)
       (xwidget-webkit-browse-url (concat "file://" tmpfile) t))))
 
-(add-to-list 'mu4e-view-actions
-             '("xViewXWidget" . my-mu4e-action-view-with-xwidget) t)
+;; (add-to-list 'mu4e-view-actions
+;;              '("xViewXWidget" . my-mu4e-action-view-with-xwidget) t)
 
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
@@ -656,15 +655,16 @@
     (define-key (eval map) (kbd "\C-p") 'tab-previous)
     )
   )
+;; (require 'mu4e-thread-folding)
+;; (add-to-list 'mu4e-header-info-custom
+;;              '(:empty . (:name "Empty"
+;;                                :shortname ""
+;;                                :function (lambda (msg) "  "))))
+;; (setq mu4e-headers-fields '((:empty         .    2)
+;;                             (:human-date    .   12)
+;;                             (:flags         .    6)
+;;                             (:mailing-list  .   10)
+;;                             (:from          .   22)
+;;                             (:subject       .   nil)))
+;;
 
-(require 'mu4e-thread-folding)
-(add-to-list 'mu4e-header-info-custom
-             '(:empty . (:name "Empty"
-                               :shortname ""
-                               :function (lambda (msg) "  "))))
-(setq mu4e-headers-fields '((:empty         .    2)
-                            (:human-date    .   12)
-                            (:flags         .    6)
-                            (:mailing-list  .   10)
-                            (:from          .   22)
-                            (:subject       .   nil)))
