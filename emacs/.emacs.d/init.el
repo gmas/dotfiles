@@ -566,8 +566,13 @@
 (add-hook 'minibuffer-setup-hook #'my-minibuffer-setup-hook)
 (add-hook 'minibuffer-exit-hook #'my-minibuffer-exit-hook)
 
-(require 'gcmh)
-(gcmh-mode 1)
+;; GC twek
+(use-package gcmh
+  :ensure t
+  :init (gcmh-mode 1))
+;; smooth scrolling
+(pixel-scroll-precision-mode 1)
+
 
 (defun override-org-level-faces ()
   (dolist (face '(org-level-1
