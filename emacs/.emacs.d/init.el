@@ -124,7 +124,8 @@
  ((string-equal system-type "gnu/linux")
   (progn
     (add-to-list 'default-frame-alist
-                 '(font . "fira code retina-9"))
+                 ;; '(font . "fira code retina-9"))
+                 '(font . "Source Code Pro-9:style=Regular"))
     )))
 
 (use-package transient
@@ -672,4 +673,7 @@
 
 (use-package highlight-indent-guides
   :ensure t
+  :config
+  (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
+  (add-hook 'yaml-mode-hook 'highlight-indent-guides-mode)
   )
