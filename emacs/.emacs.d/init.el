@@ -200,11 +200,6 @@
   (helm-mode 0)
   )
 
-(use-package counsel
-  :ensure t
-  :bind ("M-x" . counsel-M-x)
-  )
-
 (use-package swiper
   :ensure t
   :bind ( ("C-s" . swiper)
@@ -272,19 +267,10 @@
 
 (setq column-number-mode t)
 (setq linum-format "%d ")
-(global-linum-mode -1)
+;; (global-linum-mode -1)
 
 (use-package request-deferred
   :ensure t)
-
-(use-package simplenote2
-  :ensure t
-  :init
-  (setq simplenote2-email "gmasgras@gmail.com")
-  (setq simplenote2-password nil)
-)
-(require 'simplenote2)
-(simplenote2-setup)
 
 (use-package which-key
   :ensure t
@@ -658,6 +644,7 @@
     (define-key (eval map) (kbd "\C-p") 'tab-previous)
     )
   )
+
 ;; (require 'mu4e-thread-folding)
 ;; (add-to-list 'mu4e-header-info-custom
 ;;              '(:empty . (:name "Empty"
