@@ -200,15 +200,45 @@
   (helm-mode 0)
   )
 
-(use-package swiper
-  :ensure t
-  :bind ( ("C-s" . swiper)
-          ("C-x C-f" . counsel-find-file)
-          ("C-x C-p" . counsel-git)
-          ("C-c g" . counsel-ag)
-          )
-  )
+;; (use-package swiper
+;;   :ensure t
+;;   :bind ( ("C-s" . swiper)
+;;           ("C-x C-f" . counsel-find-file)
+;;           ("C-x C-p" . counsel-git)
+;;           ("C-c g" . counsel-ag)
+;;           )
+;;   )
 (ivy-mode 0)
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(use-package consult
+  :straight t
+  :demand t
+  :bind (("C-s" . consult-line)
+         ("C-M-l" . consult-imenu)
+         ("C-M-j" . persp-switch-to-buffer*)
+         ("C-c g" . consult-ripgrep))
+  ;; :map minibuffer-local-map
+  ;; ("C-r" . consult-history))
+  )
+;; :custom
+;; (consult-project-root-function #'dw/get-project-root)
+;; (completion-in-region-function #'consult-completion-in-region)
+;; :config
+;; (consult-preview-mode))
+
 ;; (setq ivy-use-selectable-prompt t)
 ;; (setq ivy-height 15)
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
@@ -240,7 +270,8 @@
 (use-package orderless
   :ensure t
   :custom
-  (completion-styles '(orderless basic))
+  (completion-styles '(orderless basic)
+                     (read-buffer-completion-ignore-case t))
   (completion-category-overrides '(
                                    (file (styles basic partial-completion))
                                    (file (styles basic-remote orderless))
