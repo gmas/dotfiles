@@ -208,21 +208,56 @@
           ("C-c g" . counsel-ag)
           )
   )
-(ivy-mode 1)
-(setq ivy-use-selectable-prompt t)
-(setq ivy-height 15)
+(ivy-mode 0)
+;; (setq ivy-use-selectable-prompt t)
+;; (setq ivy-height 15)
 ;;(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
 ;; (setq ivy-re-builders-alist '((t . ivy--regex-fuzzy)))
-(setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
-(use-package ivy-prescient
+;; (setq ivy-re-builders-alist '((t . ivy--regex-ignore-order)))
+;; (use-package ivy-prescient
+;;   :ensure t
+;;   :after counsel
+;;   :custom
+;;   (ivy-prescient-enable-filtering nil)
+;;   :config
+;;   ;; Uncomment the following line to have sorting remembered across sessions!
+;;                                         ;(prescient-persist-mode 1)
+;;   (ivy-prescient-mode 1))
+
+(use-package vertico
   :ensure t
-  :after counsel
+  :bind (:map vertico-map
+              ("C-j" . vertico-next)
+              ("C-k" . vertico-previous)
+              ("C-f" . vertico-exit)
+              :map minibuffer-local-map
+              ("M-h" . backward-kill-word))
   :custom
-  (ivy-prescient-enable-filtering nil)
-  :config
-  ;; Uncomment the following line to have sorting remembered across sessions!
-                                        ;(prescient-persist-mode 1)
-  (ivy-prescient-mode 1))
+  (vertico-cycle t)
+  :init
+  (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '(
+                                   (file (styles basic partial-completion))
+                                   (file (styles basic-remote orderless))
+                                   ))
+  )
+
+(use-package savehist
+  :init
+  (savehist-mode))
+
+(use-package marginalia
+  :after vertico
+  :ensure t
+  :custom
+  (marginalia-annotators '(marginalia-annotators-heavy marginalia-annotators-light nil))
+  :init
+  (marginalia-mode))
 
 
 (setq show-paren-delay 0)
