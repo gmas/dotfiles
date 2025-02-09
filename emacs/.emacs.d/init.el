@@ -137,10 +137,10 @@
 (global-set-key (kbd "C-c c")
                 'org-capture)
 (setq org-log-done 'time)
-(setq org-directory "~/Dropbox/org")
+(setq org-directory "~/Documents/org")
 (setq org-default-notes-file (concat org-directory "/notes.org"))
-(setq org-mobile-directory "~/Dropbox/org")
-(setq org-agenda-files '("~/Dropbox/org/"))
+(setq org-mobile-directory "~/Documents/org")
+(setq org-agenda-files '("~/Documents/org/"))
 (setq org-todo-keywords
       '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
 
