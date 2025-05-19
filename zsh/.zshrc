@@ -34,21 +34,21 @@ antigen bundle git
 
 # Syntax highlighting bundle.
 antigen bundle zsh-users/zsh-syntax-highlighting
+
+# FZF is garbage
+export FZF_CTRL_T_OPTS='--height=60% --layout=reverse --border --preview "bat --style=numbers --color=always {}" --preview-window=right:80%:wrap:nohidden --bind "ctrl-y:preview-up,ctrl-e:preview-down,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down,ctrl-b:preview-page-up,ctrl-f:preview-page-down"'
 antigen bundle unixorn/fzf-zsh-plugin@main
 
-# Load the theme.
-#antigen theme lambda
-#antigen theme cloud
-# antigen theme simple
-#antigen theme blinks
-#antigen theme candy
 ZSH_THEME=""
 fpath+=$HOME/dotfiles/zsh/pure
 autoload -U promptinit; promptinit
+RPROMPT='%m% '
 prompt pure
+#PROMPT='%m{white}%* '$PROMPT
 
 # Tell antigen that you're done.
 antigen apply
+export FZF_CTRL_T_COMMAND='=rg --files --hidden --glob "!{.git,node_modules}/**" --no-messages'
 
 if [ -e /usr/share/chruby ]
 then
@@ -142,8 +142,17 @@ alias k=kubectl
 alias kd='kubectl describe'
 alias kg='kubectl get'
 alias klo='kubectl logs'
+alias kc=kubecolor
+alias ktx=kubectx
 
 source ~/dotfiles/scripts/functions.bash
 
 # npm
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
+export PATH=~/.npm-global/bin:$PATH
+
+
+export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
+
+# distrobox 
+export PATH="/home/gmas/.local/bin:$PATH"
