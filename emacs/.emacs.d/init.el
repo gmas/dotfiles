@@ -173,6 +173,76 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
+(add-to-list 'exec-path "~/play/golang/bin")
+
+;; GO MODE
+;; Lock Go grammar to the revision that matches your Emacs
+(add-to-list 'treesit-language-source-alist
+             '(go "https://github.com/tree-sitter/tree-sitter-go" "v0.19.1"))
+;; Auto-install the pinned grammar if it’s missing
+(unless (treesit-language-available-p 'go)
+  (treesit-install-language-grammar 'go))
+
+
+;; --- Optional but strongly recommended ---------------------------
+;; 1. Enable staticcheck, strip vendor dir, and use semantic tokens.
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(go-ts-mode . ("gopls" "-remote=auto"))))
+(setq-default
+ eglot-workspace-configuration
+ '((gopls .
+          ((staticcheck . t)
+           (directoryFilters . ["-vendor"])
+           (ui.semanticTokens . t)
+           (ui.completion.usePlaceholders . t)))))
+
+
+;; Always use Tree-sitter major mode for Go
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
+(add-to-list 'major-mode-remap-alist '(go-mode . go-ts-mode))
+(setq auto-mode-alist
+      (rassq-delete-all 'go-mod-ts-mode auto-mode-alist))
+
+;; fix error with importing from internal
+(with-eval-after-load 'flycheck
+  (setq flycheck-go-vet-emacs
+        '("go" "vet" "./...")))  ;; package-level vet
+
+
+;; --- Tooltip docs next to cursor ---------------------------------
+(use-package eldoc-box
+  :ensure t
+  :after (eldoc eglot)                    ;; load only after both
+  ;; Enable in every buffer that Eglot manages *and* the frame can
+  ;; display child-frames (GUI, not tty).
+  :hook
+  (eglot-managed-mode .
+                      (lambda ()
+                        (when (and (posframe-workable-p)     ;; child-frames available?
+                                   (display-graphic-p))      ;; GUI? not tty/daemon
+                          (eldoc-box-hover-at-point-mode 1)))
+                      )
+  :custom
+  (eldoc-box-clear-with-C-g t)            ;; quit tooltip on C-g
+  (eldoc-box-only-multi-line nil)         ;; show even 1-liners
+  (eldoc-box-max-pixel-width 800)
+  (eldoc-box-lighter " ⓘ"))               ;; tiny mode-line hint
+
+;; Keep the inline parameter/type hints you already have
+(add-hook 'eglot-managed-mode-hook #'eglot-inlay-hints-mode)
+
+
+;; 2. Make sure Emacs sees the same PATH as your shell (macOS, GUI builds).
+;;    (use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
+;;
+
+;; (require 'edit-server)
+;; (edit-server-start)
+;; (when (and (daemonp) (locate-library "edit-server"))
+;;   (require 'edit-server)
+;;   ;(setq edit-server-new-frame nil)
+;;   (edit-server-start))
 
 
 ;; Smart meta-x
