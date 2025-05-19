@@ -111,3 +111,5 @@
     insteadOf = https://github.com/
 [github]
 	user = gmasgras
+[core]
+	pager = bat

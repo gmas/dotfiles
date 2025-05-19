@@ -125,7 +125,11 @@
   (progn
     (add-to-list 'default-frame-alist
                  ;; '(font . "fira code retina-9"))
-                 '(font . "Source Code Pro-9:style=Regular"))
+                 ;; '(font . "Source Code Pro-9:style=Regular"))
+                 ;; '(font . "DejaVu Sans Mono-9:style=Regular")
+                 ;; '(font . "Bitstream Vera Sans Mono-9:style=Regular"))
+                 ;; '(font . "Cascadia Mono-10:style=SemiBold"))
+                 '(font . "Cascadia Code PL-10:style=SemiBold"))
     )))
 
 (use-package transient
@@ -169,12 +173,6 @@
 
 
 (add-to-list 'load-path "~/.emacs.d/lisp")
-;(require 'edit-server)
-;(edit-server-start)
-(when (and (daemonp) (locate-library "edit-server"))
-  (require 'edit-server)
-                                        ;(setq edit-server-new-frame nil)
-  (edit-server-start))
 
 
 ;; Smart meta-x
@@ -200,16 +198,6 @@
   (helm-mode 0)
   )
 
-;; (use-package swiper
-;;   :ensure t
-;;   :bind ( ("C-s" . swiper)
-;;           ("C-x C-f" . counsel-find-file)
-;;           ("C-x C-p" . counsel-git)
-;;           ("C-c g" . counsel-ag)
-;;           )
-;;   )
-(ivy-mode 0)
-
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
@@ -229,6 +217,7 @@
   :bind (("C-s" . consult-line)
          ("C-M-l" . consult-imenu)
          ("C-M-j" . persp-switch-to-buffer*)
+         ("C-x b" . consult-buffer)
          ("C-c g" . consult-ripgrep))
   ;; :map minibuffer-local-map
   ;; ("C-r" . consult-history))
@@ -298,10 +287,12 @@
   :ensure t
   :init
   (setq key-chord-two-keys-delay 0.5)
+  (setq key-chord-one-key-delay 0.5)
+  ;;
   :config
   (key-chord-mode 1)
   (key-chord-define evil-insert-state-map "jj" 'evil-normal-state)
-)
+  )
 
 ;(require 'rubocop)
 
@@ -377,7 +368,9 @@
   )
 
 (add-hook 'ediff-mode-hook 'ora-ediff-hook)
-(add-hook 'prog-mode-hook 'electric-pair-mode)
+(add-hook 'prog-mode-hook 'electric-pair-local-mode)
+;; might help with overzealous insertions of quotes before existing strings
+(setq electric-pair-inhibit-predicate 'electric-pair-conservative-inhibit)
 
 (use-package beacon
   :ensure t
@@ -390,7 +383,44 @@
 (use-package apropospriate-theme
   :ensure t)
 
-(load-theme 'apropospriate-dark)
+(use-package doom-themes
+  :ensure t
+  :config
+  ;; Global settings (defaults)
+  (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
+        doom-themes-enable-italic t) ; if nil, italics is universally disabled
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (setq doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
+
+(use-package ef-themes
+  :ensure t)
+(require 'ef-themes)
+(load-theme 'ef-dream)
+
+(use-package doric-themes
+  :ensure nil
+  :demand t
+  :load-path "~/src/doric-themes/"
+  )
+
+;; (use-package reykjavik-theme
+;;   :ensure t)
+
+;;(load-theme 'apropospriate-dark)
+;; (load-theme 'doom-one t)
+;; (load-theme 'doom-monokai-ristretto)
+;;(load-theme 'doom-spacegrey)
+;;(load-theme 'doom-zenburn)
+;; (load-theme 'reykjavik)
+;; (load-theme 'eziam-dark)
 
 (use-package go-mode
   :ensure t)
@@ -430,45 +460,21 @@
 ;;   )
 ;; )
 
-(use-package company
+(use-package corfu
   :ensure t
+  :custom
+  ;; Use Corfu completion UI everywhere
+  (global-corfu-mode t)
+  ;; Optional: Enable auto completion
+  (corfu-auto t)
+  ;; Optional: Number of candidates to show
+  ;; (corfu-count 10)
+  ;; Optional: Enable cycling
+  ;; (corfu-cycle t)
+  ;; Optional: Configure auto completion delay
+  ;; (corfu-auto-delay 0.2)
   :init
-         (global-company-mode)
-         ;;(global-set-key (kbd "TAB") #'company-indent-or-complete-common)
-         (global-set-key (kbd "TAB") #'company-complete-common)
-  (progn
-    ;; Use Company for completion
-    (bind-key [remap completion-at-point] #'company-complete company-mode-map)
-
-    (setq company-tooltip-align-annotations t
-          ;; Easy navigation to candidates with M-<n>
-          company-show-numbers t)
-    ;; (setq company-dabbrev-downcase nil)
-  (defun company-mode/backend-with-yas (backend)
-      (if (and (listp backend) (member 'company-yasnippet backend))
-          backend
-        (append (if (consp backend) backend (list backend))
-                '(:with company-yasnippet))))
-  (setq company-backends (mapcar #'company-mode/backend-with-yas company-backends))
-  )
-)
-
-
-(use-package company-quickhelp          ; Documentation popups for Company
-  :ensure t
-  :defer t
-:init (add-hook 'global-company-mode-hook #'company-quickhelp-mode))
-
-(use-package tide
-  :ensure t
-  :after (typescript-mode company flycheck)
-  :hook ((typescript-mode . tide-setup)
-         (typescript-mode . flycheck-mode)
-         (typescript-mode . tide-hl-identifier-mode)
-         (typescript-mode . company-mode)
-         (typescript-mode . eldoc-mode)
-         (before-save . tide-format-before-save))
-  )
+  (global-corfu-mode))
 
 (use-package aggressive-indent
   :ensure t
@@ -536,6 +542,7 @@
 ;; (add-to-list 'mu4e-view-actions
 ;;              '("xViewXWidget" . my-mu4e-action-view-with-xwidget) t)
 
+(setq-default require-final-newline t) ;need to keep CRLF at EOF or it breaks configs
 (add-hook 'before-save-hook 'delete-trailing-whitespace)
 
 ;; Disable mouse wheel (and two finger swipe) scrolling
@@ -624,6 +631,7 @@
 (use-package gcmh
   :ensure t
   :init (gcmh-mode 1))
+(setq garbage-collection-messages t)
 ;; smooth scrolling
 (pixel-scroll-precision-mode 1)
 
@@ -730,3 +738,14 @@
   (add-hook 'prog-mode-hook 'highlight-indent-guides-mode)
   (add-hook 'yaml-mode-hook 'highlight-indent-guides-mode)
   )
+
+(use-package snow
+  :ensure t)
+;;setq zone-timer (run-with-idle-timer 600 t 'snow))
+
+(use-package restclient
+  :ensure t)
+
+(use-package edit-server
+  :ensure t)
+(edit-server-start)
