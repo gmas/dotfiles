@@ -154,5 +154,10 @@ export PATH=~/.npm-global/bin:$PATH
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
-# distrobox 
+# distrobox
 export PATH="/home/gmas/.local/bin:$PATH"
+
+if [[ $(uname) == "Darwin" ]]; then
+  export PATH="/usr/local/opt/openssl/bin:$PATH"
+  export PATH="$(brew --prefix openssh)/bin:$PATH"
+fi
