@@ -130,7 +130,10 @@
                  ;; '(font . "Bitstream Vera Sans Mono-9:style=Regular"))
                  ;; '(font . "Cascadia Mono-10:style=SemiBold"))
                  '(font . "Cascadia Code PL-10:style=SemiBold"))
-    )))
+    ))
+ ;; macOS (Darwin) configuration
+ ((string-equal system-type "darwin")
+  (add-to-list 'default-frame-alist '(font . "Cascadia Code-12"))))
 
 (use-package transient
   :ensure t
@@ -271,6 +274,7 @@
 (defvar bootstrap-version)
 (let ((bootstrap-file
        (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+
       (bootstrap-version 6))
   (unless (file-exists-p bootstrap-file)
     (with-current-buffer
@@ -404,9 +408,9 @@
   :config (which-key-mode)
   )
 
-(use-package helm-ag
-  :ensure t
-)
+;; (use-package helm-ag
+;;   :ensure t
+;; )
 
 (use-package terraform-mode
   :ensure t
