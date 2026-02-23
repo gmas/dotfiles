@@ -213,6 +213,8 @@
         '("go" "vet" "./...")))  ;; package-level vet
 
 
+(use-package posframe
+  :ensure t)
 ;; --- Tooltip docs next to cursor ---------------------------------
 (use-package eldoc-box
   :ensure t
@@ -237,8 +239,9 @@
 
 
 ;; 2. Make sure Emacs sees the same PATH as your shell (macOS, GUI builds).
-;;    (use-package exec-path-from-shell :config (exec-path-from-shell-initialize))
-;;
+(use-package exec-path-from-shell
+  :ensure t
+  :config (exec-path-from-shell-initialize))
 
 ;; (require 'edit-server)
 ;; (edit-server-start)
