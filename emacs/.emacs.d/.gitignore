@@ -1,0 +1,14 @@
+auto-save-list/
+bookmarks
+custom.el
+edit-server.el
+eln-cache/
+eshell/
+forge-database*.sqlite
+history
+projects
+session.*
+straight/
+transient/
+tramp
+tree-sitter/

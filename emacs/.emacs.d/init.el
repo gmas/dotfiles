@@ -120,20 +120,29 @@
 
 (setq ac-disable-faces (quote (font-lock-comment-face font-lock-doc-face)))
 
-(cond
- ((string-equal system-type "gnu/linux")
-  (progn
-    (add-to-list 'default-frame-alist
-                 ;; '(font . "fira code retina-9"))
-                 ;; '(font . "Source Code Pro-9:style=Regular"))
-                 ;; '(font . "DejaVu Sans Mono-9:style=Regular")
-                 ;; '(font . "Bitstream Vera Sans Mono-9:style=Regular"))
-                 ;; '(font . "Cascadia Mono-10:style=SemiBold"))
-                 '(font . "Cascadia Code PL-10:style=SemiBold"))
-    ))
- ;; macOS (Darwin) configuration
- ((string-equal system-type "darwin")
-  (add-to-list 'default-frame-alist '(font . "Cascadia Code-12"))))
+(defvar gmas/linux-font-spec
+  (font-spec :family "IBM Plex Mono" :weight 'semi-bold))
+
+(defun gmas/apply-startup-font (&optional frame)
+  "Apply the preferred GUI font to FRAME or the current frame."
+  (let ((target-frame (or frame (selected-frame))))
+    (when (display-graphic-p target-frame)
+      (when-let ((font (find-font gmas/linux-font-spec)))
+        (set-face-attribute 'default target-frame
+                            :font font
+                            :height 80)))))
+
+(defun gmas/apply-startup-font-to-existing-frames ()
+  "Apply the preferred GUI font to all existing frames."
+  (dolist (frame (frame-list))
+    (gmas/apply-startup-font frame)))
+
+(when (string-equal system-type "gnu/linux")
+  (add-hook 'emacs-startup-hook #'gmas/apply-startup-font-to-existing-frames)
+  (add-hook 'after-make-frame-functions #'gmas/apply-startup-font))
+
+(when (string-equal system-type "darwin")
+  (add-to-list 'default-frame-alist '(font . "Cascadia Code-12")))
 
 (use-package transient
   :ensure t
@@ -480,7 +489,7 @@
 (use-package ef-themes
   :ensure t)
 (require 'ef-themes)
-(load-theme 'ef-dream)
+(load-theme 'ef-maris-dark)
 
 (use-package doric-themes
   :ensure nil
@@ -826,3 +835,4 @@
 (use-package edit-server
   :ensure t)
 (edit-server-start)
+(put 'set-goal-column 'disabled nil)
