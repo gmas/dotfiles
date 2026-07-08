@@ -151,6 +151,8 @@ source ~/dotfiles/scripts/functions.bash
 export NODE_PATH="$NPM_PACKAGES/lib/node_modules:$NODE_PATH"
 export PATH=~/.npm-global/bin:$PATH
 
+# aqua
+#export PATH="$(aqua root-dir)/bin:$PATH"
 
 export PATH="${KREW_ROOT:-$HOME/.krew}/bin:$PATH"
 
@@ -161,3 +163,18 @@ if [[ $(uname) == "Darwin" ]]; then
   export PATH="/usr/local/opt/openssl/bin:$PATH"
   export PATH="$(brew --prefix openssh)/bin:$PATH"
 fi
+
+### man syntax highlighting
+export GROFF_NO_SGR=1          # force groff to overstrike mode
+export LESS='-R'               # pass colour escapes through unchanged
+# Map bold & underline to colours
+export LESS_TERMCAP_md=$'\e[31m'   # bold   → red
+export LESS_TERMCAP_me=$'\e[0m'    # reset
+export LESS_TERMCAP_us=$'\e[34m'   # underline → blue
+export LESS_TERMCAP_ue=$'\e[0m'    # reset
+export PAGER=less
+export MANPAGER=less
+
+
+# opencode
+export PATH=/home/gmas/.opencode/bin:$PATH
