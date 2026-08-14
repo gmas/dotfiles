@@ -69,7 +69,10 @@ export PATH=$PATH:$GOPATH/bin
 export PATH=$PATH:/usr/local/go/bin
 
 export PATH=~/dotfiles/scripts/scripts/:~/bin:$PATH
- if [ -z $SSH_AGENT_PID ] ; then eval $(ssh-agent) ; fi
+# fix for ssh -A
+if [[ -z ${SSH_AUTH_SOCK:-} ]]; then
+  eval "$(ssh-agent -s)"
+fi
 
 alias weechat="TZ='US/Pacific' TERM=screen-256color weechat-curses"
 alias tmux="tmux -2"
